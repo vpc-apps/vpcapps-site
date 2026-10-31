@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pop Pairs – play the demo</title>
+<meta name="description" content="Play the first 10 levels of Pop Pairs, the number merge puzzle, right in your browser. Swipe, merge, beat the move limit.">
+<meta name="theme-color" content="#FFE7CF">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="frame" id="frame">
+  <div class="screens">
+    <section class="screen" id="home">
+      <canvas id="backdrop" aria-hidden="true"></canvas>
+      <div class="title">
+        <h1>Pop<br>Pairs</h1>
+        <p>Swipe. Merge. Beat the move limit.</p>
+        <span class="demo-tag">Browser demo · 10 levels</span>
+      </div>
+      <button class="chunky primary big" id="playBtn"></button>
+      <div class="row"><button class="chunky" id="levelsBtn"></button></div>
+    </section>
+
+    <section class="screen" id="levels">
+      <div class="hud"><button class="chunky icon" data-act="home" aria-label="Back"></button><h2>Levels</h2></div>
+      <div class="grid" id="grid"></div>
+      <p class="more">The full game has 120 levels, a Daily Challenge and a Night Arcade look.</p>
+    </section>
+
+    <section class="screen" id="game">
+      <div class="hud">
+        <button class="chunky icon" data-act="levels" aria-label="Back"></button>
+        <div class="stat"><small>LEVEL</small><b id="lvlNo">1</b></div>
+        <div class="pill"><div class="goal" id="goal"><small>MAKE</small><canvas id="goalTile" width="76" height="76"></canvas></div></div>
+        <div class="stat end"><small>MOVES</small><b id="moves">6</b></div>
+        <button class="chunky icon" data-act="rules" aria-label="How to play"></button>
+      </div>
+      <div class="banner" id="banner"><span id="bannerText"></span><button data-act="skip">Skip</button></div>
+      <div class="stage" id="stage"><div class="board"><canvas id="board" aria-label="Game board. Swipe or use the arrow keys to move the tiles."></canvas></div></div>
+      <div class="keys" id="keys" aria-label="Arrow buttons"><span class="keyhint">Use the arrow keys ← ↑ → ↓ or click:</span><button class="key" data-dir="L" aria-label="Left">←</button><button class="key" data-dir="U" aria-label="Up">↑</button><button class="key" data-dir="D" aria-label="Down">↓</button><button class="key" data-dir="R" aria-label="Right">→</button></div>
+      <div class="row"><button class="chunky" data-act="undo" id="undoBtn"></button><button class="chunky" data-act="restart"></button></div>
+    </section>
+  </div>
+
+  <div class="bar">
+    <button class="mute" id="mute" aria-label="Sound on/off"></button>
+    <a class="gp" target="_blank" rel="noopener"></a>
+  </div>
+
+  <div class="overlay" id="overlay"><div class="card" id="card"></div></div>
+</div>
+<script src="levels.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

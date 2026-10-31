@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Balloon Domino</title>
+  <meta name="description" content="One tap starts a chain of popping balloons. Pick the right balloon and clear the whole sky. 400 levels and a Daily Challenge.">
+  <link rel="icon" href="data:,">
+  <link rel="preload" href="fonts/fredoka.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="phaser.min.js" as="script">
+  <link rel="preload" href="game.js" as="script">
+  <style>
+    @font-face { font-family: 'Fredoka'; src: url('fonts/fredoka.woff') format('woff'); font-weight: 300 700; font-display: swap; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #ff6f7f; }
+    body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: none;
+           -webkit-tap-highlight-color: transparent; }
+    #game { position: fixed; inset: 0; }
+    #game canvas { display: block; outline: none; }
+    /* Branded loader: pure HTML/CSS, on screen before any script runs. */
+    #vpc-loader { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 22px; background: radial-gradient(circle at 50% 35%, #ffa58f, #ff6f7f 70%);
+      font-family: 'Trebuchet MS', system-ui, sans-serif; color: #fff; transition: opacity .4s; }
+    #vpc-loader.done { opacity: 0; pointer-events: none; }
+    #vpc-loader .art { display: flex; gap: 14px; height: 92px; align-items: flex-end; }
+    #vpc-loader .b { width: 46px; height: 54px; border-radius: 50% 50% 48% 48%; position: relative;
+      background: radial-gradient(circle at 34% 28%, #fff 0 9%, var(--c) 30%, var(--d) 100%);
+      animation: vpc-bob 1.4s ease-in-out infinite; }
+    #vpc-loader .b::after { content: ''; position: absolute; left: 50%; top: 100%; width: 2px; height: 26px; background: rgba(255,255,255,.55); }
+    #vpc-loader .b:nth-child(2) { animation-delay: .2s; transform: translateY(-14px); }
+    #vpc-loader .b:nth-child(3) { animation-delay: .4s; }
+    @keyframes vpc-bob { 50% { translate: 0 -12px; } }
+    #vpc-loader h1 { margin: 0; font-size: clamp(30px, 7vw, 58px); letter-spacing: 1px; text-shadow: 0 4px 0 rgba(0,0,0,.18); }
+    #vpc-loader .bar { width: min(320px, 70vw); height: 14px; border-radius: 99px; background: rgba(255,255,255,.3); overflow: hidden; }
+    #vpc-loader .fill { height: 100%; width: 4%; border-radius: 99px; background: #ffc400; transition: width .25s; }
+    #vpc-loader p { margin: 0; font-size: 16px; opacity: .92; padding: 0 20px; text-align: center; }
+  </style>
+  <script>
+    window.VPC_BUILD = {"game": "balloon_domino", "title": "Balloon Domino", "portal": "none", "target": "website", "savePrefix": "bd", "saveKey": "bd_save", "demoLevels": 10, "fullGameUrl": "", "version": "web"};
+  </script>
+
+</head>
+<body>
+  <div id="game"></div>
+  <div id="vpc-loader">
+    <div class="art"><div class="b" style="--c:#1fa8ff;--d:#0a6fb0"></div><div class="b" style="--c:#ffc800;--d:#c79100"></div><div class="b" style="--c:#14d99a;--d:#0b8f66"></div></div>
+    <h1>Balloon Domino</h1>
+    <div class="bar"><div class="fill" id="vpc-fill"></div></div>
+    <p>One tap. One chain. Clear the sky.</p>
+  </div>
+  <script>
+    // Progress = bytes of finished downloads / the first-load total (written by phaser_pack.py).
+    (function () {
+      var total = 1336104, fill = document.getElementById('vpc-fill'), got = 0, seen = {};
+      function step() {
+        try {
+          performance.getEntriesByType('resource').forEach(function (e) {
+            if (seen[e.name]) return;
+            seen[e.name] = 1;
+            got += e.encodedBodySize || e.transferSize || 0;
+          });
+        } catch (e) {}
+        var p = Math.min(0.96, Math.max(0.04, got / total));
+        if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
+        if (!window.VPC || !window.VPC._ready) setTimeout(step, 120);
+      }
+      step();
+    })();
+  </script>
+  <script src="phaser.min.js" defer></script>
+  <script src="game.js" defer></script>
+</body>
+</html>
