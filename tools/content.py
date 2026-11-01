@@ -37,7 +37,7 @@ GAMES = [
     dict(slug='lantern-chain', key='lantern_chain', title='Lantern Chain',
          tagline='Sort the glowing paper lanterns by colour. Calm and satisfying.',
          genre=['Puzzle', 'Sorting'], play_id=None, play_note='Coming soon to Google Play',
-         web=OLD_SITE + '/play/lantern-chain/', web_label='Free 10-level browser demo', shape='any',
+         web='local', web_label='Free browser demo', shape='any',
          levels='200 levels + Daily Challenge',
          controls=[('Mouse / touch', 'Click a string to lift its top lanterns, then click another to hang them'),
                    ('U', 'Undo'), ('H', 'Hint'), ('R', 'Restart'), ('Enter / Space', 'Next level')],

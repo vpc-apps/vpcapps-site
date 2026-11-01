@@ -300,22 +300,25 @@ unlock: function (v) {
 noise(0.02, 6000, 0.04 * v);
 },
 };
-var CHORDS = [[261.63, 329.63, 392.0], [220.0, 261.63, 329.63], [174.61, 220.0, 261.63], [196.0, 246.94, 293.66]];
-var MELODY = [0, 2, 4, 2, 5, 4, 2, 1, 0, 2, 4, 5, 4, 2, 1, -1];
-var SCALE = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5];
+var SONG = {
+bpm: 96, steps: 32, voice: 'sine',
+chords: [[261.63, 329.63, 392.0], [220.0, 261.63, 329.63], [174.61, 220.0, 261.63], [196.0, 246.94, 293.66]],
+melody: [0, 2, 4, 2, 5, 4, 2, 1, 0, 2, 4, 5, 4, 2, 1, -1],
+scale: [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5],
+};
 function renderMusic() {
-var beat = 60 / 96 / 2, steps = 32, rate = 22050, dur = beat * steps;
+var beat = 60 / SONG.bpm / 2, steps = SONG.steps, rate = 22050, dur = beat * steps;
 var O = window.OfflineAudioContext || window.webkitOfflineAudioContext;
 if (!O) return Promise.reject(new Error('no OfflineAudioContext'));
 var off = new O(1, Math.ceil(rate * dur), rate), out = off.destination;
 for (var step = 0; step < steps; step++) {
-var chord = CHORDS[Math.floor(step / 8) % CHORDS.length], at = step * beat;
+var chord = SONG.chords[Math.floor(step / 8) % SONG.chords.length], at = step * beat;
 if (step % 8 === 0) {
 chord.forEach(function (f) { tone(off, out, f / 2, { at: at, type: 'sine', volume: 0.035, attack: 0.08, decay: beat * 7 }); });
 tone(off, out, chord[0] / 4, { at: at, volume: 0.05, attack: 0.02, decay: beat * 3 });
 }
-var n = MELODY[step % MELODY.length];
-if (n >= 0 && (step < 24 || step % 2 === 0)) tone(off, out, SCALE[n], { at: at, type: 'sine', volume: 0.03, attack: 0.01, decay: beat * 1.6 });
+var n = SONG.melody[step % SONG.melody.length];
+if (n >= 0 && (step < steps - 8 || step % 2 === 0)) tone(off, out, SONG.scale[n], { at: at, type: SONG.voice, volume: 0.03, attack: 0.01, decay: beat * 1.6 });
 }
 return new Promise(function (ok, fail) {
 var p = off.startRendering(ok, fail); // old Safari: callbacks; others: a promise
@@ -338,6 +341,8 @@ if (musicBuffer) go(musicBuffer);
 else renderMusic().then(go).catch(function (e) { music = null; VPC.log('music failed', String(e)); });
 }
 return {
+/** Replaces the default music tune (call before boot). */
+setSong: function (song) { Object.assign(SONG, song); },
 /** Registers a sample: fetched and decoded at boot. */
 load: function (name, url) { urls[name] = url; if (ctx) fetchBuffer(name); },
 /** Plays a sample, else a synth voice of that name. opts: { volume, rate, minGap (s) }. */
@@ -537,6 +542,8 @@ primary: '#ff4f87', primaryLip: '#c92e62', primaryInk: '#ffffff',
 button: '#ffffff', buttonLip: '#d9c2ae', buttonInk: '#333333',
 star: '#ffc23d', starInk: '#4a2a00', badge: '#3a1230', badgeInk: '#ffd84d',
 free: '#14b886', dim: 'rgba(0,0,0,0.45)',
+gloss: 0.6, primaryGloss: 0.18, // top highlight alpha (dark themes: lower)
+gloss: 0.6, // highlight band on plain buttons (dark themes: lower)
 };
 function hex(c) { return Phaser.Display.Color.HexStringToColor(c).color; }
 function s() { return VPC.dpr(); }
@@ -678,7 +685,7 @@ g.clear();
 g.fillStyle(0x000000, 0.12).fillRoundedRect(-w / 2, -h / 2 + lip + 3 * u, w, h, r);
 g.fillStyle(hex(col[1]), 1).fillRoundedRect(-w / 2, -h / 2 + lip, w, h, r);
 g.fillStyle(hex(col[0]), 1).fillRoundedRect(-w / 2, -h / 2 + off, w, h, r);
-g.fillStyle(0xffffff, st.primary ? 0.18 : 0.6).fillRoundedRect(-w / 2 + 6 * u, -h / 2 + off + 4 * u, w - 12 * u, h * 0.32, Math.min(r, h * 0.16));
+g.fillStyle(0xffffff, st.primary ? 0.18 : theme.gloss).fillRoundedRect(-w / 2 + 6 * u, -h / 2 + off + 4 * u, w - 12 * u, h * 0.32, Math.min(r, h * 0.16));
 var iconSize = Math.min(h * 0.5, 30 * u), gap = 8 * u;
 var hasLabel = label && label.text, lw = hasLabel ? label.width : 0, iw = icon ? iconSize : 0, total = lw + iw + (hasLabel && icon ? gap : 0);
 var x = -total / 2;
