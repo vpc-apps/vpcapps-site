@@ -267,7 +267,7 @@ def page(path, title, desc, body, og_image='/assets/img/brand/og-default.jpg', l
       <ul><li><a href="/games/">Games</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
       <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
     </div>
-    <p class="muted small">© {datetime.date.today().year} VPC Apps · Google Play and the Google Play logo are trademarks of Google LLC.</p>
+    <p class="muted small">© {datetime.date.today().year} VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
   </div>
 </footer>
 </body>
@@ -324,7 +324,7 @@ def card(g, big=False):
 </article>'''
 
 
-ORG = {'@context': 'https://schema.org', '@type': 'Organization', 'name': SITE['name'], 'url': SITE['url'],
+ORG = {'@context': 'https://schema.org', '@type': 'Organization', 'name': SITE['name'], 'legalName': 'Venture Path Consulting', 'url': SITE['url'],
        'logo': SITE['url'] + '/assets/img/brand/icon-512.png', 'email': SITE['email']}
 
 # ---------------------------------------------------------------- pages ----
@@ -464,6 +464,7 @@ def about():
     body = f'''<section class="wrap section page-head narrow">
   <h1>About VPC Apps</h1>
   <p class="lead">VPC Apps is a small independent studio making bite-size puzzle games. We started in {SITE['founded']}.</p>
+  <p>VPC Apps is a brand of <b>Venture Path Consulting</b>, an independent business registered in India.</p>
   <p>Our first {len(live)} games are live on Google Play: {', '.join(E(g['title']) for g in live)}. Shuriken Ricochet and Lantern Chain are next, and you can already play their demos in your browser.</p>
   <h2>What we care about</h2>
   <ul class="checks">
