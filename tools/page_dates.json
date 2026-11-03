@@ -1,0 +1,122 @@
+{
+ "/": {
+  "hash": "b6f74b5f946bfa31",
+  "date": "2026-11-03"
+ },
+ "/404.html": {
+  "hash": "5f7c79b2a08c5ae9",
+  "date": "2026-11-03"
+ },
+ "/about/": {
+  "hash": "accb723d434c6b68",
+  "date": "2026-11-01"
+ },
+ "/apps/": {
+  "hash": "e6a9f52a0e509e9b",
+  "date": "2026-11-03"
+ },
+ "/balloon-domino/privacy.html": {
+  "hash": "f007da08df3802ae",
+  "date": "2026-11-01"
+ },
+ "/contact/": {
+  "hash": "0f7130c4a3a9dc31",
+  "date": "2026-11-01"
+ },
+ "/games/": {
+  "hash": "44f743a7bbbfa9e4",
+  "date": "2026-11-01"
+ },
+ "/games/balloon-domino/": {
+  "hash": "7fe4fbc1a01e095c",
+  "date": "2026-11-01"
+ },
+ "/games/lantern-chain/": {
+  "hash": "f0cfbee75c46e57d",
+  "date": "2026-11-01"
+ },
+ "/games/pop-pairs/": {
+  "hash": "a17647ab7f5a936b",
+  "date": "2026-11-01"
+ },
+ "/games/shuriken-ricochet/": {
+  "hash": "4324a38881bd4cbf",
+  "date": "2026-11-01"
+ },
+ "/games/target-tiles/": {
+  "hash": "5fd2d6735ed7b516",
+  "date": "2026-11-01"
+ },
+ "/lantern-chain/privacy.html": {
+  "hash": "f2f19e1cb79f427a",
+  "date": "2026-11-01"
+ },
+ "/play/balloon-domino/data-deletion.html": {
+  "hash": "ad1a7c8c7eba4c91",
+  "date": "2026-11-01"
+ },
+ "/play/balloon-domino/privacy.html": {
+  "hash": "cf4d3c959fecf8d6",
+  "date": "2026-11-01"
+ },
+ "/play/lantern-chain/data-deletion.html": {
+  "hash": "d6710cc1e3e356fe",
+  "date": "2026-11-01"
+ },
+ "/play/lantern-chain/privacy.html": {
+  "hash": "2c732c610c4c1246",
+  "date": "2026-11-01"
+ },
+ "/play/pop-pairs/data-deletion.html": {
+  "hash": "bd80029497ef8d75",
+  "date": "2026-11-01"
+ },
+ "/play/pop-pairs/privacy.html": {
+  "hash": "323ead7e2a2030e9",
+  "date": "2026-11-01"
+ },
+ "/play/shuriken-ricochet/privacy.html": {
+  "hash": "eb9eec9bcfbe9121",
+  "date": "2026-11-01"
+ },
+ "/pop-pairs/privacy.html": {
+  "hash": "5a3ffe1268d53020",
+  "date": "2026-11-01"
+ },
+ "/press/": {
+  "hash": "67c0e1918529c81d",
+  "date": "2026-11-01"
+ },
+ "/privacy/": {
+  "hash": "e4390250a612b807",
+  "date": "2026-11-03"
+ },
+ "/shuriken-ricochet/privacy.html": {
+  "hash": "71a5c09ddc738abf",
+  "date": "2026-11-01"
+ },
+ "/target-tiles/privacy.html": {
+  "hash": "1b07325ec4fd0615",
+  "date": "2026-11-01"
+ },
+ "/terms/": {
+  "hash": "3c8d7a18eab4bb9f",
+  "date": "2026-10-31"
+ },
+ "/tools/": {
+  "hash": "f25f3eec4f73fceb",
+  "date": "2026-11-03"
+ },
+ "/tools/attendance-report-analyzer/": {
+  "hash": "bf2d506ef984df65",
+  "date": "2026-11-03"
+ },
+ "/tools/etsy-profit-dashboard/": {
+  "hash": "3681a8bdf17cf8fb",
+  "date": "2026-11-03"
+ },
+ "/tools/jira-csv-dashboard/": {
+  "hash": "12fb3f8794a70b76",
+  "date": "2026-11-03"
+ }
+}

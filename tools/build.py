@@ -10,6 +10,7 @@ Sources: tools/content.py (games, studio facts), the APPs repo
 are committed: GitHub Pages serves the repo root as is.
 """
 import datetime
+import hashlib
 import html
 import json
 import os
@@ -21,14 +22,20 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
-from content import GAMES, OLD_SITE, PLAY, SITE, WORLD  # noqa: E402
+from content import GAMES, OLD_SITE, PLAY, SITE, TOOL, TOOLS, WORLD  # noqa: E402
 
 APPS = os.path.normpath(os.path.join(ROOT, '..', 'APPs'))
+E8 = os.path.join(APPS, 'products', 'e8_dashboard')
 OLD = os.path.normpath(os.path.join(ROOT, '..', 'vpconsulting-apps-site'))
 MARKETING = os.path.join(APPS, 'docs', 'marketing')
 LISTINGS = os.path.join(APPS, 'docs', 'store_listings')
 PHASER_WEB = os.path.join(MARKETING, 'phaser', 'website')
 TODAY = datetime.date.today().isoformat()
+# Per-page "last changed" dates: a page's date moves only when its own content (title,
+# description, body; not the shared header/footer) changes. Kept in git next to this file.
+DATES_FILE = os.path.join(HERE, 'page_dates.json')
+DATE_SEED = {'/privacy/': '2026-10-31', '/terms/': '2026-10-31'}  # first run only
+UPDATED = '{{UPDATED}}'  # placeholder for a page's own "last updated" date
 E = html.escape
 
 # ---------------------------------------------------------------- assets ----
@@ -106,6 +113,7 @@ def import_assets():
                             '-vf', 'scale=960:-2', '-q:v', '4', os.path.join(d, 'trailer.jpg')], check=True)
     font()
     import_games()
+    import_tools()
 
 
 def favicons(d):
@@ -202,6 +210,68 @@ def import_games():
         print(f'game build: {os.path.relpath(src, os.path.dirname(ROOT))} -> play/{g["slug"]}/')
 
 
+# Tool pages and the app may only be framed by our own pages (the landing pages embed the app).
+TOOL_GUARD = """<script>(function(){var framed;try{framed=window.top!==window.self;}catch(e){framed=true;}
+if(!framed)return;var ok=false;try{ok=window.top.location.host===location.host;}catch(e){}
+if(ok)return;document.write('<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fdf1e7;font:16px system-ui,sans-serif;color:#2b2140;text-align:center;z-index:2147483647">'+
+'<div style="padding:24px"><p style="font-size:20px;font-weight:700;margin:0 0 8px">Use Export to Dashboard free on vpcapps.net</p>'+
+'<p style="margin:0 0 18px;color:#6b5f80">This tool by VPC Apps runs on its own page:<br><b>'+location.host+location.pathname+'</b></p>'+
+'<a href="'+location.href.replace(/"/g,'%22')+'" target="_top" rel="noopener" style="display:inline-block;background:#e2495f;color:#fff;padding:12px 20px;border-radius:12px;text-decoration:none;font-weight:700">Open the tool</a></div></div>'+
+'<plaintext style="display:none">');})();</script>"""
+SW_REGISTER = ("<script>if('serviceWorker' in navigator)addEventListener('load',function(){"
+               "navigator.serviceWorker.register('/tools/sw.js').catch(function(){})});</script>")
+
+
+def import_tools():
+    """The E8 Export to Dashboard app (one copy, /tools/app/) + page images from its screenshots."""
+    dest = os.path.join(ROOT, 'tools', 'app')
+    shutil.rmtree(dest, ignore_errors=True)
+    os.makedirs(dest)
+    for d in ('src', 'samples'):
+        shutil.copytree(os.path.join(E8, d), os.path.join(dest, d))
+    with open(os.path.join(E8, 'index.html'), encoding='utf-8') as f:
+        doc = f.read()
+    doc = doc.replace('<link rel="icon" href="data:,">', '<link rel="icon" href="/favicon.ico" sizes="any">\n'
+                      f'<link rel="canonical" href="{SITE["url"]}/tools/">\n<link rel="manifest" href="/tools/manifest.webmanifest">\n'
+                      '<meta name="theme-color" content="#3b6fd8">\n' + SW_REGISTER)
+    i = doc.find('<head>') + len('<head>')
+    doc = doc[:i] + '\n' + TOOL_GUARD + doc[i:]
+    with open(os.path.join(dest, 'index.html'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(doc)
+    out = os.path.join(ROOT, 'assets', 'img', 'tools')
+    for t in TOOLS:
+        src = os.path.join(E8, 'site_img', t['t'] + '.png')
+        _img(src, os.path.join(out, f'{t["t"]}-1280.webp'), quality=80)
+        og_card([src], t['short'], os.path.join(out, f'{t["t"]}-og.jpg'))
+    og_card([os.path.join(E8, 'site_img', t['t'] + '.png') for t in TOOLS], TOOL['name'], os.path.join(out, 'hub-og.jpg'))
+    print('tool app: products/e8_dashboard -> tools/app/')
+
+
+def og_card(srcs, title, dest):
+    """1200x630 share card: dashboard screenshot(s) on top, title band below."""
+    from PIL import Image, ImageDraw, ImageFont
+    card = Image.new('RGB', (1200, 630), (245, 247, 251))
+    if len(srcs) == 1:
+        with Image.open(srcs[0]) as im:
+            card.paste(_cover(im.convert('RGB'), (1200, 750)).crop((0, 0, 1200, 480)), (0, 0))
+    else:
+        for n, s in enumerate(srcs):
+            with Image.open(s) as im:
+                card.paste(_cover(im.convert('RGB'), (384, 240)), (12 + n * 396, 120))
+    d = ImageDraw.Draw(card)
+    d.rectangle((0, 480, 1200, 630), fill=(42, 22, 48))
+    try:
+        big = ImageFont.truetype(os.path.join(APPS, 'apps', 'p5_pop_chain', 'assets', 'fonts', 'Fredoka-Variable.ttf'), 54)
+        big.set_variation_by_axes([600])
+        small = ImageFont.truetype(os.path.join(APPS, 'apps', 'p5_pop_chain', 'assets', 'fonts', 'Fredoka-Variable.ttf'), 28)
+    except Exception:
+        big = small = ImageFont.load_default()
+    d.text((48, 500), title, font=big, fill='white')
+    d.text((48, 574), 'Free · your file never leaves your device · vpcapps.net/tools', font=small, fill=(255, 160, 112))
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    card.save(dest, 'JPEG', quality=86, optimize=True)
+
+
 # ---------------------------------------------------------------- store text ----
 
 
@@ -242,17 +312,19 @@ def store_text(key):
 
 # ---------------------------------------------------------------- layout ----
 
-NAV = [('Games', '/games/'), ('Apps', '/apps/'), ('About', '/about/'), ('Press', '/press/'), ('Contact', '/contact/')]
+NAV = [('Games', '/games/'), ('Tools', '/tools/'), ('Apps', '/apps/'), ('About', '/about/'), ('Press', '/press/'), ('Contact', '/contact/')]
 
 
 def page(path, title, desc, body, og_image='/assets/img/brand/og-default.jpg', ld=None, og_type='website',
-         active=None, extra_head=''):
+         active=None, extra_head='', manifest='/site.webmanifest'):
     url = SITE['url'] + path
     full = title if title == SITE['name'] else f'{title} · {SITE["name"]}'
     cur = ' aria-current="page"'
     nav = ''.join(f'<li><a href="{h}"{cur if active == h else ""}>{n}</a></li>' for n, h in NAV)
     lds = ''.join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>\n'
                   for x in (ld or []))
+    date = page_date(path, title + desc + body)
+    body = body.replace(UPDATED, datetime.date.fromisoformat(date).strftime('%d %B %Y').lstrip('0'))
     doc = f'''<!doctype html>
 <html lang="en">
 <head>
@@ -273,7 +345,7 @@ def page(path, title, desc, body, og_image='/assets/img/brand/og-default.jpg', l
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="manifest" href="{manifest}">
 <link rel="preload" href="/assets/fonts/fredoka.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
 <script>try{{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}}catch(e){{}}</script>
@@ -296,7 +368,7 @@ def page(path, title, desc, body, og_image='/assets/img/brand/og-default.jpg', l
     <div class="foot-grid">
       <div><a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="28" height="28"><span>VPC Apps</span></a>
       <p class="muted">{E(SITE['tagline'])}</p></div>
-      <ul><li><a href="/games/">Games</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
+      <ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
       <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
     </div>
     <p class="muted small">© {datetime.date.today().year} VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
@@ -310,6 +382,38 @@ def page(path, title, desc, body, og_image='/assets/img/brand/og-default.jpg', l
 
 
 PAGES = []
+DATES = {}
+
+
+def load_dates():
+    DATES.clear()
+    if os.path.exists(DATES_FILE):
+        with open(DATES_FILE, encoding='utf-8') as f:
+            DATES.update(json.load(f))
+        return
+    # First run: start from the sitemap's lastmod values (hash None = accept the current content).
+    p = os.path.join(ROOT, 'sitemap.xml')
+    old = open(p, encoding='utf-8').read() if os.path.exists(p) else ''
+    for loc, mod in re.findall(r'<loc>(.*?)</loc><lastmod>(.*?)</lastmod>', old):
+        path = loc[len(SITE['url']):]
+        DATES[path] = {'hash': None, 'date': DATE_SEED.get(path, mod)}
+
+
+def page_date(path, content):
+    h = hashlib.sha1(content.encode('utf-8')).hexdigest()[:16]
+    d = DATES.get(path)
+    if d and d['hash'] in (h, None):
+        d['hash'] = h
+    else:
+        DATES[path] = d = {'hash': h, 'date': TODAY}
+    return d['date']
+
+
+def save_dates():
+    keep = set(PAGES) | {'/404.html'}
+    with open(DATES_FILE, 'w', encoding='utf-8', newline='\n') as f:
+        json.dump({p: DATES[p] for p in sorted(DATES) if p in keep}, f, indent=1)
+        f.write('\n')
 
 
 def write(path, text):
@@ -391,7 +495,7 @@ def home():
   <div><h2>A little world</h2><p>{WORLD}</p></div>
 </section>
 <section class="wrap section">
-  <div class="panel"><h2>Apps</h2><p>Games come first, but we are also building small, useful apps. <a href="/apps/">See what's coming →</a></p></div>
+  <div class="panel"><h2>Free tools</h2><p>Games come first, but we also make small, useful tools. <a href="/tools/">Export to Dashboard</a> turns a Jira, Etsy or attendance CSV export into a dashboard and a one-page summary, right in your browser: your file never leaves your device. <a href="/tools/">Try it →</a></p></div>
 </section>'''
     site_ld = {'@context': 'https://schema.org', '@type': 'WebSite', 'name': SITE['name'], 'url': SITE['url']}
     page('/', SITE['name'], SITE['description'], body, ld=[ORG, site_ld])
@@ -478,6 +582,7 @@ def apps():
   <h1>Apps</h1>
   <p class="lead">Games come first at VPC Apps, but not only games.</p>
   <p>We are working on small, focused apps and tools: the kind that do one job well, open fast, work offline where they can and don't ask for more permissions than they need. They will be listed here, each with its own page and privacy policy, as soon as they are ready.</p>
+  <div class="panel"><h2>Live now: Export to Dashboard</h2><p>A free browser tool that turns a CSV export into a dashboard, findings in plain English and a one-page summary: <a href="/tools/jira-csv-dashboard/">Jira issues</a>, <a href="/tools/etsy-profit-dashboard/">Etsy sales and fees</a> and <a href="/tools/attendance-report-analyzer/">biometric attendance</a>. Your file never leaves your device. <a href="/tools/">Open the tools →</a></p></div>
   <h2>What to expect from our apps</h2>
   <ul class="checks">
     <li>Free to use, with any paid extra clearly marked.</li>
@@ -566,7 +671,7 @@ def privacy():
     e = SITE['email']
     body = f'''<section class="wrap section page-head narrow prose">
   <h1>Privacy policy</h1>
-  <p class="muted">Website privacy policy · last updated {datetime.date.today().strftime('%d %B %Y').lstrip('0')}</p>
+  <p class="muted">Website privacy policy · last updated {UPDATED}</p>
   <p>This policy covers the website <b>vpcapps.net</b> and the browser games played on it. Each of our Android apps has its own privacy policy, linked from its game page and its Google Play listing.</p>
   <h2>Summary</h2>
   <ul>
@@ -578,6 +683,8 @@ def privacy():
   <p>The site is hosted on GitHub Pages (GitHub, Inc.). Like any web server, GitHub receives your IP address and browser details when you load a page, and may keep them in its logs for security purposes. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub's privacy statement</a>. Our domain name is registered with Cloudflare, which only answers address lookups for the domain and does not see your visits.</p>
   <h2>Browser games</h2>
   <p>When you play a game on this site, it stores your progress (levels unlocked, stars, settings) in your browser's local storage on your device. You can delete it at any time by clearing your browser's site data. Some game demos are loaded from our older site, vpc-apps.github.io, which is also hosted by GitHub Pages and run by us under the same rules.</p>
+  <h2>Free tools</h2>
+  <p>Our tools at <a href="/tools/">vpcapps.net/tools</a> (such as Export to Dashboard) process the files you choose locally in your browser and send nothing to us or anyone else; your files never leave your device.</p>
   <h2>Videos and images</h2>
   <p>All videos, images and fonts are served from this site. We don't embed third-party players or social media widgets.</p>
   <h2>Advertising</h2>
@@ -596,7 +703,7 @@ def terms():
     e = SITE['email']
     body = f'''<section class="wrap section page-head narrow prose">
   <h1>Terms of use</h1>
-  <p class="muted">Last updated {datetime.date.today().strftime('%d %B %Y').lstrip('0')}</p>
+  <p class="muted">Last updated {UPDATED}</p>
   <p>These terms apply to the website vpcapps.net and the browser games on it ("the site"), run by VPC Apps ("we"). By using the site you agree to them. Our Android apps are also covered by the Google Play terms.</p>
   <h2>Using the site and the games</h2>
   <p>You may play the games and read the site for your own personal, non-commercial use. Please don't copy, modify, re-host or sell the games or their content, try to break or overload the site, or use it for anything unlawful.</p>
@@ -612,6 +719,153 @@ def terms():
   <p>We may update these terms; the date above shows the latest version. Questions: <a href="mailto:{e}">{e}</a>.</p>
 </section>'''
     page('/terms/', 'Terms of use', 'Terms of use for the VPC Apps website and its browser games.', body)
+
+
+TOOL_HEAD = TOOL_GUARD + '\n' + SW_REGISTER + '\n'
+TOOL_MANIFEST = '/tools/manifest.webmanifest'
+
+
+def tool_app_ld(name, desc, url, image, features=None):
+    ld = {'@context': 'https://schema.org', '@type': 'SoftwareApplication', 'name': name, 'description': desc, 'url': url,
+          'applicationCategory': 'BusinessApplication', 'operatingSystem': 'Any (web browser)', 'image': image,
+          'isAccessibleForFree': True, 'offers': {'@type': 'Offer', 'price': '0', 'priceCurrency': 'USD'},
+          'publisher': {'@type': 'Organization', 'name': SITE['name'], 'url': SITE['url']}}
+    if features:
+        ld['featureList'] = features
+    return ld
+
+
+def tools_hub():
+    cards = ''.join(f'''<article class="card tool-card">
+  <a class="cover" href="/tools/{t['slug']}/"><img src="/assets/img/tools/{t['t']}-1280.webp" alt="{E(t['short'])} example dashboard" width="1280" height="800" loading="lazy"></a>
+  <div class="tool-body"><h3><a href="/tools/{t['slug']}/">{E(t['short'])}</a></h3><p>{E(t['card'])}</p>
+  <p class="cta"><a class="btn primary" href="/tools/{t['slug']}/">Open</a> <a class="btn ghost" href="/tools/app/?t={t['t']}&amp;sample=1">Try a sample</a></p></div>
+</article>''' for t in TOOLS)
+    body = f'''<section class="wrap section page-head">
+  <p class="eyebrow">Free tool</p>
+  <h1>{E(TOOL['name'])}</h1>
+  <p class="lead">Turn a CSV export into a dashboard, findings in plain English and a one-page summary you can share. Pick your source:</p>
+  <p class="privacy-line">🔒 Your file never leaves your device: everything is worked out in your browser. No upload, no account.</p>
+</section>
+<section class="wrap section"><div class="grid tools-grid">{cards}</div></section>
+<section class="wrap section split">
+  <div><h2>How it works</h2><ol class="steps">
+    <li>Export a CSV from the tool you already use (Jira, Etsy, your attendance machine).</li>
+    <li>Drop it on the page. The format is recognised and the numbers appear in a second.</li>
+    <li>Adjust the settings, then download a one-file HTML summary or print it as a PDF.</li></ol></div>
+  <div><h2>Free, private, offline</h2><ul class="checks">
+    <li>Free for files up to {TOOL['free_rows']} rows each; exports carry a small "made with" line.</li>
+    <li>No upload: the file is read by your own browser, so it suits work and staff data.</li>
+    <li>Works offline after your first visit. In Chrome or Edge you can install it as an app from the address bar.</li></ul></div>
+</section>'''
+    url = SITE['url'] + '/tools/'
+    page('/tools/', f'{TOOL["name"]}: free CSV to dashboard tools',
+         'Free CSV to dashboard tools for Jira, Etsy and biometric attendance exports: a dashboard, plain-English '
+         'findings and a one-page summary. Nothing is uploaded.', body,
+         og_image='/assets/img/tools/hub-og.jpg', active='/tools/', extra_head=TOOL_HEAD, manifest=TOOL_MANIFEST,
+         ld=[tool_app_ld(TOOL['name'], 'Turn Jira, Etsy and attendance CSV exports into dashboards in your browser.', url,
+                         SITE['url'] + '/assets/img/tools/hub-og.jpg'),
+             {'@context': 'https://schema.org', '@type': 'ItemList', 'itemListElement': [
+                 {'@type': 'ListItem', 'position': i, 'url': f'{SITE["url"]}/tools/{t["slug"]}/'} for i, t in enumerate(TOOLS, 1)]}])
+
+
+def tool_page(t):
+    path = f'/tools/{t["slug"]}/'
+    sample = SAMPLES_DL[t['t']]
+    gets = ''.join(f'<li>{E(x)}</li>' for x in t['gets'])
+    steps = ''.join(f'<li>{x}</li>' for x in t['steps'])
+    faqs = ''.join(f'<details><summary>{E(q)}</summary><p>{E(a)}</p></details>' for q, a in t['faqs'])
+    others = ' · '.join(f'<a href="/tools/{o["slug"]}/">{E(o["short"])}</a>' for o in TOOLS if o is not t)
+    body = f'''<nav class="wrap crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/tools/">Tools</a> › <span>{E(t['short'])}</span></nav>
+<section class="wrap section tool-head">
+  <h1>{E(t['h1'])}</h1>
+  <p class="lead">{E(t['lead'])}</p>
+  <p class="tags"><span class="tag">Free</span><span class="tag">No upload, no account</span><span class="tag">Works offline</span></p>
+</section>
+<section class="wrap section" id="try" aria-label="{E(t['short'])} tool">
+  <iframe class="e8-frame" src="/tools/app/?t={t['t']}&amp;embed=1" title="{E(t['short'])} tool"></iframe>
+  <p class="player-links"><a href="/tools/app/?t={t['t']}">Open full screen ↗</a> · <a href="{sample}" download>Download the sample CSV</a> (synthetic data)</p>
+</section>
+<section class="wrap section split">
+  <div><h2>What you get</h2><ul class="checks">{gets}</ul></div>
+  <figure class="shot"><img src="/assets/img/tools/{t['t']}-1280.webp" alt="Example {E(t['short'])} dashboard made from the sample file" width="1280" height="800" loading="lazy">
+  <figcaption class="muted small">Made from the sample file (synthetic data).</figcaption></figure>
+</section>
+<section class="wrap section narrow"><h2>How to export the file</h2><ol class="steps">{steps}</ol></section>
+<section class="wrap section narrow">
+  <div class="panel"><h2>Your file never leaves your device</h2><p>The tool is a web page that runs entirely in your browser. When you choose a file, it is read and analysed on your computer: nothing is uploaded, stored or seen by us. After your first visit it also works with no internet connection. See our <a href="/privacy/">privacy policy</a>.</p></div>
+  {t['extra']}
+</section>
+<section class="wrap section narrow faq"><h2>Questions</h2>{faqs}</section>
+<section class="wrap section narrow"><p class="muted">More free tools: {others} · <a href="/tools/">all tools</a></p></section>'''
+    url = SITE['url'] + path
+    og = f'/assets/img/tools/{t["t"]}-og.jpg'
+    faq_ld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
+        {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in t['faqs']]}
+    crumbs = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': SITE['url'] + '/'},
+        {'@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': SITE['url'] + '/tools/'},
+        {'@type': 'ListItem', 'position': 3, 'name': t['short'], 'item': url}]}
+    page(path, t['title'], t['desc'], body, og_image=og, active='/tools/', extra_head=TOOL_HEAD, manifest=TOOL_MANIFEST,
+         ld=[tool_app_ld(t['short'], t['desc'], url, SITE['url'] + og, t['gets']), faq_ld, crumbs])
+
+
+SAMPLES_DL = {'jira': '/tools/app/samples/jira_sample.csv', 'etsy': '/tools/app/samples/etsy_order_items_sample.csv',
+              'attendance': '/tools/app/samples/attendance_punches_sample.csv'}
+
+
+def tool_offline():
+    """Service worker (scope /tools/ only: games and other pages are never controlled) + app manifest."""
+    app = os.path.join(ROOT, 'tools', 'app')
+    files = sorted(os.path.relpath(os.path.join(d, n), ROOT).replace(os.sep, '/')
+                   for d, _, ns in os.walk(app) for n in ns)
+    pages = ['/tools/'] + [f'/tools/{t["slug"]}/' for t in TOOLS] + ['/tools/app/']
+    shell = pages + ['/' + f for f in files if not f.endswith('/index.html')] + [
+        '/assets/css/site.css', '/assets/js/site.js', '/assets/fonts/fredoka.woff', '/favicon.ico',
+        '/assets/img/brand/icon-192.png', '/assets/img/brand/favicon-32.png'] + [
+        f'/assets/img/tools/{t["t"]}-1280.webp' for t in TOOLS]
+    h = hashlib.sha1()
+    for f in files + [p.strip('/') + '/index.html' for p in pages[:-1]] + ['assets/css/site.css', 'assets/js/site.js']:
+        with open(os.path.join(ROOT, *f.split('/')), 'rb') as fh:
+            h.update(fh.read())
+    sw = f'''// Export to Dashboard offline cache. Scope /tools/ only. Generated by tools/build.py.
+var CACHE = 'e8-{h.hexdigest()[:12]}';
+var SHELL = {json.dumps(shell, indent=0)};
+self.addEventListener('install', function (e) {{
+  e.waitUntil(caches.open(CACHE).then(function (c) {{ return c.addAll(SHELL); }}).then(function () {{ return self.skipWaiting(); }}));
+}});
+self.addEventListener('activate', function (e) {{
+  e.waitUntil(caches.keys().then(function (ks) {{
+    return Promise.all(ks.filter(function (k) {{ return k.indexOf('e8-') === 0 && k !== CACHE; }}).map(function (k) {{ return caches.delete(k); }}));
+  }}).then(function () {{ return self.clients.claim(); }}));
+}});
+function keep(req, res) {{
+  if (res.ok && res.type === 'basic') {{ var c = res.clone(); caches.open(CACHE).then(function (k) {{ k.put(req, c); }}); }}
+  return res;
+}}
+self.addEventListener('fetch', function (e) {{
+  var r = e.request, u = new URL(r.url);
+  if (r.method !== 'GET' || u.origin !== location.origin) return;
+  if (r.mode === 'navigate') {{  // pages: newest from the network, the cached copy when offline
+    e.respondWith(fetch(r).then(function (res) {{ return keep(u.pathname, res); }}).catch(function () {{
+      return caches.match(u.pathname, {{ ignoreSearch: true }}).then(function (m) {{ return m || caches.match('/tools/'); }});
+    }}));
+    return;
+  }}
+  e.respondWith(caches.match(r, {{ ignoreSearch: true }}).then(function (m) {{  // files: cached copy, refreshed in the background
+    var net = fetch(r).then(function (res) {{ return keep(r, res); }});
+    if (m) {{ net.catch(function () {{}}); return m; }}
+    return net;
+  }}));
+}});
+'''
+    write('/tools/sw.js', sw)
+    write(TOOL_MANIFEST, json.dumps({
+        'name': f'{TOOL["name"]} (VPC Apps)', 'short_name': 'Dashboard', 'description': 'CSV export to dashboard, in your browser.',
+        'start_url': '/tools/app/', 'scope': '/tools/', 'display': 'standalone', 'background_color': '#f5f7fb',
+        'theme_color': '#3b6fd8', 'icons': [{'src': '/assets/img/brand/icon-192.png', 'sizes': '192x192', 'type': 'image/png'},
+                                            {'src': '/assets/img/brand/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]},
+        indent=1) + '\n')
 
 
 def not_found():
@@ -643,9 +897,11 @@ def legacy_pages():
 
 
 def seo_files():
-    urls = ''.join(f'  <url><loc>{SITE["url"]}{p}</loc><lastmod>{TODAY}</lastmod></url>\n' for p in PAGES)
+    urls = ''.join(f'  <url><loc>{SITE["url"]}{p}</loc><lastmod>{DATES[p]["date"]}</lastmod></url>\n' for p in PAGES)
     write('/sitemap.xml', f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
-    write('/robots.txt', f'User-agent: *\nAllow: /\n\nSitemap: {SITE["url"]}/sitemap.xml\n')
+    # The site build scripts share the /tools/ folder with the tool pages: keep them out of search.
+    write('/robots.txt', f'User-agent: *\nAllow: /\nDisallow: /tools/*.py\nDisallow: /tools/page_dates.json\n\n'
+                         f'Sitemap: {SITE["url"]}/sitemap.xml\n')
     # Same AdMob publisher line as the old site (for apps that will list vpcapps.net as their developer website).
     with open(os.path.join(OLD, 'app-ads.txt'), encoding='utf-8') as f:
         write('/app-ads.txt', f.read())
@@ -663,10 +919,14 @@ def main(argv=None):
     if '--assets' in argv:
         import_assets()
     PAGES.clear()
+    load_dates()
     home()
     games_index()
     for g in GAMES:
         game_page(g)
+    tools_hub()
+    for t in TOOLS:
+        tool_page(t)
     apps()
     about()
     contact()
@@ -676,6 +936,8 @@ def main(argv=None):
     legacy_pages()
     not_found()
     seo_files()
+    tool_offline()
+    save_dates()
     print(f'{len(PAGES)} pages -> {ROOT}')
 
 

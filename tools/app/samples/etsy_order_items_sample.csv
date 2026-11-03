@@ -1,0 +1,200 @@
+Sale Date,Item Name,Buyer,Quantity,Price,Coupon Code,Coupon Details,Discount Amount,Shipping Discount,Order Shipping,Order Sales Tax,Item Total,Currency,Transaction ID,Listing ID,Date Paid,Date Shipped,Ship Name,Ship City,Ship State,Ship Zipcode,Ship Country,Order ID,Variations,Order Type,Listings Type,Payment Type,SKU
+06/01/2026,Custom Pet Portrait,buyer7795,1,65.00,,,0.00,0,6.00,0,65.00,USD,4200000001,1200002,06/01/2026,06/03/2026,Customer,City,,00000,United States,3100000001,,online,listing,online_cc,LLP-02
+06/02/2026,Custom Pet Portrait,buyer8657,1,65.00,FALL10,10% off,6.50,0,0.00,0,58.50,USD,4200000002,1200002,06/02/2026,06/04/2026,Customer,City,,00000,France,3100000002,,online,listing,online_cc,LLP-02
+06/02/2026,Kids Room Alphabet Poster,buyer8657,1,22.00,,,0.00,0,0.00,0,22.00,USD,4200000003,1200004,06/02/2026,06/04/2026,Customer,City,,00000,France,3100000002,,online,listing,online_cc,LLP-04
+06/05/2026,Kids Room Alphabet Poster,buyer1151,1,22.00,FALL10,10% off,2.20,0,0.00,0,19.80,USD,4200000004,1200004,06/05/2026,06/07/2026,Customer,City,,00000,United States,3100000003,,online,listing,online_cc,LLP-04
+06/09/2026,Kids Room Alphabet Poster,buyer1428,1,22.00,FALL10,10% off,2.20,0,4.50,0,19.80,USD,4200000005,1200004,06/09/2026,06/11/2026,Customer,City,,00000,United States,3100000004,,online,listing,online_cc,LLP-04
+06/09/2026,Gift Card Holder,buyer2912,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000006,1200007,06/09/2026,06/11/2026,Customer,City,,00000,United Kingdom,3100000005,,online,listing,online_cc,LLP-07
+06/10/2026,Botanical Print A4,buyer4984,2,18.00,FALL10,10% off,3.60,0,6.00,0,32.40,USD,4200000007,1200000,06/10/2026,06/12/2026,Customer,City,,00000,United States,3100000006,,online,listing,online_cc,LLP-00
+06/10/2026,Custom Pet Portrait,buyer4984,1,65.00,,,0.00,0,6.00,0,65.00,USD,4200000008,1200002,06/10/2026,06/12/2026,Customer,City,,00000,United States,3100000006,,online,listing,online_cc,LLP-02
+06/12/2026,Minimalist Line Art Set of 3,buyer9852,1,34.00,,,0.00,0,0.00,0,34.00,USD,4200000009,1200003,06/12/2026,06/14/2026,Customer,City,,00000,United States,3100000007,,online,listing,online_cc,LLP-03
+06/12/2026,Kids Room Alphabet Poster,buyer4088,1,22.00,,,0.00,0,0.00,0,22.00,USD,4200000010,1200004,06/12/2026,06/14/2026,Customer,City,,00000,United States,3100000008,,online,listing,online_cc,LLP-04
+06/13/2026,Botanical Print A3,buyer8395,2,28.00,,,0.00,0,0.00,0,56.00,USD,4200000011,1200001,06/13/2026,06/15/2026,Customer,City,,00000,United States,3100000009,,online,listing,online_cc,LLP-01
+06/14/2026,Botanical Print A3,buyer3743,1,28.00,,,0.00,0,0.00,0,28.00,USD,4200000012,1200001,06/14/2026,06/16/2026,Customer,City,,00000,United States,3100000010,,online,listing,online_cc,LLP-01
+06/15/2026,Botanical Print A4,buyer2888,1,18.00,,,0.00,0,0.00,0,18.00,USD,4200000013,1200000,06/15/2026,06/17/2026,Customer,City,,00000,United States,3100000011,,online,listing,online_cc,LLP-00
+06/15/2026,Custom Pet Portrait,buyer0575,2,65.00,,,0.00,0,6.00,0,130.00,USD,4200000014,1200002,06/15/2026,06/17/2026,Customer,City,,00000,United States,3100000012,,online,listing,online_cc,LLP-02
+06/15/2026,Botanical Print A3,buyer5097,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000015,1200001,06/15/2026,06/17/2026,Customer,City,,00000,United States,3100000013,,online,listing,online_cc,LLP-01
+06/16/2026,Botanical Print A3,buyer7755,2,28.00,,,0.00,0,6.00,0,56.00,USD,4200000016,1200001,06/16/2026,06/18/2026,Customer,City,,00000,France,3100000014,,online,listing,online_cc,LLP-01
+06/16/2026,Mountain Sunset Print,buyer0204,1,20.00,FALL10,10% off,2.00,0,6.00,0,18.00,USD,4200000017,1200006,06/16/2026,06/18/2026,Customer,City,,00000,United States,3100000015,,online,listing,online_cc,LLP-06
+06/17/2026,Gift Card Holder,buyer8868,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000018,1200007,06/17/2026,06/19/2026,Customer,City,,00000,United Kingdom,3100000016,,online,listing,online_cc,LLP-07
+06/17/2026,Gift Card Holder,buyer7968,1,9.00,FALL10,10% off,0.90,0,6.00,0,8.10,USD,4200000019,1200007,06/17/2026,06/19/2026,Customer,City,,00000,United States,3100000017,,online,listing,online_cc,LLP-07
+06/19/2026,Kids Room Alphabet Poster,buyer7060,1,22.00,,,0.00,0,0.00,0,22.00,USD,4200000020,1200004,06/19/2026,06/21/2026,Customer,City,,00000,Australia,3100000018,,online,listing,online_cc,LLP-04
+06/20/2026,Botanical Print A4,buyer1051,2,18.00,,,0.00,0,6.00,0,36.00,USD,4200000021,1200000,06/20/2026,06/22/2026,Customer,City,,00000,United States,3100000019,,online,listing,online_cc,LLP-00
+06/20/2026,Gift Card Holder,buyer5168,1,9.00,,,0.00,0,6.00,0,9.00,USD,4200000022,1200007,06/20/2026,06/22/2026,Customer,City,,00000,United States,3100000020,,online,listing,online_cc,LLP-07
+06/20/2026,Kids Room Alphabet Poster,buyer5804,1,22.00,,,0.00,0,6.00,0,22.00,USD,4200000023,1200004,06/20/2026,06/22/2026,Customer,City,,00000,Australia,3100000021,,online,listing,online_cc,LLP-04
+06/23/2026,Wedding Date Print,buyer3245,1,40.00,,,0.00,0,0.00,0,40.00,USD,4200000024,1200005,06/23/2026,06/25/2026,Customer,City,,00000,United Kingdom,3100000022,,online,listing,online_cc,LLP-05
+06/24/2026,Custom Pet Portrait,buyer3669,1,65.00,,,0.00,0,4.50,0,65.00,USD,4200000025,1200002,06/24/2026,06/26/2026,Customer,City,,00000,United States,3100000023,,online,listing,online_cc,LLP-02
+06/24/2026,Mountain Sunset Print,buyer8236,1,20.00,,,0.00,0,6.00,0,20.00,USD,4200000026,1200006,06/24/2026,06/26/2026,Customer,City,,00000,United Kingdom,3100000024,,online,listing,online_cc,LLP-06
+06/24/2026,Kids Room Alphabet Poster,buyer8236,1,22.00,,,0.00,0,6.00,0,22.00,USD,4200000027,1200004,06/24/2026,06/26/2026,Customer,City,,00000,United Kingdom,3100000024,,online,listing,online_cc,LLP-04
+06/26/2026,Kids Room Alphabet Poster,buyer5710,1,22.00,FALL10,10% off,2.20,0,0.00,0,19.80,USD,4200000028,1200004,06/26/2026,06/28/2026,Customer,City,,00000,France,3100000025,,online,listing,online_cc,LLP-04
+06/26/2026,Wedding Date Print,buyer5710,1,40.00,,,0.00,0,0.00,0,40.00,USD,4200000029,1200005,06/26/2026,06/28/2026,Customer,City,,00000,France,3100000025,,online,listing,online_cc,LLP-05
+06/26/2026,Custom Pet Portrait,buyer2436,2,65.00,,,0.00,0,4.50,0,130.00,USD,4200000030,1200002,06/26/2026,06/28/2026,Customer,City,,00000,United States,3100000026,,online,listing,online_cc,LLP-02
+06/26/2026,Botanical Print A3,buyer7200,1,28.00,,,0.00,0,0.00,0,28.00,USD,4200000031,1200001,06/26/2026,06/28/2026,Customer,City,,00000,United States,3100000027,,online,listing,online_cc,LLP-01
+06/26/2026,Mountain Sunset Print,buyer7200,1,20.00,,,0.00,0,0.00,0,20.00,USD,4200000032,1200006,06/26/2026,06/28/2026,Customer,City,,00000,United States,3100000027,,online,listing,online_cc,LLP-06
+06/27/2026,Kids Room Alphabet Poster,buyer3293,1,22.00,FALL10,10% off,2.20,0,4.50,0,19.80,USD,4200000033,1200004,06/27/2026,06/29/2026,Customer,City,,00000,Australia,3100000028,,online,listing,online_cc,LLP-04
+06/27/2026,Gift Card Holder,buyer3293,1,9.00,FALL10,10% off,0.90,0,4.50,0,8.10,USD,4200000034,1200007,06/27/2026,06/29/2026,Customer,City,,00000,Australia,3100000028,,online,listing,online_cc,LLP-07
+06/27/2026,Gift Card Holder,buyer6622,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000035,1200007,06/27/2026,06/29/2026,Customer,City,,00000,United States,3100000029,,online,listing,online_cc,LLP-07
+06/28/2026,Botanical Print A4,buyer2122,1,18.00,,,0.00,0,4.50,0,18.00,USD,4200000036,1200000,06/28/2026,06/30/2026,Customer,City,,00000,United States,3100000030,,online,listing,online_cc,LLP-00
+06/28/2026,Minimalist Line Art Set of 3,buyer8173,1,34.00,,,0.00,0,6.00,0,34.00,USD,4200000037,1200003,06/28/2026,06/30/2026,Customer,City,,00000,United States,3100000031,,online,listing,online_cc,LLP-03
+06/28/2026,Mountain Sunset Print,buyer6157,1,20.00,,,0.00,0,0.00,0,20.00,USD,4200000038,1200006,06/28/2026,06/30/2026,Customer,City,,00000,United States,3100000032,,online,listing,online_cc,LLP-06
+06/29/2026,Custom Pet Portrait,buyer5696,2,65.00,,,0.00,0,0.00,0,130.00,USD,4200000039,1200002,06/29/2026,07/01/2026,Customer,City,,00000,United States,3100000033,,online,listing,online_cc,LLP-02
+07/02/2026,Mountain Sunset Print,buyer2065,1,20.00,,,0.00,0,6.00,0,20.00,USD,4200000040,1200006,07/02/2026,07/04/2026,Customer,City,,00000,United States,3100000034,,online,listing,online_cc,LLP-06
+07/02/2026,Kids Room Alphabet Poster,buyer2065,1,22.00,,,0.00,0,6.00,0,22.00,USD,4200000041,1200004,07/02/2026,07/04/2026,Customer,City,,00000,United States,3100000034,,online,listing,online_cc,LLP-04
+07/02/2026,Minimalist Line Art Set of 3,buyer7899,1,34.00,FALL10,10% off,3.40,0,0.00,0,30.60,USD,4200000042,1200003,07/02/2026,07/04/2026,Customer,City,,00000,Canada,3100000035,,online,listing,online_cc,LLP-03
+07/05/2026,Gift Card Holder,buyer5355,1,9.00,,,0.00,0,0.00,0,9.00,USD,4200000043,1200007,07/05/2026,07/07/2026,Customer,City,,00000,United States,3100000036,,online,listing,online_cc,LLP-07
+07/05/2026,Botanical Print A4,buyer5355,1,18.00,,,0.00,0,0.00,0,18.00,USD,4200000044,1200000,07/05/2026,07/07/2026,Customer,City,,00000,United States,3100000036,,online,listing,online_cc,LLP-00
+07/05/2026,Minimalist Line Art Set of 3,buyer2705,1,34.00,,,0.00,0,6.00,0,34.00,USD,4200000045,1200003,07/05/2026,07/07/2026,Customer,City,,00000,United States,3100000037,,online,listing,online_cc,LLP-03
+07/05/2026,Wedding Date Print,buyer4580,2,40.00,,,0.00,0,4.50,0,80.00,USD,4200000046,1200005,07/05/2026,07/07/2026,Customer,City,,00000,United States,3100000038,,online,listing,online_cc,LLP-05
+07/06/2026,Minimalist Line Art Set of 3,buyer3029,1,34.00,,,0.00,0,6.00,0,34.00,USD,4200000047,1200003,07/06/2026,07/08/2026,Customer,City,,00000,United States,3100000039,,online,listing,online_cc,LLP-03
+07/06/2026,Kids Room Alphabet Poster,buyer4897,1,22.00,,,0.00,0,6.00,0,22.00,USD,4200000048,1200004,07/06/2026,07/08/2026,Customer,City,,00000,Germany,3100000040,,online,listing,online_cc,LLP-04
+07/07/2026,Botanical Print A3,buyer1771,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000049,1200001,07/07/2026,07/09/2026,Customer,City,,00000,United States,3100000041,,online,listing,online_cc,LLP-01
+07/08/2026,Mountain Sunset Print,buyer1633,1,20.00,,,0.00,0,6.00,0,20.00,USD,4200000050,1200006,07/08/2026,07/10/2026,Customer,City,,00000,United States,3100000042,,online,listing,online_cc,LLP-06
+07/08/2026,Kids Room Alphabet Poster,buyer1633,1,22.00,FALL10,10% off,2.20,0,6.00,0,19.80,USD,4200000051,1200004,07/08/2026,07/10/2026,Customer,City,,00000,United States,3100000042,,online,listing,online_cc,LLP-04
+07/10/2026,Mountain Sunset Print,buyer5119,1,20.00,,,0.00,0,6.00,0,20.00,USD,4200000052,1200006,07/10/2026,07/12/2026,Customer,City,,00000,Germany,3100000043,,online,listing,online_cc,LLP-06
+07/11/2026,Botanical Print A4,buyer2566,1,18.00,,,0.00,0,6.00,0,18.00,USD,4200000053,1200000,07/11/2026,07/13/2026,Customer,City,,00000,United States,3100000044,,online,listing,online_cc,LLP-00
+07/11/2026,Wedding Date Print,buyer3666,1,40.00,,,0.00,0,0.00,0,40.00,USD,4200000054,1200005,07/11/2026,07/13/2026,Customer,City,,00000,United States,3100000045,,online,listing,online_cc,LLP-05
+07/12/2026,Botanical Print A3,buyer6835,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000055,1200001,07/12/2026,07/14/2026,Customer,City,,00000,France,3100000046,,online,listing,online_cc,LLP-01
+07/12/2026,Botanical Print A4,buyer6835,1,18.00,,,0.00,0,6.00,0,18.00,USD,4200000056,1200000,07/12/2026,07/14/2026,Customer,City,,00000,France,3100000046,,online,listing,online_cc,LLP-00
+07/12/2026,Custom Pet Portrait,buyer2112,1,65.00,FALL10,10% off,6.50,0,4.50,0,58.50,USD,4200000057,1200002,07/12/2026,07/14/2026,Customer,City,,00000,United States,3100000047,,online,listing,online_cc,LLP-02
+07/12/2026,Minimalist Line Art Set of 3,buyer4566,1,34.00,,,0.00,0,6.00,0,34.00,USD,4200000058,1200003,07/12/2026,07/14/2026,Customer,City,,00000,United States,3100000048,,online,listing,online_cc,LLP-03
+07/13/2026,Mountain Sunset Print,buyer0624,1,20.00,,,0.00,0,0.00,0,20.00,USD,4200000059,1200006,07/13/2026,07/15/2026,Customer,City,,00000,United States,3100000049,,online,listing,online_cc,LLP-06
+07/13/2026,Gift Card Holder,buyer3452,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000060,1200007,07/13/2026,07/15/2026,Customer,City,,00000,United States,3100000050,,online,listing,online_cc,LLP-07
+07/13/2026,Minimalist Line Art Set of 3,buyer3452,1,34.00,,,0.00,0,4.50,0,34.00,USD,4200000061,1200003,07/13/2026,07/15/2026,Customer,City,,00000,United States,3100000050,,online,listing,online_cc,LLP-03
+07/14/2026,Wedding Date Print,buyer8989,1,40.00,,,0.00,0,4.50,0,40.00,USD,4200000062,1200005,07/14/2026,07/16/2026,Customer,City,,00000,United States,3100000051,,online,listing,online_cc,LLP-05
+07/14/2026,Botanical Print A3,buyer9245,1,28.00,,,0.00,0,4.50,0,28.00,USD,4200000063,1200001,07/14/2026,07/16/2026,Customer,City,,00000,Australia,3100000052,,online,listing,online_cc,LLP-01
+07/15/2026,Wedding Date Print,buyer2342,1,40.00,,,0.00,0,4.50,0,40.00,USD,4200000064,1200005,07/15/2026,07/17/2026,Customer,City,,00000,United States,3100000053,,online,listing,online_cc,LLP-05
+07/16/2026,Gift Card Holder,buyer6547,2,9.00,,,0.00,0,0.00,0,18.00,USD,4200000065,1200007,07/16/2026,07/18/2026,Customer,City,,00000,United States,3100000054,,online,listing,online_cc,LLP-07
+07/16/2026,Custom Pet Portrait,buyer6547,1,65.00,FALL10,10% off,6.50,0,0.00,0,58.50,USD,4200000066,1200002,07/16/2026,07/18/2026,Customer,City,,00000,United States,3100000054,,online,listing,online_cc,LLP-02
+07/17/2026,Custom Pet Portrait,buyer1471,1,65.00,,,0.00,0,0.00,0,65.00,USD,4200000067,1200002,07/17/2026,07/19/2026,Customer,City,,00000,United States,3100000055,,online,listing,online_cc,LLP-02
+07/17/2026,Botanical Print A4,buyer6927,1,18.00,,,0.00,0,6.00,0,18.00,USD,4200000068,1200000,07/17/2026,07/19/2026,Customer,City,,00000,United States,3100000056,,online,listing,online_cc,LLP-00
+07/18/2026,Botanical Print A3,buyer6915,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000069,1200001,07/18/2026,07/20/2026,Customer,City,,00000,United States,3100000057,,online,listing,online_cc,LLP-01
+07/18/2026,Wedding Date Print,buyer8089,1,40.00,,,0.00,0,0.00,0,40.00,USD,4200000070,1200005,07/18/2026,07/20/2026,Customer,City,,00000,United States,3100000058,,online,listing,online_cc,LLP-05
+07/18/2026,Gift Card Holder,buyer8089,1,9.00,,,0.00,0,0.00,0,9.00,USD,4200000071,1200007,07/18/2026,07/20/2026,Customer,City,,00000,United States,3100000058,,online,listing,online_cc,LLP-07
+07/19/2026,Botanical Print A4,buyer5932,1,18.00,,,0.00,0,6.00,0,18.00,USD,4200000072,1200000,07/19/2026,07/21/2026,Customer,City,,00000,United States,3100000059,,online,listing,online_cc,LLP-00
+07/20/2026,Mountain Sunset Print,buyer4785,1,20.00,,,0.00,0,6.00,0,20.00,USD,4200000073,1200006,07/20/2026,07/22/2026,Customer,City,,00000,United States,3100000060,,online,listing,online_cc,LLP-06
+07/20/2026,Botanical Print A4,buyer0282,1,18.00,,,0.00,0,4.50,0,18.00,USD,4200000074,1200000,07/20/2026,07/22/2026,Customer,City,,00000,United States,3100000061,,online,listing,online_cc,LLP-00
+07/20/2026,Mountain Sunset Print,buyer0282,1,20.00,,,0.00,0,4.50,0,20.00,USD,4200000075,1200006,07/20/2026,07/22/2026,Customer,City,,00000,United States,3100000061,,online,listing,online_cc,LLP-06
+07/23/2026,Wedding Date Print,buyer1515,1,40.00,,,0.00,0,6.00,0,40.00,USD,4200000076,1200005,07/23/2026,07/25/2026,Customer,City,,00000,United States,3100000062,,online,listing,online_cc,LLP-05
+07/23/2026,Gift Card Holder,buyer1515,1,9.00,,,0.00,0,6.00,0,9.00,USD,4200000077,1200007,07/23/2026,07/25/2026,Customer,City,,00000,United States,3100000062,,online,listing,online_cc,LLP-07
+07/24/2026,Wedding Date Print,buyer4040,1,40.00,,,0.00,0,4.50,0,40.00,USD,4200000078,1200005,07/24/2026,07/26/2026,Customer,City,,00000,United States,3100000063,,online,listing,online_cc,LLP-05
+07/24/2026,Custom Pet Portrait,buyer4367,1,65.00,FALL10,10% off,6.50,0,6.00,0,58.50,USD,4200000079,1200002,07/24/2026,07/26/2026,Customer,City,,00000,United States,3100000064,,online,listing,online_cc,LLP-02
+07/24/2026,Wedding Date Print,buyer4367,1,40.00,,,0.00,0,6.00,0,40.00,USD,4200000080,1200005,07/24/2026,07/26/2026,Customer,City,,00000,United States,3100000064,,online,listing,online_cc,LLP-05
+07/24/2026,Gift Card Holder,buyer7679,1,9.00,,,0.00,0,6.00,0,9.00,USD,4200000081,1200007,07/24/2026,07/26/2026,Customer,City,,00000,United States,3100000065,,online,listing,online_cc,LLP-07
+07/26/2026,Gift Card Holder,buyer5103,1,9.00,,,0.00,0,0.00,0,9.00,USD,4200000082,1200007,07/26/2026,07/28/2026,Customer,City,,00000,United States,3100000066,,online,listing,online_cc,LLP-07
+07/28/2026,Gift Card Holder,buyer7787,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000083,1200007,07/28/2026,07/30/2026,Customer,City,,00000,France,3100000067,,online,listing,online_cc,LLP-07
+07/28/2026,Botanical Print A4,buyer7787,2,18.00,,,0.00,0,4.50,0,36.00,USD,4200000084,1200000,07/28/2026,07/30/2026,Customer,City,,00000,France,3100000067,,online,listing,online_cc,LLP-00
+07/29/2026,Botanical Print A3,buyer3091,1,28.00,,,0.00,0,4.50,0,28.00,USD,4200000085,1200001,07/29/2026,07/31/2026,Customer,City,,00000,Canada,3100000068,,online,listing,online_cc,LLP-01
+07/30/2026,Custom Pet Portrait,buyer1547,1,65.00,,,0.00,0,6.00,0,65.00,USD,4200000086,1200002,07/30/2026,08/01/2026,Customer,City,,00000,Canada,3100000069,,online,listing,online_cc,LLP-02
+07/30/2026,Botanical Print A3,buyer0531,1,28.00,FALL10,10% off,2.80,0,0.00,0,25.20,USD,4200000087,1200001,07/30/2026,08/01/2026,Customer,City,,00000,United States,3100000070,,online,listing,online_cc,LLP-01
+07/31/2026,Mountain Sunset Print,buyer5430,2,20.00,,,0.00,0,4.50,0,40.00,USD,4200000088,1200006,07/31/2026,08/02/2026,Customer,City,,00000,United Kingdom,3100000071,,online,listing,online_cc,LLP-06
+08/01/2026,Kids Room Alphabet Poster,buyer3093,1,22.00,,,0.00,0,4.50,0,22.00,USD,4200000089,1200004,08/01/2026,08/03/2026,Customer,City,,00000,France,3100000072,,online,listing,online_cc,LLP-04
+08/01/2026,Custom Pet Portrait,buyer4891,1,65.00,,,0.00,0,6.00,0,65.00,USD,4200000090,1200002,08/01/2026,08/03/2026,Customer,City,,00000,Canada,3100000073,,online,listing,online_cc,LLP-02
+08/01/2026,Gift Card Holder,buyer4891,1,9.00,,,0.00,0,6.00,0,9.00,USD,4200000091,1200007,08/01/2026,08/03/2026,Customer,City,,00000,Canada,3100000073,,online,listing,online_cc,LLP-07
+08/03/2026,Mountain Sunset Print,buyer5466,1,20.00,,,0.00,0,6.00,0,20.00,USD,4200000092,1200006,08/03/2026,08/05/2026,Customer,City,,00000,United States,3100000074,,online,listing,online_cc,LLP-06
+08/05/2026,Wedding Date Print,buyer2387,1,40.00,,,0.00,0,6.00,0,40.00,USD,4200000093,1200005,08/05/2026,08/07/2026,Customer,City,,00000,Germany,3100000075,,online,listing,online_cc,LLP-05
+08/06/2026,Gift Card Holder,buyer2951,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000094,1200007,08/06/2026,08/08/2026,Customer,City,,00000,United States,3100000076,,online,listing,online_cc,LLP-07
+08/06/2026,Botanical Print A4,buyer2951,1,18.00,,,0.00,0,4.50,0,18.00,USD,4200000095,1200000,08/06/2026,08/08/2026,Customer,City,,00000,United States,3100000076,,online,listing,online_cc,LLP-00
+08/07/2026,Mountain Sunset Print,buyer9331,1,20.00,,,0.00,0,0.00,0,20.00,USD,4200000096,1200006,08/07/2026,08/09/2026,Customer,City,,00000,United States,3100000077,,online,listing,online_cc,LLP-06
+08/07/2026,Custom Pet Portrait,buyer8152,1,65.00,,,0.00,0,4.50,0,65.00,USD,4200000097,1200002,08/07/2026,08/09/2026,Customer,City,,00000,United Kingdom,3100000078,,online,listing,online_cc,LLP-02
+08/08/2026,Mountain Sunset Print,buyer1923,1,20.00,,,0.00,0,4.50,0,20.00,USD,4200000098,1200006,08/08/2026,08/10/2026,Customer,City,,00000,Australia,3100000079,,online,listing,online_cc,LLP-06
+08/08/2026,Botanical Print A4,buyer7098,1,18.00,,,0.00,0,4.50,0,18.00,USD,4200000099,1200000,08/08/2026,08/10/2026,Customer,City,,00000,Germany,3100000080,,online,listing,online_cc,LLP-00
+08/10/2026,Botanical Print A3,buyer3919,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000100,1200001,08/10/2026,08/12/2026,Customer,City,,00000,United States,3100000081,,online,listing,online_cc,LLP-01
+08/11/2026,Custom Pet Portrait,buyer6908,1,65.00,,,0.00,0,0.00,0,65.00,USD,4200000101,1200002,08/11/2026,08/13/2026,Customer,City,,00000,United States,3100000082,,online,listing,online_cc,LLP-02
+08/11/2026,Botanical Print A4,buyer4904,1,18.00,,,0.00,0,0.00,0,18.00,USD,4200000102,1200000,08/11/2026,08/13/2026,Customer,City,,00000,United States,3100000083,,online,listing,online_cc,LLP-00
+08/11/2026,Custom Pet Portrait,buyer4904,1,65.00,FALL10,10% off,6.50,0,0.00,0,58.50,USD,4200000103,1200002,08/11/2026,08/13/2026,Customer,City,,00000,United States,3100000083,,online,listing,online_cc,LLP-02
+08/12/2026,Gift Card Holder,buyer3321,1,9.00,,,0.00,0,0.00,0,9.00,USD,4200000104,1200007,08/12/2026,08/14/2026,Customer,City,,00000,United States,3100000084,,online,listing,online_cc,LLP-07
+08/13/2026,Minimalist Line Art Set of 3,buyer3871,1,34.00,,,0.00,0,6.00,0,34.00,USD,4200000105,1200003,08/13/2026,08/15/2026,Customer,City,,00000,United States,3100000085,,online,listing,online_cc,LLP-03
+08/13/2026,Kids Room Alphabet Poster,buyer3871,1,22.00,,,0.00,0,6.00,0,22.00,USD,4200000106,1200004,08/13/2026,08/15/2026,Customer,City,,00000,United States,3100000085,,online,listing,online_cc,LLP-04
+08/15/2026,Kids Room Alphabet Poster,buyer3219,1,22.00,,,0.00,0,0.00,0,22.00,USD,4200000107,1200004,08/15/2026,08/17/2026,Customer,City,,00000,United States,3100000086,,online,listing,online_cc,LLP-04
+08/15/2026,Botanical Print A3,buyer8453,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000108,1200001,08/15/2026,08/17/2026,Customer,City,,00000,Canada,3100000087,,online,listing,online_cc,LLP-01
+08/15/2026,Botanical Print A3,buyer8656,1,28.00,,,0.00,0,4.50,0,28.00,USD,4200000109,1200001,08/15/2026,08/17/2026,Customer,City,,00000,United Kingdom,3100000088,,online,listing,online_cc,LLP-01
+08/16/2026,Minimalist Line Art Set of 3,buyer4573,1,34.00,FALL10,10% off,3.40,0,0.00,0,30.60,USD,4200000110,1200003,08/16/2026,08/18/2026,Customer,City,,00000,United States,3100000089,,online,listing,online_cc,LLP-03
+08/17/2026,Custom Pet Portrait,buyer9110,1,65.00,,,0.00,0,0.00,0,65.00,USD,4200000111,1200002,08/17/2026,08/19/2026,Customer,City,,00000,Germany,3100000090,,online,listing,online_cc,LLP-02
+08/18/2026,Custom Pet Portrait,buyer9963,1,65.00,,,0.00,0,0.00,0,65.00,USD,4200000112,1200002,08/18/2026,08/20/2026,Customer,City,,00000,Germany,3100000091,,online,listing,online_cc,LLP-02
+08/18/2026,Gift Card Holder,buyer0579,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000113,1200007,08/18/2026,08/20/2026,Customer,City,,00000,United States,3100000092,,online,listing,online_cc,LLP-07
+08/19/2026,Gift Card Holder,buyer4309,2,9.00,FALL10,10% off,1.80,0,6.00,0,16.20,USD,4200000114,1200007,08/19/2026,08/21/2026,Customer,City,,00000,United States,3100000093,,online,listing,online_cc,LLP-07
+08/20/2026,Botanical Print A4,buyer5151,1,18.00,,,0.00,0,6.00,0,18.00,USD,4200000115,1200000,08/20/2026,08/22/2026,Customer,City,,00000,United States,3100000094,,online,listing,online_cc,LLP-00
+08/21/2026,Gift Card Holder,buyer9763,1,9.00,FALL10,10% off,0.90,0,6.00,0,8.10,USD,4200000116,1200007,08/21/2026,08/23/2026,Customer,City,,00000,United States,3100000095,,online,listing,online_cc,LLP-07
+08/22/2026,Custom Pet Portrait,buyer7460,1,65.00,,,0.00,0,0.00,0,65.00,USD,4200000117,1200002,08/22/2026,08/24/2026,Customer,City,,00000,United States,3100000096,,online,listing,online_cc,LLP-02
+08/22/2026,Gift Card Holder,buyer1254,2,9.00,,,0.00,0,4.50,0,18.00,USD,4200000118,1200007,08/22/2026,08/24/2026,Customer,City,,00000,United States,3100000097,,online,listing,online_cc,LLP-07
+08/22/2026,Minimalist Line Art Set of 3,buyer7563,1,34.00,,,0.00,0,4.50,0,34.00,USD,4200000119,1200003,08/22/2026,08/24/2026,Customer,City,,00000,United States,3100000098,,online,listing,online_cc,LLP-03
+08/24/2026,Custom Pet Portrait,buyer6438,2,65.00,,,0.00,0,4.50,0,130.00,USD,4200000120,1200002,08/24/2026,08/26/2026,Customer,City,,00000,United States,3100000099,,online,listing,online_cc,LLP-02
+08/25/2026,Gift Card Holder,buyer7743,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000121,1200007,08/25/2026,08/27/2026,Customer,City,,00000,United States,3100000100,,online,listing,online_cc,LLP-07
+08/25/2026,Kids Room Alphabet Poster,buyer4498,1,22.00,,,0.00,0,4.50,0,22.00,USD,4200000122,1200004,08/25/2026,08/27/2026,Customer,City,,00000,United States,3100000101,,online,listing,online_cc,LLP-04
+08/26/2026,Wedding Date Print,buyer3947,1,40.00,,,0.00,0,0.00,0,40.00,USD,4200000123,1200005,08/26/2026,08/28/2026,Customer,City,,00000,United States,3100000102,,online,listing,online_cc,LLP-05
+08/28/2026,Minimalist Line Art Set of 3,buyer0669,1,34.00,,,0.00,0,4.50,0,34.00,USD,4200000124,1200003,08/28/2026,08/30/2026,Customer,City,,00000,United States,3100000103,,online,listing,online_cc,LLP-03
+08/29/2026,Gift Card Holder,buyer6177,1,9.00,,,0.00,0,6.00,0,9.00,USD,4200000125,1200007,08/29/2026,08/31/2026,Customer,City,,00000,United Kingdom,3100000104,,online,listing,online_cc,LLP-07
+08/30/2026,Minimalist Line Art Set of 3,buyer0667,1,34.00,,,0.00,0,0.00,0,34.00,USD,4200000126,1200003,08/30/2026,09/01/2026,Customer,City,,00000,United States,3100000105,,online,listing,online_cc,LLP-03
+08/31/2026,Wedding Date Print,buyer2001,2,40.00,,,0.00,0,6.00,0,80.00,USD,4200000127,1200005,08/31/2026,09/02/2026,Customer,City,,00000,Australia,3100000106,,online,listing,online_cc,LLP-05
+08/31/2026,Botanical Print A4,buyer6281,2,18.00,,,0.00,0,4.50,0,36.00,USD,4200000128,1200000,08/31/2026,09/02/2026,Customer,City,,00000,United States,3100000107,,online,listing,online_cc,LLP-00
+09/01/2026,Wedding Date Print,buyer2471,1,40.00,,,0.00,0,4.50,0,40.00,USD,4200000129,1200005,09/01/2026,09/03/2026,Customer,City,,00000,United Kingdom,3100000108,,online,listing,online_cc,LLP-05
+09/01/2026,Botanical Print A3,buyer4457,1,28.00,,,0.00,0,4.50,0,28.00,USD,4200000130,1200001,09/01/2026,09/03/2026,Customer,City,,00000,United States,3100000109,,online,listing,online_cc,LLP-01
+09/03/2026,Custom Pet Portrait,buyer6299,1,65.00,,,0.00,0,4.50,0,65.00,USD,4200000131,1200002,09/03/2026,09/05/2026,Customer,City,,00000,United States,3100000110,,online,listing,online_cc,LLP-02
+09/03/2026,Wedding Date Print,buyer6299,2,40.00,,,0.00,0,4.50,0,80.00,USD,4200000132,1200005,09/03/2026,09/05/2026,Customer,City,,00000,United States,3100000110,,online,listing,online_cc,LLP-05
+09/04/2026,Mountain Sunset Print,buyer2226,1,20.00,,,0.00,0,0.00,0,20.00,USD,4200000133,1200006,09/04/2026,09/06/2026,Customer,City,,00000,Canada,3100000111,,online,listing,online_cc,LLP-06
+09/04/2026,Minimalist Line Art Set of 3,buyer2226,1,34.00,,,0.00,0,0.00,0,34.00,USD,4200000134,1200003,09/04/2026,09/06/2026,Customer,City,,00000,Canada,3100000111,,online,listing,online_cc,LLP-03
+09/05/2026,Botanical Print A3,buyer9188,2,28.00,,,0.00,0,6.00,0,56.00,USD,4200000135,1200001,09/05/2026,09/07/2026,Customer,City,,00000,United States,3100000112,,online,listing,online_cc,LLP-01
+09/09/2026,Kids Room Alphabet Poster,buyer8749,1,22.00,,,0.00,0,4.50,0,22.00,USD,4200000136,1200004,09/09/2026,09/11/2026,Customer,City,,00000,United States,3100000113,,online,listing,online_cc,LLP-04
+09/10/2026,Kids Room Alphabet Poster,buyer8395,1,22.00,,,0.00,0,4.50,0,22.00,USD,4200000137,1200004,09/10/2026,09/12/2026,Customer,City,,00000,Canada,3100000114,,online,listing,online_cc,LLP-04
+09/10/2026,Botanical Print A4,buyer8395,2,18.00,FALL10,10% off,3.60,0,4.50,0,32.40,USD,4200000138,1200000,09/10/2026,09/12/2026,Customer,City,,00000,Canada,3100000114,,online,listing,online_cc,LLP-00
+09/10/2026,Wedding Date Print,buyer5470,2,40.00,,,0.00,0,0.00,0,80.00,USD,4200000139,1200005,09/10/2026,09/12/2026,Customer,City,,00000,United Kingdom,3100000115,,online,listing,online_cc,LLP-05
+09/11/2026,Custom Pet Portrait,buyer3291,1,65.00,,,0.00,0,0.00,0,65.00,USD,4200000140,1200002,09/11/2026,09/13/2026,Customer,City,,00000,Canada,3100000116,,online,listing,online_cc,LLP-02
+09/12/2026,Mountain Sunset Print,buyer2274,1,20.00,,,0.00,0,4.50,0,20.00,USD,4200000141,1200006,09/12/2026,09/14/2026,Customer,City,,00000,United Kingdom,3100000117,,online,listing,online_cc,LLP-06
+09/13/2026,Gift Card Holder,buyer6119,1,9.00,,,0.00,0,0.00,0,9.00,USD,4200000142,1200007,09/13/2026,09/15/2026,Customer,City,,00000,United States,3100000118,,online,listing,online_cc,LLP-07
+09/13/2026,Custom Pet Portrait,buyer6380,1,65.00,,,0.00,0,6.00,0,65.00,USD,4200000143,1200002,09/13/2026,09/15/2026,Customer,City,,00000,United Kingdom,3100000119,,online,listing,online_cc,LLP-02
+09/14/2026,Wedding Date Print,buyer4427,1,40.00,FALL10,10% off,4.00,0,0.00,0,36.00,USD,4200000144,1200005,09/14/2026,09/16/2026,Customer,City,,00000,United States,3100000120,,online,listing,online_cc,LLP-05
+09/14/2026,Kids Room Alphabet Poster,buyer0840,1,22.00,FALL10,10% off,2.20,0,6.00,0,19.80,USD,4200000145,1200004,09/14/2026,09/16/2026,Customer,City,,00000,United States,3100000121,,online,listing,online_cc,LLP-04
+09/16/2026,Mountain Sunset Print,buyer0945,1,20.00,,,0.00,0,6.00,0,20.00,USD,4200000146,1200006,09/16/2026,09/18/2026,Customer,City,,00000,United States,3100000122,,online,listing,online_cc,LLP-06
+09/16/2026,Gift Card Holder,buyer0770,1,9.00,FALL10,10% off,0.90,0,6.00,0,8.10,USD,4200000147,1200007,09/16/2026,09/18/2026,Customer,City,,00000,Australia,3100000123,,online,listing,online_cc,LLP-07
+09/16/2026,Kids Room Alphabet Poster,buyer0770,1,22.00,,,0.00,0,6.00,0,22.00,USD,4200000148,1200004,09/16/2026,09/18/2026,Customer,City,,00000,Australia,3100000123,,online,listing,online_cc,LLP-04
+09/16/2026,Wedding Date Print,buyer8639,1,40.00,,,0.00,0,0.00,0,40.00,USD,4200000149,1200005,09/16/2026,09/18/2026,Customer,City,,00000,United States,3100000124,,online,listing,online_cc,LLP-05
+09/17/2026,Mountain Sunset Print,buyer0385,1,20.00,FALL10,10% off,2.00,0,4.50,0,18.00,USD,4200000150,1200006,09/17/2026,09/19/2026,Customer,City,,00000,Germany,3100000125,,online,listing,online_cc,LLP-06
+09/19/2026,Wedding Date Print,buyer1543,1,40.00,,,0.00,0,6.00,0,40.00,USD,4200000151,1200005,09/19/2026,09/21/2026,Customer,City,,00000,United States,3100000126,,online,listing,online_cc,LLP-05
+09/20/2026,Wedding Date Print,buyer2988,1,40.00,FALL10,10% off,4.00,0,4.50,0,36.00,USD,4200000152,1200005,09/20/2026,09/22/2026,Customer,City,,00000,United States,3100000127,,online,listing,online_cc,LLP-05
+09/21/2026,Botanical Print A3,buyer5268,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000153,1200001,09/21/2026,09/23/2026,Customer,City,,00000,Australia,3100000128,,online,listing,online_cc,LLP-01
+09/23/2026,Botanical Print A4,buyer6196,2,18.00,FALL10,10% off,3.60,0,0.00,0,32.40,USD,4200000154,1200000,09/23/2026,09/25/2026,Customer,City,,00000,United States,3100000129,,online,listing,online_cc,LLP-00
+09/23/2026,Botanical Print A3,buyer7426,1,28.00,,,0.00,0,0.00,0,28.00,USD,4200000155,1200001,09/23/2026,09/25/2026,Customer,City,,00000,United Kingdom,3100000130,,online,listing,online_cc,LLP-01
+09/23/2026,Botanical Print A4,buyer7401,1,18.00,,,0.00,0,6.00,0,18.00,USD,4200000156,1200000,09/23/2026,09/25/2026,Customer,City,,00000,United States,3100000131,,online,listing,online_cc,LLP-00
+09/24/2026,Gift Card Holder,buyer6588,1,9.00,,,0.00,0,6.00,0,9.00,USD,4200000157,1200007,09/24/2026,09/26/2026,Customer,City,,00000,United Kingdom,3100000132,,online,listing,online_cc,LLP-07
+09/26/2026,Kids Room Alphabet Poster,buyer1063,1,22.00,FALL10,10% off,2.20,0,4.50,0,19.80,USD,4200000158,1200004,09/26/2026,09/28/2026,Customer,City,,00000,United States,3100000133,,online,listing,online_cc,LLP-04
+09/26/2026,Mountain Sunset Print,buyer8013,1,20.00,,,0.00,0,0.00,0,20.00,USD,4200000159,1200006,09/26/2026,09/28/2026,Customer,City,,00000,United States,3100000134,,online,listing,online_cc,LLP-06
+09/27/2026,Botanical Print A3,buyer5995,1,28.00,,,0.00,0,0.00,0,28.00,USD,4200000160,1200001,09/27/2026,09/29/2026,Customer,City,,00000,Canada,3100000135,,online,listing,online_cc,LLP-01
+09/27/2026,Mountain Sunset Print,buyer5995,1,20.00,,,0.00,0,0.00,0,20.00,USD,4200000161,1200006,09/27/2026,09/29/2026,Customer,City,,00000,Canada,3100000135,,online,listing,online_cc,LLP-06
+09/28/2026,Minimalist Line Art Set of 3,buyer5184,2,34.00,,,0.00,0,6.00,0,68.00,USD,4200000162,1200003,09/28/2026,09/30/2026,Customer,City,,00000,United States,3100000136,,online,listing,online_cc,LLP-03
+09/29/2026,Minimalist Line Art Set of 3,buyer3434,1,34.00,FALL10,10% off,3.40,0,6.00,0,30.60,USD,4200000163,1200003,09/29/2026,10/01/2026,Customer,City,,00000,United Kingdom,3100000137,,online,listing,online_cc,LLP-03
+10/01/2026,Minimalist Line Art Set of 3,buyer5904,2,34.00,,,0.00,0,6.00,0,68.00,USD,4200000164,1200003,10/01/2026,10/03/2026,Customer,City,,00000,United States,3100000138,,online,listing,online_cc,LLP-03
+10/01/2026,Wedding Date Print,buyer5904,1,40.00,,,0.00,0,6.00,0,40.00,USD,4200000165,1200005,10/01/2026,10/03/2026,Customer,City,,00000,United States,3100000138,,online,listing,online_cc,LLP-05
+10/03/2026,Botanical Print A3,buyer1281,1,28.00,,,0.00,0,4.50,0,28.00,USD,4200000166,1200001,10/03/2026,10/05/2026,Customer,City,,00000,United States,3100000139,,online,listing,online_cc,LLP-01
+10/04/2026,Kids Room Alphabet Poster,buyer7224,1,22.00,,,0.00,0,6.00,0,22.00,USD,4200000167,1200004,10/04/2026,10/06/2026,Customer,City,,00000,United States,3100000140,,online,listing,online_cc,LLP-04
+10/06/2026,Botanical Print A3,buyer1630,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000168,1200001,10/06/2026,10/08/2026,Customer,City,,00000,United States,3100000141,,online,listing,online_cc,LLP-01
+10/06/2026,Botanical Print A4,buyer2552,1,18.00,,,0.00,0,6.00,0,18.00,USD,4200000169,1200000,10/06/2026,10/08/2026,Customer,City,,00000,United States,3100000142,,online,listing,online_cc,LLP-00
+10/07/2026,Minimalist Line Art Set of 3,buyer8870,1,34.00,,,0.00,0,6.00,0,34.00,USD,4200000170,1200003,10/07/2026,10/09/2026,Customer,City,,00000,France,3100000143,,online,listing,online_cc,LLP-03
+10/08/2026,Wedding Date Print,buyer8448,1,40.00,,,0.00,0,0.00,0,40.00,USD,4200000171,1200005,10/08/2026,10/10/2026,Customer,City,,00000,France,3100000144,,online,listing,online_cc,LLP-05
+10/09/2026,Botanical Print A3,buyer7679,1,28.00,,,0.00,0,4.50,0,28.00,USD,4200000172,1200001,10/09/2026,10/11/2026,Customer,City,,00000,Canada,3100000145,,online,listing,online_cc,LLP-01
+10/11/2026,Botanical Print A3,buyer9305,1,28.00,,,0.00,0,0.00,0,28.00,USD,4200000173,1200001,10/11/2026,10/13/2026,Customer,City,,00000,Canada,3100000146,,online,listing,online_cc,LLP-01
+10/13/2026,Botanical Print A3,buyer2537,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000174,1200001,10/13/2026,10/15/2026,Customer,City,,00000,United States,3100000147,,online,listing,online_cc,LLP-01
+10/13/2026,Botanical Print A3,buyer6170,1,28.00,,,0.00,0,6.00,0,28.00,USD,4200000175,1200001,10/13/2026,10/15/2026,Customer,City,,00000,Canada,3100000148,,online,listing,online_cc,LLP-01
+10/13/2026,Botanical Print A4,buyer6819,1,18.00,,,0.00,0,4.50,0,18.00,USD,4200000176,1200000,10/13/2026,10/15/2026,Customer,City,,00000,France,3100000149,,online,listing,online_cc,LLP-00
+10/14/2026,Custom Pet Portrait,buyer8208,2,65.00,FALL10,10% off,13.00,0,6.00,0,117.00,USD,4200000177,1200002,10/14/2026,10/16/2026,Customer,City,,00000,France,3100000150,,online,listing,online_cc,LLP-02
+10/14/2026,Gift Card Holder,buyer5874,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000178,1200007,10/14/2026,10/16/2026,Customer,City,,00000,United States,3100000151,,online,listing,online_cc,LLP-07
+10/16/2026,Wedding Date Print,buyer7931,2,40.00,,,0.00,0,4.50,0,80.00,USD,4200000179,1200005,10/16/2026,10/18/2026,Customer,City,,00000,United States,3100000152,,online,listing,online_cc,LLP-05
+10/17/2026,Minimalist Line Art Set of 3,buyer9799,1,34.00,,,0.00,0,4.50,0,34.00,USD,4200000180,1200003,10/17/2026,10/19/2026,Customer,City,,00000,United Kingdom,3100000153,,online,listing,online_cc,LLP-03
+10/19/2026,Kids Room Alphabet Poster,buyer6118,1,22.00,,,0.00,0,4.50,0,22.00,USD,4200000181,1200004,10/19/2026,10/21/2026,Customer,City,,00000,Australia,3100000154,,online,listing,online_cc,LLP-04
+10/19/2026,Custom Pet Portrait,buyer4678,1,65.00,FALL10,10% off,6.50,0,0.00,0,58.50,USD,4200000182,1200002,10/19/2026,10/21/2026,Customer,City,,00000,United States,3100000155,,online,listing,online_cc,LLP-02
+10/20/2026,Botanical Print A4,buyer7851,1,18.00,,,0.00,0,6.00,0,18.00,USD,4200000183,1200000,10/20/2026,10/22/2026,Customer,City,,00000,Germany,3100000156,,online,listing,online_cc,LLP-00
+10/20/2026,Custom Pet Portrait,buyer7335,1,65.00,,,0.00,0,4.50,0,65.00,USD,4200000184,1200002,10/20/2026,10/22/2026,Customer,City,,00000,Canada,3100000157,,online,listing,online_cc,LLP-02
+10/20/2026,Botanical Print A3,buyer6508,1,28.00,,,0.00,0,0.00,0,28.00,USD,4200000185,1200001,10/20/2026,10/22/2026,Customer,City,,00000,United States,3100000158,,online,listing,online_cc,LLP-01
+10/20/2026,Wedding Date Print,buyer6508,1,40.00,,,0.00,0,0.00,0,40.00,USD,4200000186,1200005,10/20/2026,10/22/2026,Customer,City,,00000,United States,3100000158,,online,listing,online_cc,LLP-05
+10/21/2026,Mountain Sunset Print,buyer8101,1,20.00,,,0.00,0,0.00,0,20.00,USD,4200000187,1200006,10/21/2026,10/23/2026,Customer,City,,00000,United States,3100000159,,online,listing,online_cc,LLP-06
+10/21/2026,Wedding Date Print,buyer0242,1,40.00,,,0.00,0,0.00,0,40.00,USD,4200000188,1200005,10/21/2026,10/23/2026,Customer,City,,00000,Canada,3100000160,,online,listing,online_cc,LLP-05
+10/22/2026,Mountain Sunset Print,buyer1482,1,20.00,,,0.00,0,4.50,0,20.00,USD,4200000189,1200006,10/22/2026,10/24/2026,Customer,City,,00000,Canada,3100000161,,online,listing,online_cc,LLP-06
+10/24/2026,Botanical Print A3,buyer2945,2,28.00,,,0.00,0,6.00,0,56.00,USD,4200000190,1200001,10/24/2026,10/26/2026,Customer,City,,00000,United Kingdom,3100000162,,online,listing,online_cc,LLP-01
+10/24/2026,Kids Room Alphabet Poster,buyer2462,1,22.00,,,0.00,0,6.00,0,22.00,USD,4200000191,1200004,10/24/2026,10/26/2026,Customer,City,,00000,Canada,3100000163,,online,listing,online_cc,LLP-04
+10/26/2026,Minimalist Line Art Set of 3,buyer9992,1,34.00,,,0.00,0,6.00,0,34.00,USD,4200000192,1200003,10/26/2026,10/28/2026,Customer,City,,00000,United States,3100000164,,online,listing,online_cc,LLP-03
+10/26/2026,Kids Room Alphabet Poster,buyer4338,1,22.00,,,0.00,0,6.00,0,22.00,USD,4200000193,1200004,10/26/2026,10/28/2026,Customer,City,,00000,United States,3100000165,,online,listing,online_cc,LLP-04
+10/27/2026,Kids Room Alphabet Poster,buyer2494,2,22.00,,,0.00,0,6.00,0,44.00,USD,4200000194,1200004,10/27/2026,10/29/2026,Customer,City,,00000,United States,3100000166,,online,listing,online_cc,LLP-04
+10/28/2026,Kids Room Alphabet Poster,buyer0891,1,22.00,,,0.00,0,4.50,0,22.00,USD,4200000195,1200004,10/28/2026,10/30/2026,Customer,City,,00000,Canada,3100000167,,online,listing,online_cc,LLP-04
+10/29/2026,Kids Room Alphabet Poster,buyer5715,2,22.00,FALL10,10% off,4.40,0,6.00,0,39.60,USD,4200000196,1200004,10/29/2026,10/31/2026,Customer,City,,00000,United States,3100000168,,online,listing,online_cc,LLP-04
+10/30/2026,Botanical Print A3,buyer5068,1,28.00,FALL10,10% off,2.80,0,4.50,0,25.20,USD,4200000197,1200001,10/30/2026,11/01/2026,Customer,City,,00000,United States,3100000169,,online,listing,online_cc,LLP-01
+10/30/2026,Gift Card Holder,buyer5068,1,9.00,,,0.00,0,4.50,0,9.00,USD,4200000198,1200007,10/30/2026,11/01/2026,Customer,City,,00000,United States,3100000169,,online,listing,online_cc,LLP-07
+10/30/2026,Custom Pet Portrait,buyer8630,1,65.00,,,0.00,0,0.00,0,65.00,USD,4200000199,1200002,10/30/2026,11/01/2026,Customer,City,,00000,United States,3100000170,,online,listing,online_cc,LLP-02

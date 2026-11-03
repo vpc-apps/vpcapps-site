@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etsy profit calculator from your Etsy CSV files · VPC Apps</title>
+<meta name="description" content="Free Etsy profit calculator: drop your Order Items and statement CSVs to see true profit after every Etsy fee, ads and refunds. Files never leave your device.">
+<link rel="canonical" href="https://vpcapps.net/tools/etsy-profit-dashboard/">
+<meta property="og:site_name" content="VPC Apps">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Etsy profit calculator from your Etsy CSV files">
+<meta property="og:description" content="Free Etsy profit calculator: drop your Order Items and statement CSVs to see true profit after every Etsy fee, ads and refunds. Files never leave your device.">
+<meta property="og:url" content="https://vpcapps.net/tools/etsy-profit-dashboard/">
+<meta property="og:image" content="https://vpcapps.net/assets/img/tools/etsy-og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ff5a8a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+<link rel="manifest" href="/tools/manifest.webmanifest">
+<link rel="preload" href="/assets/fonts/fredoka.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script src="/assets/js/site.js" defer></script>
+<script>(function(){var framed;try{framed=window.top!==window.self;}catch(e){framed=true;}
+if(!framed)return;var ok=false;try{ok=window.top.location.host===location.host;}catch(e){}
+if(ok)return;document.write('<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fdf1e7;font:16px system-ui,sans-serif;color:#2b2140;text-align:center;z-index:2147483647">'+
+'<div style="padding:24px"><p style="font-size:20px;font-weight:700;margin:0 0 8px">Use Export to Dashboard free on vpcapps.net</p>'+
+'<p style="margin:0 0 18px;color:#6b5f80">This tool by VPC Apps runs on its own page:<br><b>'+location.host+location.pathname+'</b></p>'+
+'<a href="'+location.href.replace(/"/g,'%22')+'" target="_top" rel="noopener" style="display:inline-block;background:#e2495f;color:#fff;padding:12px 20px;border-radius:12px;text-decoration:none;font-weight:700">Open the tool</a></div></div>'+
+'<plaintext style="display:none">');})();</script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('/tools/sw.js').catch(function(){})});</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Etsy profit dashboard", "description": "Free Etsy profit calculator: drop your Order Items and statement CSVs to see true profit after every Etsy fee, ads and refunds. Files never leave your device.", "url": "https://vpcapps.net/tools/etsy-profit-dashboard/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (web browser)", "image": "https://vpcapps.net/assets/img/tools/etsy-og.jpg", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "VPC Apps", "url": "https://vpcapps.net"}, "featureList": ["True profit after Etsy fees, Etsy Ads, refunds, shipping labels and your own product cost (enter it once as a % of sales).", "\"Where the money goes\": sales split into fees, ads, shipping, refunds, product cost and what you keep.", "Etsy fees and costs by type, so you can see what transaction, processing and listing fees really cost you.", "Best-selling items, sales by month and sales by buyer country (from the Order Items CSV).", "Works with either file alone; both together give the full picture. A one-file HTML summary or PDF to keep with your records."]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which Etsy files do I need?", "acceptedAnswer": {"@type": "Answer", "text": "The Order Items CSV (what you sold) and the monthly payments statement CSV (what Etsy charged and paid). Either one works alone; with both you get sales, fees and profit together."}}, {"@type": "Question", "name": "How is true profit calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Sales, minus every fee and cost line in your Etsy statement (transaction, processing, listing and other Etsy fees, Etsy Ads, shipping labels, refunds), minus the product cost you enter as a % of sales."}}, {"@type": "Question", "name": "Do I have to connect my Etsy shop?", "acceptedAnswer": {"@type": "Answer", "text": "No. There is no login and no shop connection. You download the CSVs from Etsy yourself and the numbers are worked out in your browser. Nothing is uploaded."}}, {"@type": "Question", "name": "Does it work for any country and currency?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It uses the amounts in your files as they are, so the fees match what Etsy actually charged your shop, whatever your country."}}, {"@type": "Question", "name": "Is there a limit?", "acceptedAnswer": {"@type": "Answer", "text": "The free version reads the first 5,000 rows of each file, which covers a year of orders for most small shops."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://vpcapps.net/"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://vpcapps.net/tools/"}, {"@type": "ListItem", "position": 3, "name": "Etsy profit dashboard", "item": "https://vpcapps.net/tools/etsy-profit-dashboard/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></a>
+    <nav aria-label="Main"><ul><li><a href="/games/">Games</a></li><li><a href="/tools/" aria-current="page">Tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
+    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
+  </div>
+</header>
+<main id="main">
+<nav class="wrap crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/tools/">Tools</a> › <span>Etsy profit dashboard</span></nav>
+<section class="wrap section tool-head">
+  <h1>See your true Etsy profit from your own CSV files</h1>
+  <p class="lead">Download your Etsy Order Items CSV and your monthly payments statement CSV, drop them here and see what you really keep after transaction, processing, listing and ad fees, refunds and shipping labels, plus your best sellers and sales by month. No spreadsheet formulas, no account linking.</p>
+  <p class="tags"><span class="tag">Free</span><span class="tag">No upload, no account</span><span class="tag">Works offline</span></p>
+</section>
+<section class="wrap section" id="try" aria-label="Etsy profit dashboard tool">
+  <iframe class="e8-frame" src="/tools/app/?t=etsy&amp;embed=1" title="Etsy profit dashboard tool"></iframe>
+  <p class="player-links"><a href="/tools/app/?t=etsy">Open full screen ↗</a> · <a href="/tools/app/samples/etsy_order_items_sample.csv" download>Download the sample CSV</a> (synthetic data)</p>
+</section>
+<section class="wrap section split">
+  <div><h2>What you get</h2><ul class="checks"><li>True profit after Etsy fees, Etsy Ads, refunds, shipping labels and your own product cost (enter it once as a % of sales).</li><li>&quot;Where the money goes&quot;: sales split into fees, ads, shipping, refunds, product cost and what you keep.</li><li>Etsy fees and costs by type, so you can see what transaction, processing and listing fees really cost you.</li><li>Best-selling items, sales by month and sales by buyer country (from the Order Items CSV).</li><li>Works with either file alone; both together give the full picture. A one-file HTML summary or PDF to keep with your records.</li></ul></div>
+  <figure class="shot"><img src="/assets/img/tools/etsy-1280.webp" alt="Example Etsy profit dashboard dashboard made from the sample file" width="1280" height="800" loading="lazy">
+  <figcaption class="muted small">Made from the sample file (synthetic data).</figcaption></figure>
+</section>
+<section class="wrap section narrow"><h2>How to export the file</h2><ol class="steps"><li>Order Items: in <b>Shop Manager → Settings → Options → Download Data</b>, choose <b>Orders: Order Items</b>, pick the month or year and <b>Download CSV</b>.</li><li>Payments statement: in <b>Shop Manager → Finances → Monthly statements</b>, choose a month and <b>Download CSV</b>.</li><li>Drop one or both files above (or add the second one later with "Add the other Etsy file").</li><li>Type your average product cost as a % of sales to see profit after materials.</li></ol></section>
+<section class="wrap section narrow">
+  <div class="panel"><h2>Your file never leaves your device</h2><p>The tool is a web page that runs entirely in your browser. When you choose a file, it is read and analysed on your computer: nothing is uploaded, stored or seen by us. After your first visit it also works with no internet connection. See our <a href="/privacy/">privacy policy</a>.</p></div>
+  
+</section>
+<section class="wrap section narrow faq"><h2>Questions</h2><details><summary>Which Etsy files do I need?</summary><p>The Order Items CSV (what you sold) and the monthly payments statement CSV (what Etsy charged and paid). Either one works alone; with both you get sales, fees and profit together.</p></details><details><summary>How is true profit calculated?</summary><p>Sales, minus every fee and cost line in your Etsy statement (transaction, processing, listing and other Etsy fees, Etsy Ads, shipping labels, refunds), minus the product cost you enter as a % of sales.</p></details><details><summary>Do I have to connect my Etsy shop?</summary><p>No. There is no login and no shop connection. You download the CSVs from Etsy yourself and the numbers are worked out in your browser. Nothing is uploaded.</p></details><details><summary>Does it work for any country and currency?</summary><p>Yes. It uses the amounts in your files as they are, so the fees match what Etsy actually charged your shop, whatever your country.</p></details><details><summary>Is there a limit?</summary><p>The free version reads the first 5,000 rows of each file, which covers a year of orders for most small shops.</p></details></section>
+<section class="wrap section narrow"><p class="muted">More free tools: <a href="/tools/jira-csv-dashboard/">Jira CSV to dashboard</a> · <a href="/tools/attendance-report-analyzer/">Attendance report analyzer</a> · <a href="/tools/">all tools</a></p></section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="28" height="28"><span>VPC Apps</span></a>
+      <p class="muted">Bite-size puzzle games for your phone and your browser.</p></div>
+      <ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
+      <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
+    </div>
+    <p class="muted small">© 2026 VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+</footer>
+</body>
+</html>

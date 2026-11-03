@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://vpcapps.net/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://vpcapps.net/</loc><lastmod>2026-11-03</lastmod></url>
   <url><loc>https://vpcapps.net/games/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://vpcapps.net/games/balloon-domino/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://vpcapps.net/games/shuriken-ricochet/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://vpcapps.net/games/lantern-chain/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://vpcapps.net/games/pop-pairs/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://vpcapps.net/games/target-tiles/</loc><lastmod>2026-11-01</lastmod></url>
-  <url><loc>https://vpcapps.net/apps/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://vpcapps.net/tools/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://vpcapps.net/tools/jira-csv-dashboard/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://vpcapps.net/tools/etsy-profit-dashboard/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://vpcapps.net/tools/attendance-report-analyzer/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://vpcapps.net/apps/</loc><lastmod>2026-11-03</lastmod></url>
   <url><loc>https://vpcapps.net/about/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://vpcapps.net/contact/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://vpcapps.net/press/</loc><lastmod>2026-11-01</lastmod></url>
-  <url><loc>https://vpcapps.net/privacy/</loc><lastmod>2026-11-01</lastmod></url>
-  <url><loc>https://vpcapps.net/terms/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://vpcapps.net/privacy/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://vpcapps.net/terms/</loc><lastmod>2026-10-31</lastmod></url>
   <url><loc>https://vpcapps.net/balloon-domino/privacy.html</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://vpcapps.net/lantern-chain/privacy.html</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://vpcapps.net/play/balloon-domino/data-deletion.html</loc><lastmod>2026-11-01</lastmod></url>

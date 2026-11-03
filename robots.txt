@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /tools/*.py
+Disallow: /tools/page_dates.json
 
 Sitemap: https://vpcapps.net/sitemap.xml

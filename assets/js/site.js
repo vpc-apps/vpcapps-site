@@ -33,4 +33,12 @@
       if (location.hash === '#play' && matchMedia('(min-width: 700px)').matches) start();
     });
   });
+
+  // Free tools: the embedded app (same origin) reports its height; the frame grows with the dashboard.
+  window.addEventListener('message', function (e) {
+    if (e.origin !== location.origin || !e.data || !e.data.e8height) return;
+    document.querySelectorAll('.e8-frame').forEach(function (f) {
+      if (f.contentWindow === e.source) f.style.height = Math.max(380, e.data.e8height) + 'px';
+    });
+  });
 })();
