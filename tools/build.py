@@ -148,6 +148,37 @@ def font():
     shutil.copyfile(os.path.join(src, 'Fredoka-OFL.txt'), os.path.join(d, 'Fredoka-OFL.txt'))
 
 
+# Demo pages may only run on vpcapps.net. Another site that frames them (seen 11-03: a site
+# running AdSense around our Balloon Domino demo) gets a card linking to our page instead.
+FRAME_GUARD = """<script>(function(){var framed;try{framed=window.top!==window.self;}catch(e){framed=true;}
+if(!framed)return;var ok=false;try{ok=/(^|\.)vpcapps\.net$/.test(new URL(document.referrer).hostname);}catch(e){}
+if(ok)return;var t=(document.title||'this game').replace(/</g,'&lt;');
+document.write('<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fdf1e7;font:16px system-ui,sans-serif;color:#2b2140;text-align:center;z-index:2147483647">'+
+'<div style="padding:24px"><p style="font-size:20px;font-weight:700;margin:0 0 8px">Play '+t+' free on vpcapps.net</p>'+
+'<p style="margin:0 0 18px;color:#6b5f80">This game is published by VPC Apps and runs on its own page.</p>'+
+'<a href="'+location.href.replace(/"/g,'%22')+'" target="_top" rel="noopener" style="display:inline-block;background:#e2495f;color:#fff;padding:12px 20px;border-radius:12px;text-decoration:none;font-weight:700">Open the game</a></div></div>'+
+'<plaintext style="display:none">');})();</script>"""
+
+
+def guard_frames(path):
+    """Puts FRAME_GUARD first in <head> of a hosted game page (idempotent)."""
+    with open(path, encoding='utf-8') as f:
+        html = f.read()
+    k = html.find('This game is published by VPC Apps')
+    if k >= 0:  # replace an older guard
+        a = html.rfind('<script>', 0, k); b = html.find('</script>', k) + len('</script>')
+        html = html[:a].rstrip('\n') + html[b:]
+    i = html.lower().find('<head>')
+    if i < 0:
+        return
+    i += len('<head>')
+    m = re.search(r'<title>(.*?)</title>', html, re.S)  # the guard runs before <title> is parsed
+    name = (m.group(1).strip() if m else 'this game').replace("'", ' ').replace('<', '')
+    html = html[:i] + '\n' + FRAME_GUARD.replace("(document.title||'this game')", "('" + name + "')") + html[i:]
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(html)
+
+
 def import_games():
     """Hosted builds: Phaser website targets from APPs, the Pop Pairs JS demo from the old site."""
     for g in GAMES:
@@ -167,6 +198,7 @@ def import_games():
         for f, data in keep.items():
             with open(os.path.join(dest, f), 'wb') as fh:
                 fh.write(data)
+        guard_frames(os.path.join(dest, 'index.html'))
         print(f'game build: {os.path.relpath(src, os.path.dirname(ROOT))} -> play/{g["slug"]}/')
 
 

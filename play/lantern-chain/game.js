@@ -382,6 +382,10 @@ attach: function (game) {
 muted = VPC.Save.get('muted', false);
 musicOn = VPC.Save.get('music', true);
 ac();
+if (ctx && !blurred) {
+if (ctx.state === 'running') unlock();
+else ctx.resume().then(function () { if (!unlocked && ctx.state === 'running') unlock(); }).catch(function () {});
+}
 var unlockOnce = function () { unlock(); };
 window.addEventListener('pointerdown', unlockOnce, true);
 window.addEventListener('keydown', unlockOnce, true);
@@ -867,6 +871,94 @@ roundRect: roundRect,
 };
 })();
 'use strict';
+VPC.DailyUnlock = (function () {
+var cfg = {
+unlocked: function () { return false; },      // the Daily is open
+daily: function () { return { doneToday: false, streak: 0 }; },
+milestones: [],                                 // [{ day, hints, badge }]
+lockedNote: 'Clear level 5 to unlock',          // string or function
+saveKey: 'daily_card',
+label: 'Daily Challenge', goal: 'DAILY CHALLENGE UNLOCKED!',
+title: 'DAILY CHALLENGE\nUNLOCKED!', blurb: 'A new puzzle every day. Solve it to grow your streak.',
+badgeWord: 'badge', play: 'Play Daily', next: 'Next level',
+titleInk: '#FFFFFF', titleGlow: null, blurbInk: '#666666', headInk: '#FF4F87', dayInk: '#C98A00', rewardInk: '#222222',
+goalInk: '#FFD34D', icon: 0xFFC23D, cardOpts: {}, noteInk: '#666666',
+};
+var api = {
+setup: function (o) { Object.assign(cfg, o); return api; },
+get cfg() { return cfg; },
+get unlocked() { return !!cfg.unlocked(); },
+get seen() { return VPC.Save.get(cfg.saveKey, false); },
+markSeen: function () { VPC.Save.set(cfg.saveKey, true); },
+/** The card is still owed: the Daily is open and the card was never shown. */
+get pending() { return api.unlocked && !api.seen; },
+/** Call before recording a win; the returned function says whether that win opened the Daily. */
+watch: function () {
+var was = api.unlocked;
+return function () { return !was && api.unlocked; };
+},
+get goal() { return cfg.goal; },
+/** The Daily Challenge button: locked (lock icon) until it opens, then the streak badge. */
+button: function (scene, w, h, fontSize, onPress, extra) {
+var on = api.unlocked, d = cfg.daily();
+return VPC.UI.button(scene, Object.assign({
+label: cfg.label, icon: on ? 'calendar' : 'lock', w: w, h: h, fontSize: fontSize, enabled: on,
+badge: on ? (d.doneToday ? 'DONE' : d.streak > 0 ? d.streak + ' DAY' + (d.streak > 1 ? 'S' : '') : 'NEW') : '',
+onPress: onPress,
+}, extra || {}));
+},
+/** The line under a locked button ('' once open). */
+note: function (scene, fontSize) {
+var t = api.unlocked ? '' : typeof cfg.lockedNote === 'function' ? cfg.lockedNote() : cfg.lockedNote;
+return VPC.UI.text(scene, 0, 0, t, fontSize || 15, cfg.noteInk, { weight: '600' });
+},
+/**
+* The one-time card. Marks it seen. Returns the UI.card with .dailyUnlock,
+* .primary (Play Daily, for Enter) and .btnLevel (Next level).
+*/
+card: function (scene, onPlay, onNext) {
+var UI = VPC.UI;
+api.markSeen();
+var card = UI.card(scene, 330, function (card, u) {
+var p = card.panel, y = 46 * u;
+var cal = scene.add.image(0, y, 'vpc-icon-calendar').setTint(cfg.icon).setDisplaySize(64 * u, 64 * u);
+p.add(cal);
+VPC.Juice.popIn(scene, cal, 150, cal.scaleX);
+y += 58 * u;
+var glow = cfg.titleGlow ? { shadow: cfg.titleGlow, shadowY: 0, blur: 14, lineSpacing: -4 } : { lineSpacing: -4 };
+p.add(UI.text(scene, 0, y, cfg.title, 26, cfg.titleInk, glow));
+y += 56 * u;
+var t = UI.text(scene, 0, y, cfg.blurb, 15, cfg.blurbInk, { wrap: 280, oy: 0, weight: '600' });
+p.add(t);
+y += t.height + 18 * u;
+p.add(UI.text(scene, 0, y, 'STREAK REWARDS', 12, cfg.headInk));
+y += 24 * u;
+[['Every day', '+1 free hint']].concat(cfg.milestones.map(function (m) {
+return ['Day ' + m.day, m.badge ? cfg.badgeWord : '+' + m.hints + ' bonus hints'];
+})).forEach(function (r) {
+p.add(UI.text(scene, -12 * u, y, r[0], 15, cfg.dayInk, { ox: 1 }));
+p.add(UI.text(scene, 12 * u, y, r[1], 15, cfg.rewardInk, { ox: 0, weight: '600' }));
+y += 24 * u;
+});
+y += 10 * u;
+var play = UI.button(scene, { label: cfg.play, icon: 'calendar', primary: true, w: 260, h: 60, fontSize: 22, onPress: onPlay });
+play.setPosition(0, y + 30 * u);
+p.add(play);
+card.primary = play;
+y += 74 * u;
+var lvl = UI.button(scene, { label: cfg.next, icon: 'next', w: 200, h: 50, fontSize: 18, onPress: onNext });
+lvl.setPosition(0, y + 25 * u);
+p.add(lvl);
+card.btnLevel = lvl;
+return y + 58 * u;
+}, cfg.cardOpts);
+card.dailyUnlock = true;
+return card;
+},
+};
+return api;
+})();
+'use strict';
 VPC.PortalBackends = VPC.PortalBackends || {};
 VPC.Portal = (function () {
 var DEFAULT_CADENCE = { freeWins: 10, every: 3, gapSec: 180, preroll: false };
@@ -958,11 +1050,15 @@ get hasAds() { return !!fake || !!(backend().hasAds && backend().hasAds()); },
 /** The build has rewarded ads (else the game gives a free allowance). */
 get rewardedSupported() { return !!fake || !!(backend().hasRewarded && backend().hasRewarded()); },
 /** A rewarded button may be enabled now. */
-rewardedReady: function () { return api.rewardedSupported && !api.busy && Date.now() >= cooldownUntil; },
+rewardedReady: function () {
+var be = backend();
+return api.rewardedSupported && !api.busy && Date.now() >= cooldownUntil && (!!fake || !be.rewardedReady || be.rewardedReady());
+},
 onChange: function (f) { listeners.push(f); return function () { listeners = listeners.filter(function (g) { return g !== f; }); }; },
 init: function () {
 var be = backend();
 if (be.onQuiet) be.onQuiet(function (quiet) { VPC.Audio.duck('platform', quiet); });
+if (be.onAdState) be.onAdState(notify);
 return Promise.resolve().then(function () { return be.init ? be.init() : null; }).catch(function (e) {
 VPC.log('portal init failed', String(e));
 });
@@ -1945,9 +2041,8 @@ markGoalCardSeen: function () { S.set('web_goal_card', true); },
 get symbols() { return S.get('symbols', true); },
 set symbols(on) { S.set('symbols', !!on); },
 get dailyUnlocked() { return api.levelsWon >= LC.DAILY_UNLOCK_AFTER; },
-/** The one-time "Daily Challenge unlocked!" card. */
-get dailyCardSeen() { return S.get('daily_card', false); },
-markDailyCardSeen: function () { S.set('daily_card', true); },
+/** The one-time "Daily Challenge unlocked!" card (VPC.DailyUnlock, saved as lc.daily_card). */
+get dailyCardSeen() { return VPC.DailyUnlock.seen; },
 /** Wins in a row at par (3 stars), for the win card. */
 get perfectRun() { return S.get('perfect_run', 0); },
 set perfectRun(n) { S.set('perfect_run', n); },
@@ -1956,6 +2051,16 @@ get playable() { return VPC.build.demoLevels > 0 ? Math.min(VPC.build.demoLevels
 };
 return api;
 })();
+VPC.DailyUnlock.setup({
+unlocked: function () { return LC.Store.dailyUnlocked; },
+daily: function () { return LC.Store.daily; },
+milestones: LC.MILESTONES,
+lockedNote: 'Clear level ' + LC.DAILY_UNLOCK_AFTER + ' to unlock',
+blurb: 'A new festival puzzle every day. Solve it to grow your streak.', badgeWord: 'festival badge',
+titleInk: '#FFFFFF', titleGlow: '#FF3DA8', blurbInk: '#9BFBFF', headInk: '#FF7AC6', dayInk: '#FFD34D', rewardInk: '#FFFFFF',
+goalInk: '#FFD34D', icon: 0xFFD34D, noteInk: '#9BFBFF',
+cardOpts: { border: '#FFD34D', dimColor: '#0B0820', dimAlpha: 0.55 },
+});
 /** Chapter (0-based) of level index i (0-based). */
 LC.chapterOf = function (i) { return Math.floor(i / LC.PER_CHAPTER); };
 'use strict';
@@ -2215,18 +2320,6 @@ var img = scene.add.image(0, 0, key);
 var rope = scene.add.rectangle(0, -60, 3, 70, 0xE8C9A0, 0.85);
 return scene.add.container(0, 0, [rope, halo, img]);
 };
-/** The Daily Challenge button (Home and the top of Levels): locked until level 5 is cleared. */
-LC.dailyButton = function (scene, w, h, fontSize, onPress) {
-var on = LC.Store.dailyUnlocked, d = LC.Store.daily;
-return VPC.UI.button(scene, {
-label: 'Daily Challenge', icon: on ? 'calendar' : 'lock', w: w, h: h, fontSize: fontSize, enabled: on,
-badge: on ? (d.doneToday ? 'DONE' : d.streak > 0 ? d.streak + ' DAY' + (d.streak > 1 ? 'S' : '') : 'NEW') : '',
-onPress: onPress,
-});
-};
-LC.dailyNote = function (scene) {
-return VPC.UI.text(scene, 0, 0, LC.Store.dailyUnlocked ? '' : 'Clear level ' + LC.DAILY_UNLOCK_AFTER + ' to unlock', 15, '#9BFBFF', { weight: '600' });
-};
 LC.Home = new Phaser.Class({
 Extends: Phaser.Scene,
 initialize: function Home() { Phaser.Scene.call(this, { key: 'Home' }); },
@@ -2244,8 +2337,8 @@ label: st.brandNew ? 'Play' : 'Continue · Level ' + (next + 1), icon: 'play', p
 onPress: function () { self.go('Play', { idx: next }); },
 });
 this.levels = UI.button(this, { label: 'Levels', icon: 'grid', w: 310, h: 58, fontSize: 21, onPress: function () { self.go('Levels', {}); } });
-this.daily = LC.dailyButton(this, 310, 58, 21, function () { self.go('Play', { daily: true }); });
-this.dailyNote = LC.dailyNote(this);
+this.daily = VPC.DailyUnlock.button(this, 310, 58, 21, function () { self.go('Play', { daily: true }); });
+this.dailyNote = VPC.DailyUnlock.note(this);
 this.btnSound = UI.button(this, { icon: VPC.Audio.muted ? 'mute' : 'sound', w: 60, h: 54, onPress: function () {
 VPC.Audio.setMuted(!VPC.Audio.muted);
 self.btnSound.setIcon(VPC.Audio.muted ? 'mute' : 'sound');
@@ -2324,8 +2417,8 @@ this.blurb = UI.text(this, 0, 0, '', 15, '#9BFBFF', { weight: '700' });
 this.prev = UI.button(this, { icon: 'back', w: 64, h: 56, onPress: function () { self.turn(-1); } });
 this.next = UI.button(this, { icon: 'next', w: 64, h: 56, onPress: function () { self.turn(1); } });
 this.pageText = UI.text(this, 0, 0, '', 16, '#9BFBFF', { weight: '700' });
-this.daily = LC.dailyButton(this, 280, 52, 19, function () { self.leave('Play', { daily: true }); });
-this.dailyNote = LC.dailyNote(this);
+this.daily = VPC.DailyUnlock.button(this, 280, 52, 19, function () { self.leave('Play', { daily: true }); });
+this.dailyNote = VPC.DailyUnlock.note(this);
 this.tiles = this.add.container(0, 0);
 VPC.Keys.bind(this, {
 ArrowLeft: function () { self.turn(-1); }, ArrowRight: function () { self.turn(1); },
@@ -3143,9 +3236,9 @@ this.reward = st.daily.complete();
 this.showDailyWin();
 return;
 }
-var wasLocked = !st.dailyUnlocked;
+var opened = VPC.DailyUnlock.watch();
 st.recordWin(this.idx + 1, s.stars);
-this.dailyJustUnlocked = wasLocked && st.dailyUnlocked;
+this.dailyJustUnlocked = opened();
 st.perfectRun = s.stars === 3 ? st.perfectRun + 1 : 0;
 if (this.guided() && this.idx === 1) st.markTutorialDone();
 this.showWin();
@@ -3166,7 +3259,7 @@ if (on) self.time.delayedCall(delay + k * 220 + 120, function () { LC.sfx('star'
 showWin: function () {
 var self = this, UI = VPC.UI, st = LC.Store, s = this.s, n = this.idx + 1, last = n >= st.playable;
 var demoEnd = last && VPC.build.demoLevels > 0;
-var goal = this.dailyJustUnlocked ? 'DAILY CHALLENGE UNLOCKED!' : this.nextGoal(), ch = LC.chapterOf(this.idx), chDone = n % LC.PER_CHAPTER === 0;
+var goal = this.dailyJustUnlocked ? VPC.DailyUnlock.goal : this.nextGoal(), ch = LC.chapterOf(this.idx), chDone = n % LC.PER_CHAPTER === 0;
 this.card = UI.card(this, 330, function (card, u) {
 var p = card.panel, y = 40 * u;
 p.add(UI.text(self, 0, y, 'LANTERNS LIT', 32, '#FFFFFF', { shadow: '#FF3DA8', shadowY: 0, blur: 16 }));
@@ -3192,7 +3285,7 @@ y += 30 * u;
 if (goal && !last) {
 p.add(UI.text(self, 0, y, 'NEXT GOAL', 12, '#FF7AC6'));
 y += 22 * u;
-var gt = UI.text(self, 0, y, goal, 15, self.dailyJustUnlocked ? '#FFD34D' : '#FFFFFF', { wrap: 280, oy: 0 });
+var gt = UI.text(self, 0, y, goal, 15, self.dailyJustUnlocked ? VPC.DailyUnlock.cfg.goalInk : '#FFFFFF', { wrap: 280, oy: 0 });
 p.add(gt);
 y += gt.height + 16 * u;
 } else y += 6 * u;
@@ -3246,49 +3339,17 @@ if (n >= st.playable) {
 if (VPC.build.demoLevels > 0) this.showDemoEnd();
 return;
 }
-if (st.dailyUnlocked && !st.dailyCardSeen && !this.card.dailyUnlock) { this.showDailyUnlocked(); return; }
+if (VPC.DailyUnlock.pending && !this.card.dailyUnlock) { this.showDailyUnlocked(); return; }
 this.leaveWon('Play', { idx: n });
 },
 /** Once, on Next after the level that opens the Daily Challenge: what it is and its streak rewards. */
 showDailyUnlocked: function () {
-var self = this, UI = VPC.UI, n = this.idx + 1;
-LC.Store.markDailyCardSeen();
+var self = this, n = this.idx + 1;
 if (this.card) this.card.close();
-this.card = UI.card(this, 330, function (card, u) {
-var p = card.panel, y = 46 * u;
-var cal = self.add.image(0, y, 'vpc-icon-calendar').setTint(LC.GOLD).setDisplaySize(64 * u, 64 * u);
-p.add(cal);
-VPC.Juice.popIn(self, cal, 150, cal.scaleX);
-y += 58 * u;
-p.add(UI.text(self, 0, y, 'DAILY CHALLENGE\nUNLOCKED!', 26, '#FFFFFF', { shadow: '#FF3DA8', shadowY: 0, blur: 14, lineSpacing: -4 }));
-y += 56 * u;
-var t = UI.text(self, 0, y, 'A new festival puzzle every day. Solve it to grow your streak.', 15, '#9BFBFF', { wrap: 280, oy: 0, weight: '600' });
-p.add(t);
-y += t.height + 18 * u;
-p.add(UI.text(self, 0, y, 'STREAK REWARDS', 12, '#FF7AC6'));
-y += 24 * u;
-[['Every day', '+1 free hint']].concat(LC.MILESTONES.map(function (m) {
-return ['Day ' + m.day, m.badge ? 'festival badge' : '+' + m.hints + ' bonus hints'];
-})).forEach(function (r) {
-p.add(UI.text(self, -12 * u, y, r[0], 15, '#FFD34D', { ox: 1 }));
-p.add(UI.text(self, 12 * u, y, r[1], 15, '#FFFFFF', { ox: 0, weight: '600' }));
-y += 24 * u;
-});
-y += 10 * u;
-var play = UI.button(self, { label: 'Play Daily', icon: 'calendar', primary: true, w: 260, h: 60, fontSize: 22,
-onPress: function () { self.leaveWon('Play', { daily: true }); } });
-play.setPosition(0, y + 30 * u);
-p.add(play);
-self.btnNext = play;
-y += 74 * u;
-var lvl = UI.button(self, { label: 'Next level', icon: 'next', w: 200, h: 50, fontSize: 18,
-onPress: function () { self.leaveWon('Play', { idx: n }); } });
-lvl.setPosition(0, y + 25 * u);
-p.add(lvl);
-card.btnLevel = lvl;
-return y + 58 * u;
-}, { border: '#FFD34D', dimColor: '#0B0820', dimAlpha: 0.55 });
-this.card.dailyUnlock = true;
+this.card = VPC.DailyUnlock.card(this,
+function () { self.leaveWon('Play', { daily: true }); },
+function () { self.leaveWon('Play', { idx: n }); });
+this.btnNext = this.card.primary;
 this.refresh();
 },
 leaveWon: function (key, data) {

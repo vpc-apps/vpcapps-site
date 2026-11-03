@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>(function(){var framed;try{framed=window.top!==window.self;}catch(e){framed=true;}
+if(!framed)return;var ok=false;try{ok=/(^|\.)vpcapps\.net$/.test(new URL(document.referrer).hostname);}catch(e){}
+if(ok)return;var t=('Lantern Chain').replace(/</g,'&lt;');
+document.write('<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fdf1e7;font:16px system-ui,sans-serif;color:#2b2140;text-align:center;z-index:2147483647">'+
+'<div style="padding:24px"><p style="font-size:20px;font-weight:700;margin:0 0 8px">Play '+t+' free on vpcapps.net</p>'+
+'<p style="margin:0 0 18px;color:#6b5f80">This game is published by VPC Apps and runs on its own page.</p>'+
+'<a href="'+location.href.replace(/"/g,'%22')+'" target="_top" rel="noopener" style="display:inline-block;background:#e2495f;color:#fff;padding:12px 20px;border-radius:12px;text-decoration:none;font-weight:700">Open the game</a></div></div>'+
+'<plaintext style="display:none">');})();</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>Lantern Chain</title>
@@ -50,7 +58,7 @@
   <script>
     // Progress = bytes of finished downloads / the first-load total (written by phaser_pack.py).
     (function () {
-      var total = 1321231, fill = document.getElementById('vpc-fill'), got = 0, seen = {};
+      var total = 1323827, fill = document.getElementById('vpc-fill'), got = 0, seen = {};
       function step() {
         try {
           performance.getEntriesByType('resource').forEach(function (e) {
@@ -61,6 +69,8 @@
         } catch (e) {}
         var p = Math.min(0.96, Math.max(0.04, got / total));
         if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
+        // A portal that shows its own loading bar (Facebook Instant Games) gets the same progress.
+        if (window.vpcLoadProgress) window.vpcLoadProgress(p);
         if (!window.VPC || !window.VPC._ready) setTimeout(step, 120);
       }
       step();
