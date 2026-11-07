@@ -88,8 +88,8 @@
   "date": "2026-11-01"
  },
  "/privacy/": {
-  "hash": "e4390250a612b807",
-  "date": "2026-11-03"
+  "hash": "59915026a09a95e0",
+  "date": "2026-11-07"
  },
  "/shuriken-ricochet/privacy.html": {
   "hash": "71a5c09ddc738abf",
@@ -104,19 +104,19 @@
   "date": "2026-10-31"
  },
  "/tools/": {
-  "hash": "13b0a209be5894bd",
+  "hash": "9cb991e9ede95a46",
   "date": "2026-11-07"
  },
  "/tools/attendance-report-analyzer/": {
-  "hash": "bf2d506ef984df65",
-  "date": "2026-11-03"
+  "hash": "c86a9f97f2a932f9",
+  "date": "2026-11-07"
  },
  "/tools/etsy-profit-dashboard/": {
-  "hash": "bc5027df4e9e30f4",
+  "hash": "bea04ec358b63329",
   "date": "2026-11-07"
  },
  "/tools/jira-csv-dashboard/": {
-  "hash": "35bd6deff6e1904d",
+  "hash": "816e302dd3bcae81",
   "date": "2026-11-07"
  }
 }

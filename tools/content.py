@@ -11,6 +11,11 @@ SITE = dict(
     founded='2026',
 )
 
+# Cloudflare Web Analytics (approved 2026-11-07): cookie-free visit counter, manual snippet, placed before
+# </body> on every page the build renders and on /tools/app/ (never in the Chrome extension, which is
+# built from APPs/products/e8_dashboard). The token is a public site ID.
+ANALYTICS = '<!-- Cloudflare Web Analytics --><script type=\'module\' src=\'https://static.cloudflareinsights.com/beacon.min.js\' data-cf-beacon=\'{"token": "a470f94b795a45578b8f87cbfcca8c9d"}\'></script><!-- End Cloudflare Web Analytics -->'
+
 PLAY = 'https://play.google.com/store/apps/details?id='
 OLD_SITE = 'https://vpc-apps.github.io'
 
@@ -85,7 +90,7 @@ TOOLS = [
                 'Choose <b>Export → Export CSV (all fields)</b> or <b>(current fields)</b>. Current fields is faster; make sure Status, Priority, Created, Resolved and Assignee are visible.',
                 'Jira Server or Data Center: <b>Issues → Search for issues → Export → CSV</b>.',
                 'Drop the file above. Jira Cloud exports up to 10,000 issues per file.'],
-         faqs=[('Is my Jira data uploaded anywhere?', 'No. The CSV is read and analysed by JavaScript in your own browser tab. Nothing is sent to us or to any server, so it suits confidential projects, and it keeps working offline after your first visit.'),
+         faqs=[('Is my Jira data uploaded anywhere?', 'No. The CSV is read and analysed by JavaScript in your own browser tab. Nothing from the file is sent to us or to any server, so it suits confidential projects, and it keeps working offline after your first visit.'),
                ('Which Jira exports work?', 'Jira Cloud, Server and Data Center issue exports in CSV, with all fields or current fields. Columns are found by their names, so the order doesn\'t matter, and multi-value fields like Labels, Sprint and Comment that Jira repeats in several columns are merged.'),
                ('How many issues can I analyse?', 'The tool reads the first 5,000 rows of each file. Jira Cloud exports up to 10,000 issues at a time; for bigger projects, export one file per quarter or per project.'),
                ('Can I break the numbers down by a custom field?', 'Yes. Custom fields appear in the export as "Custom field (Name)". Pick one, such as Severity, Root cause or Environment, under "Extra breakdown" to see open issues by that field.'),

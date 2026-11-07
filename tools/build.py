@@ -22,7 +22,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
-from content import GAMES, OLD_SITE, PLAY, SITE, TOOL, TOOLS, WORLD  # noqa: E402
+from content import ANALYTICS, GAMES, OLD_SITE, PLAY, SITE, TOOL, TOOLS, WORLD  # noqa: E402
 
 APPS = os.path.normpath(os.path.join(ROOT, '..', 'APPs'))
 E8 = os.path.join(APPS, 'products', 'e8_dashboard')
@@ -236,6 +236,9 @@ def import_tools():
                       '<meta name="theme-color" content="#3b6fd8">\n' + SW_REGISTER)
     i = doc.find('<head>') + len('<head>')
     doc = doc[:i] + '\n' + TOOL_GUARD + doc[i:]
+    # Visit counter: added on the site copy only (the Chrome extension is built from the APPs original).
+    assert doc.count('</body>') == 1
+    doc = doc.replace('</body>', ANALYTICS + '\n</body>')
     with open(os.path.join(dest, 'index.html'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(doc)
     out = os.path.join(ROOT, 'assets', 'img', 'tools')
@@ -374,6 +377,7 @@ def page(path, title, desc, body, og_image='/assets/img/brand/og-default.jpg', l
     <p class="muted small">© {datetime.date.today().year} VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
   </div>
 </footer>
+{ANALYTICS}
 </body>
 </html>
 '''
@@ -676,15 +680,17 @@ def privacy():
   <h2>Summary</h2>
   <ul>
     <li>We don't ask you for any personal information, and there are no accounts.</li>
-    <li>The website has no analytics, no advertising and no tracking cookies today.</li>
+    <li>The website counts anonymous page visits with Cloudflare Web Analytics. It sets no cookies and stores nothing in your browser. There is no advertising.</li>
     <li>Browser games save your progress in your own browser (local storage). It never reaches us.</li>
   </ul>
   <h2>Hosting</h2>
-  <p>The site is hosted on GitHub Pages (GitHub, Inc.). Like any web server, GitHub receives your IP address and browser details when you load a page, and may keep them in its logs for security purposes. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub's privacy statement</a>. Our domain name is registered with Cloudflare, which only answers address lookups for the domain and does not see your visits.</p>
+  <p>The site is hosted on GitHub Pages (GitHub, Inc.). Like any web server, GitHub receives your IP address and browser details when you load a page, and may keep them in its logs for security purposes. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub's privacy statement</a>. Our domain name is registered with Cloudflare, which answers address lookups for the domain; the pages themselves are not served through Cloudflare.</p>
+  <h2>Visit counter (Cloudflare Web Analytics)</h2>
+  <p>We count page visits with <a href="https://www.cloudflare.com/web-analytics/" rel="noopener">Cloudflare Web Analytics</a>, run by Cloudflare, Inc. When a page loads, a small script from static.cloudflareinsights.com sends Cloudflare the page address (without anything after a "?"), the site you came from, page-load timings and your browser and device type. Cloudflare also receives your IP address, as any server does, and reports the visit's country to us. We only see totals, never individual visitors. The counter sets no cookies and stores nothing in your browser (we checked in Chrome on 7 November 2026), and it never sees the contents of files you open in our tools. Ad blockers may block it; the site works the same either way. See <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare's privacy policy</a>.</p>
   <h2>Browser games</h2>
   <p>When you play a game on this site, it stores your progress (levels unlocked, stars, settings) in your browser's local storage on your device. You can delete it at any time by clearing your browser's site data. Some game demos are loaded from our older site, vpc-apps.github.io, which is also hosted by GitHub Pages and run by us under the same rules.</p>
   <h2>Free tools</h2>
-  <p>Our tools at <a href="/tools/">vpcapps.net/tools</a> (such as Export to Dashboard) process the files you choose locally in your browser and send nothing to us or anyone else; your files never leave your device.</p>
+  <p>Our tools at <a href="/tools/">vpcapps.net/tools</a> (such as Export to Dashboard) process the files you choose locally in your browser and send nothing from them to us or anyone else; your files never leave your device. The tool pages count visits like the rest of the site (see Visit counter), and that count never includes your file, its name or its contents.</p>
   <h2>Videos and images</h2>
   <p>All videos, images and fonts are served from this site. We don't embed third-party players or social media widgets.</p>
   <h2>Advertising</h2>
@@ -696,7 +702,7 @@ def privacy():
   <h2>Changes and contact</h2>
   <p>We'll post any change on this page with a new date. Questions or requests: <a href="mailto:{e}">{e}</a>.</p>
 </section>'''
-    page('/privacy/', 'Privacy policy', 'How the VPC Apps website and its browser games handle your information: no accounts, no analytics, progress saved in your browser.', body)
+    page('/privacy/', 'Privacy policy', 'How the VPC Apps website and its browser games handle your information: no accounts, no cookies, an anonymous visit counter, progress saved in your browser.', body)
 
 
 def terms():
@@ -755,7 +761,7 @@ def tools_hub():
     <li>Adjust the settings, then download a one-file HTML summary or print it as a PDF.</li></ol></div>
   <div><h2>Free, private, offline</h2><ul class="checks">
     <li>Free for files up to {TOOL['free_rows']} rows each; exports carry a small "made with" line.</li>
-    <li>No upload: the file is read by your own browser, so it suits work and staff data.</li>
+    <li>No upload: the file is read by your own browser, so it suits work and staff data. The pages only count anonymous visits (Cloudflare Web Analytics, no cookies, never your file).</li>
     <li>Works offline after your first visit. In Chrome or Edge you can install it as an app from the address bar.</li></ul></div>
 </section>'''
     url = SITE['url'] + '/tools/'
@@ -793,7 +799,7 @@ def tool_page(t):
 </section>
 <section class="wrap section narrow"><h2>How to export the file</h2><ol class="steps">{steps}</ol></section>
 <section class="wrap section narrow">
-  <div class="panel"><h2>Your file never leaves your device</h2><p>The tool is a web page that runs entirely in your browser. When you choose a file, it is read and analysed on your computer: nothing is uploaded, stored or seen by us. After your first visit it also works with no internet connection. See our <a href="/privacy/">privacy policy</a>.</p></div>
+  <div class="panel"><h2>Your file never leaves your device</h2><p>The tool is a web page that runs entirely in your browser. When you choose a file, it is read and analysed on your computer: nothing is uploaded, stored or seen by us. After your first visit it also works with no internet connection. The page counts anonymous visits with Cloudflare Web Analytics (no cookies, nothing from your file); ad blockers may block it. See our <a href="/privacy/">privacy policy</a>.</p></div>
   {t['extra']}
 </section>
 <section class="wrap section narrow faq"><h2>Questions</h2>{faqs}</section>
