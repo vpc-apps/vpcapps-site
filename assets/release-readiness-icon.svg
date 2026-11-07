@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" width="144" height="144" role="img" aria-label="Go/No-Go Release Scorecard">
+  <rect width="144" height="144" rx="28" fill="#17324d"/>
+  <rect x="30" y="26" width="84" height="26" rx="13" fill="#d9534a"/>
+  <rect x="30" y="59" width="84" height="26" rx="13" fill="#e8a33d"/>
+  <rect x="30" y="92" width="84" height="26" rx="13" fill="#2f9e6e"/>
+  <path d="M60 105l9 8 17-18" transform="translate(0 0)" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

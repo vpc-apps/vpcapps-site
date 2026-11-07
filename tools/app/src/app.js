@@ -12,7 +12,7 @@ var E8 = window.E8 || (window.E8 = {});
   var TITLES = { jira: 'QA status report', etsy: 'Etsy profit report', attendance: 'Attendance report' };
   var SAMPLES = { jira: ['samples/jira_sample.csv'], etsy: ['samples/etsy_order_items_sample.csv', 'samples/etsy_statement_sample.csv'],
     attendance: ['samples/attendance_punches_sample.csv'] };
-  var WATERMARK = 'Made with the free Export to Dashboard tool · vpcapps.net/tools';
+  var WATERMARK = 'Made with Export to Dashboard · vpcapps.net/tools';
   var state = fresh();
   var $ = function (id) { return document.getElementById(id); };
 
@@ -96,7 +96,7 @@ var E8 = window.E8 || (window.E8 = {});
     $('drop').hidden = true;
     $('dash').hidden = false;
     $('meta').textContent = state.files.map(function (f) { return f.name; }).join(' + ') + ' · ' + metaLine() +
-      (state.capped ? ' · free version: first ' + Eng.FREE_ROWS.toLocaleString() + ' rows per file' : '');
+      (state.capped ? ' · reads the first ' + Eng.FREE_ROWS.toLocaleString() + ' rows per file' : '');
     $('body').innerHTML = state.model.total ? t.render(state.model) : '<p class="muted">No rows match these settings.</p>';
     // In the page rather than added on the button click, so the browser's own Print (Ctrl+P) carries it too.
     $('print-wm').textContent = E8.pro ? '' : WATERMARK;
@@ -151,15 +151,18 @@ var E8 = window.E8 || (window.E8 = {});
     $('export').addEventListener('click', exportHtml);
     $('print').addEventListener('click', function () { window.print(); });
     $('again').addEventListener('click', function () { state = fresh(); $('dash').hidden = true; $('drop').hidden = false; $('err').hidden = true; $('file').value = ''; });
+    // site-only-start (the extension build leaves these blocks out)
     // Landing pages preselect a source (?t=etsy) and may embed the app (&embed=1).
     var t = /[?&]t=(\w+)/.exec(location.search);
     if (t && HERO[t[1]]) preselect(t[1]);
     if (t && HERO[t[1]] && /[?&]sample=1/.test(location.search)) loadSample(t[1]);
     if (/[?&]embed=1/.test(location.search)) embed();
+    // site-only-end
   }
 
+  // site-only-start
   var HERO = {
-    jira: ['Drop your Jira CSV export', 'Get a QA and bug dashboard: created vs resolved trend, ageing, by priority, assignee and component, with a one-page executive summary to share.'],
+    jira: ['Drop your Jira CSV export', 'Get a QA and bug dashboard: created vs resolved trend, ageing, by priority, assignee and component, with an executive summary to share.'],
     etsy: ['Drop your Etsy CSV files', 'Order Items CSV, payments statement CSV, or both: get your true profit after every Etsy fee, ads and refunds, plus best sellers by month.'],
     attendance: ['Drop your attendance export', 'A biometric punch log (ZKTeco, BioTime) or a daily In/Out report (eSSL eTimeTrackLite): get late arrivals, overtime, absences and missing punches per employee.']
   };
@@ -189,6 +192,7 @@ var E8 = window.E8 || (window.E8 = {});
     window.addEventListener('load', tell);
     tell();
   }
+  // site-only-end
 
   E8.App = { add: add, show: show, state: function () { return state; }, loadSample: loadSample };
   document.addEventListener('DOMContentLoaded', init);

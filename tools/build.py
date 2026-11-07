@@ -495,7 +495,7 @@ def home():
   <div><h2>A little world</h2><p>{WORLD}</p></div>
 </section>
 <section class="wrap section">
-  <div class="panel"><h2>Free tools</h2><p>Games come first, but we also make small, useful tools. <a href="/tools/">Export to Dashboard</a> turns a Jira, Etsy or attendance CSV export into a dashboard and a one-page summary, right in your browser: your file never leaves your device. <a href="/tools/">Try it →</a></p></div>
+  <div class="panel"><h2>Free tools</h2><p>Games come first, but we also make small, useful tools. <a href="/tools/">Export to Dashboard</a> turns a Jira, Etsy or attendance CSV export into a dashboard and a summary to share, right in your browser: your file never leaves your device. <a href="/tools/">Try it →</a></p></div>
 </section>'''
     site_ld = {'@context': 'https://schema.org', '@type': 'WebSite', 'name': SITE['name'], 'url': SITE['url']}
     page('/', SITE['name'], SITE['description'], body, ld=[ORG, site_ld])
@@ -582,7 +582,7 @@ def apps():
   <h1>Apps</h1>
   <p class="lead">Games come first at VPC Apps, but not only games.</p>
   <p>We are working on small, focused apps and tools: the kind that do one job well, open fast, work offline where they can and don't ask for more permissions than they need. They will be listed here, each with its own page and privacy policy, as soon as they are ready.</p>
-  <div class="panel"><h2>Live now: Export to Dashboard</h2><p>A free browser tool that turns a CSV export into a dashboard, findings in plain English and a one-page summary: <a href="/tools/jira-csv-dashboard/">Jira issues</a>, <a href="/tools/etsy-profit-dashboard/">Etsy sales and fees</a> and <a href="/tools/attendance-report-analyzer/">biometric attendance</a>. Your file never leaves your device. <a href="/tools/">Open the tools →</a></p></div>
+  <div class="panel"><h2>Live now: Export to Dashboard</h2><p>A free browser tool that turns a CSV export into a dashboard, findings in plain English and a summary to share: <a href="/tools/jira-csv-dashboard/">Jira issues</a>, <a href="/tools/etsy-profit-dashboard/">Etsy sales and fees</a> and <a href="/tools/attendance-report-analyzer/">biometric attendance</a>. Your file never leaves your device. <a href="/tools/">Open the tools →</a></p></div>
   <h2>What to expect from our apps</h2>
   <ul class="checks">
     <li>Free to use, with any paid extra clearly marked.</li>
@@ -744,7 +744,7 @@ def tools_hub():
     body = f'''<section class="wrap section page-head">
   <p class="eyebrow">Free tool</p>
   <h1>{E(TOOL['name'])}</h1>
-  <p class="lead">Turn a CSV export into a dashboard, findings in plain English and a one-page summary you can share. Pick your source:</p>
+  <p class="lead">Turn a CSV export into a dashboard, findings in plain English and a summary you can share. Pick your source:</p>
   <p class="privacy-line">🔒 Your file never leaves your device: everything is worked out in your browser. No upload, no account.</p>
 </section>
 <section class="wrap section"><div class="grid tools-grid">{cards}</div></section>
@@ -761,7 +761,7 @@ def tools_hub():
     url = SITE['url'] + '/tools/'
     page('/tools/', f'{TOOL["name"]}: free CSV to dashboard tools',
          'Free CSV to dashboard tools for Jira, Etsy and biometric attendance exports: a dashboard, plain-English '
-         'findings and a one-page summary. Nothing is uploaded.', body,
+         'findings and a summary to share. Nothing is uploaded.', body,
          og_image='/assets/img/tools/hub-og.jpg', active='/tools/', extra_head=TOOL_HEAD, manifest=TOOL_MANIFEST,
          ld=[tool_app_ld(TOOL['name'], 'Turn Jira, Etsy and attendance CSV exports into dashboards in your browser.', url,
                          SITE['url'] + '/assets/img/tools/hub-og.jpg'),

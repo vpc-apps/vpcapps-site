@@ -16,7 +16,7 @@ if(ok)return;document.write('<div style="position:fixed;inset:0;display:flex;ali
 <link rel="manifest" href="/tools/manifest.webmanifest">
 <meta name="theme-color" content="#3b6fd8">
 <script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('/tools/sw.js').catch(function(){})});</script>
-<meta name="description" content="Turn a Jira, Etsy or attendance CSV export into a dashboard with plain-English findings and a one-page summary. Runs in your browser: your file never leaves your device.">
+<meta name="description" content="Turn a Jira, Etsy or attendance CSV export into a dashboard with plain-English findings and a summary to share. Runs in your browser: your file never leaves your device.">
 <style id="report-css">
 :root{--bg:#f5f7fb;--surface:#fff;--ink:#1d2333;--muted:#5d667c;--line:#dde2ee;--accent:#3b6fd8;--warn:#c0283d}
 @media (prefers-color-scheme:dark){:root{--bg:#121624;--surface:#1a2032;--ink:#e8ebf4;--muted:#a1a9bf;--line:#2c3550;--accent:#86a8ff;--warn:#ff7b8c}}
@@ -53,11 +53,13 @@ select,input[type=text],input[type=time]{font:14px system-ui,sans-serif;padding:
 .print-only{display:none}
 @media print{.print-only{display:block}}
 .how{max-width:760px;margin:0 auto 40px;padding:0 16px;color:var(--muted);font-size:14px}
+/* site-only-start */
 /* ?t=<source> shows that source only; embed=1 = inside a vpcapps.net landing page (page has its own header + steps) */
 body[data-source] [data-src]:not(.on){display:none}
 .embed .top,.embed .how{display:none}
 .embed .drop{margin:16px auto}
 .embed .report{padding-top:12px}
+/* site-only-end */
 </style>
 </head>
 <body>
@@ -65,7 +67,7 @@ body[data-source] [data-src]:not(.on){display:none}
 
 <section id="drop" class="drop no-print">
   <h1 id="hero">Turn your export into a dashboard</h1>
-  <p id="hero-sub" class="muted">Drop a Jira issues CSV, your Etsy Order Items / payments statement CSV, or a biometric attendance export (eSSL, ZKTeco) here. You get KPIs, findings in plain English and a one-page summary to share.</p>
+  <p id="hero-sub" class="muted">Drop a Jira issues CSV, your Etsy Order Items / payments statement CSV, or a biometric attendance export (eSSL, ZKTeco) here. You get KPIs, findings in plain English and a summary to share.</p>
   <p><label class="btn">Choose CSV file(s)<input id="file" type="file" accept=".csv,.tsv,.txt" multiple hidden></label>
      <button id="sample-jira" class="btn ghost" type="button" data-tpl="jira" data-src="jira">Try a Jira sample</button>
      <button id="sample-etsy" class="btn ghost" type="button" data-tpl="etsy" data-src="etsy">Try an Etsy sample</button>

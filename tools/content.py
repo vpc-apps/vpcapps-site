@@ -72,10 +72,10 @@ TOOLS = [
          h1='Turn a Jira CSV export into a QA dashboard',
          lead='Export your issues from Jira, drop the CSV here and get a bug and QA status dashboard in seconds: '
               'open vs resolved trend, ageing, priorities, assignees and components, with plain-English findings '
-              'and a one-page summary you can send to your manager.',
-         desc='Free Jira CSV to dashboard: drop a Jira issues export, get a QA and bug dashboard and a one-page '
+              'and a summary you can send to your manager.',
+         desc='Free Jira CSV to dashboard: drop a Jira issues export, get a QA and bug dashboard and an '
               'executive summary. Your file never leaves your device.',
-         card='Bug trend, ageing, priorities and a one-page executive summary from any Jira issues export.',
+         card='Bug trend, ageing, priorities and an executive summary from any Jira issues export.',
          gets=['Six headline numbers: issues, open, resolved, median time to resolve, high-priority issues open over 30 days, unassigned open issues.',
                'Findings written out for you: whether the backlog grew in the last 4 weeks, old high-priority bugs, and whether one person holds too many open issues.',
                'Charts: created vs resolved per week, age of open issues, open by priority, assignee, component and status, issues by fix version.',
@@ -87,9 +87,9 @@ TOOLS = [
                 'Drop the file above. Jira Cloud exports up to 10,000 issues per file.'],
          faqs=[('Is my Jira data uploaded anywhere?', 'No. The CSV is read and analysed by JavaScript in your own browser tab. Nothing is sent to us or to any server, so it suits confidential projects, and it keeps working offline after your first visit.'),
                ('Which Jira exports work?', 'Jira Cloud, Server and Data Center issue exports in CSV, with all fields or current fields. Columns are found by their names, so the order doesn\'t matter, and multi-value fields like Labels, Sprint and Comment that Jira repeats in several columns are merged.'),
-               ('How many issues can I analyse?', 'The free version reads the first 5,000 rows of each file. Jira Cloud exports up to 10,000 issues at a time; for bigger projects, export one file per quarter or per project.'),
+               ('How many issues can I analyse?', 'The tool reads the first 5,000 rows of each file. Jira Cloud exports up to 10,000 issues at a time; for bigger projects, export one file per quarter or per project.'),
                ('Can I break the numbers down by a custom field?', 'Yes. Custom fields appear in the export as "Custom field (Name)". Pick one, such as Severity, Root cause or Environment, under "Extra breakdown" to see open issues by that field.'),
-               ('How do I share the report?', 'Use "Download summary (HTML)" for a single file you can attach to an email, or "Print / PDF" and save as PDF. The free version adds a small "made with" line at the bottom.')],
+               ('How do I share the report?', 'Use "Download summary (HTML)" for a single file you can attach to an email, or "Print / PDF" and save as PDF. Reports end with a small "made with" line.')],
          extra='<div class="panel"><h2>Coming next: inside Jira</h2><p>We\'re building a Jira Cloud app that shows a release-readiness scorecard and this summary live inside Jira, with no export needed. <a href="/contact/">Email us</a> if you\'d like to hear when it\'s out.</p></div>'),
     dict(t='etsy', slug='etsy-profit-dashboard', short='Etsy profit dashboard',
          title='Etsy profit calculator from your Etsy CSV files',
@@ -113,7 +113,7 @@ TOOLS = [
                ('How is true profit calculated?', 'Sales, minus every fee and cost line in your Etsy statement (transaction, processing, listing and other Etsy fees, Etsy Ads, shipping labels, refunds), minus the product cost you enter as a % of sales.'),
                ('Do I have to connect my Etsy shop?', 'No. There is no login and no shop connection. You download the CSVs from Etsy yourself and the numbers are worked out in your browser. Nothing is uploaded.'),
                ('Does it work for any country and currency?', 'Yes. It uses the amounts in your files as they are, so the fees match what Etsy actually charged your shop, whatever your country.'),
-               ('Is there a limit?', 'The free version reads the first 5,000 rows of each file, which covers a year of orders for most small shops.')],
+               ('Is there a limit?', 'The tool reads the first 5,000 rows of each file, which covers a year of orders for most small shops.')],
          extra=''),
     dict(t='attendance', slug='attendance-report-analyzer', short='Attendance report analyzer',
          title='Biometric attendance report analyzer: late, overtime, absences',
