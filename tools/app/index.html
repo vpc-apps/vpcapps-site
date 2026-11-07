@@ -50,6 +50,8 @@ table{border-collapse:collapse;width:100%;font-size:13.5px}th,td{text-align:left
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 select,input[type=text],input[type=time]{font:14px system-ui,sans-serif;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
 [hidden]{display:none!important}
+.print-only{display:none}
+@media print{.print-only{display:block}}
 .how{max-width:760px;margin:0 auto 40px;padding:0 16px;color:var(--muted);font-size:14px}
 /* ?t=<source> shows that source only; embed=1 = inside a vpcapps.net landing page (page has its own header + steps) */
 body[data-source] [data-src]:not(.on){display:none}
@@ -89,6 +91,7 @@ body[data-source] [data-src]:not(.on){display:none}
   </div>
   <p id="meta" class="muted"></p>
   <div id="body"></div>
+  <footer id="print-wm" class="wm print-only" hidden></footer>
 </main>
 
 <section class="how no-print">

@@ -1,6 +1,7 @@
 // E8 app: file(s) → detect template (and which part, for multi-file sources) →
 // controls → dashboard → single-file export.
-// Free tier: first FREE_ROWS rows per file and a watermark on exports (E8.pro unlocks both later).
+// Free tier: first FREE_ROWS rows per file and a watermark on the HTML export and on Print/PDF
+// (E8.pro unlocks both later).
 'use strict';
 
 var E8 = window.E8 || (window.E8 = {});
@@ -11,6 +12,7 @@ var E8 = window.E8 || (window.E8 = {});
   var TITLES = { jira: 'QA status report', etsy: 'Etsy profit report', attendance: 'Attendance report' };
   var SAMPLES = { jira: ['samples/jira_sample.csv'], etsy: ['samples/etsy_order_items_sample.csv', 'samples/etsy_statement_sample.csv'],
     attendance: ['samples/attendance_punches_sample.csv'] };
+  var WATERMARK = 'Made with the free Export to Dashboard tool · vpcapps.net/tools';
   var state = fresh();
   var $ = function (id) { return document.getElementById(id); };
 
@@ -96,6 +98,9 @@ var E8 = window.E8 || (window.E8 = {});
     $('meta').textContent = state.files.map(function (f) { return f.name; }).join(' + ') + ' · ' + metaLine() +
       (state.capped ? ' · free version: first ' + Eng.FREE_ROWS.toLocaleString() + ' rows per file' : '');
     $('body').innerHTML = state.model.total ? t.render(state.model) : '<p class="muted">No rows match these settings.</p>';
+    // In the page rather than added on the button click, so the browser's own Print (Ctrl+P) carries it too.
+    $('print-wm').textContent = E8.pro ? '' : WATERMARK;
+    $('print-wm').hidden = !!E8.pro;
   }
 
   function metaLine() {
@@ -115,7 +120,7 @@ var E8 = window.E8 || (window.E8 = {});
     var html = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
       '<title>' + Eng.esc(title) + '</title><style>' + css + '</style></head><body><main class="report">' +
       '<header><h1>' + Eng.esc(title) + '</h1><p class="muted">' + Eng.esc(metaLine()) + '</p></header>' + state.tpl.render(m) +
-      (E8.pro ? '' : '<footer class="wm">Made with the free Export to Dashboard tool · vpcapps.net/tools</footer>') +
+      (E8.pro ? '' : '<footer class="wm">' + WATERMARK + '</footer>') +
       '</main></body></html>';
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
