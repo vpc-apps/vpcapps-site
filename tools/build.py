@@ -760,7 +760,7 @@ def tools_hub():
     <li>Drop it on the page. The format is recognised and the numbers appear in a second.</li>
     <li>Adjust the settings, then download a one-file HTML summary or print it as a PDF.</li></ol></div>
   <div><h2>Free, private, offline</h2><ul class="checks">
-    <li>Free for files up to {TOOL['free_rows']} rows each; exports carry a small "made with" line.</li>
+    <li>Free. Reads the first {TOOL['free_rows']} rows of each file.</li>
     <li>No upload: the file is read by your own browser, so it suits work and staff data. The pages only count anonymous visits (Cloudflare Web Analytics, no cookies, never your file).</li>
     <li>Works offline after your first visit. In Chrome or Edge you can install it as an app from the address bar.</li></ul></div>
 </section>'''

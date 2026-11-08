@@ -94,7 +94,7 @@ TOOLS = [
                ('Which Jira exports work?', 'Jira Cloud, Server and Data Center issue exports in CSV, with all fields or current fields. Columns are found by their names, so the order doesn\'t matter, and multi-value fields like Labels, Sprint and Comment that Jira repeats in several columns are merged.'),
                ('How many issues can I analyse?', 'The tool reads the first 5,000 rows of each file. Jira Cloud exports up to 10,000 issues at a time; for bigger projects, export one file per quarter or per project.'),
                ('Can I break the numbers down by a custom field?', 'Yes. Custom fields appear in the export as "Custom field (Name)". Pick one, such as Severity, Root cause or Environment, under "Extra breakdown" to see open issues by that field.'),
-               ('How do I share the report?', 'Use "Download summary (HTML)" for a single file you can attach to an email, or "Print / PDF" and save as PDF. Reports end with a small "made with" line.')],
+               ('How do I share the report?', 'Use "Download summary (HTML)" for a single file you can attach to an email, or "Print / PDF" and save as PDF.')],
          extra='<div class="panel"><h2>Coming next: inside Jira</h2><p>We\'re building a Jira Cloud app that shows a release-readiness scorecard and this summary live inside Jira, with no export needed. <a href="/contact/">Email us</a> if you\'d like to hear when it\'s out.</p></div>'),
     dict(t='etsy', slug='etsy-profit-dashboard', short='Etsy profit dashboard',
          title='Etsy profit calculator from your Etsy CSV files',
