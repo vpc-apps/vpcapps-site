@@ -18,23 +18,44 @@ if(ok)return;document.write('<div style="position:fixed;inset:0;display:flex;ali
 <script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('/tools/sw.js').catch(function(){})});</script>
 <meta name="description" content="Turn a Jira, Etsy or attendance CSV export into a dashboard with plain-English findings and a summary to share. Runs in your browser: your file never leaves your device.">
 <style id="report-css">
-:root{--bg:#f5f7fb;--surface:#fff;--ink:#1d2333;--muted:#5d667c;--line:#dde2ee;--accent:#3b6fd8;--warn:#c0283d}
-@media (prefers-color-scheme:dark){:root{--bg:#121624;--surface:#1a2032;--ink:#e8ebf4;--muted:#a1a9bf;--line:#2c3550;--accent:#86a8ff;--warn:#ff7b8c}}
+:root{--bg:#f5f7fb;--surface:#fff;--ink:#1d2333;--muted:#5d667c;--line:#cfd6e4;--soft:#eef1f7;--zebra:#f8f9fc;--accent:#3b6fd8;--warn:#c0283d;--good:#2f9e6e;--amber:#d18a00;--bad:#b3261e;--warnbg:#fffaf0;--badbg:#fdf3f2}
+@media (prefers-color-scheme:dark){:root{--bg:#121624;--surface:#1a2032;--ink:#e8ebf4;--muted:#a1a9bf;--line:#34405f;--soft:#232b42;--zebra:#1e253a;--accent:#86a8ff;--warn:#ff7b8c;--warnbg:#2a2418;--badbg:#2e1c20}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-h1{font-size:26px;margin:0 0 4px}h3{font-size:14px;margin:0 0 10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+h1{font-size:26px;margin:0 0 4px}
 .muted{color:var(--muted)}
 .report{max-width:1100px;margin:0 auto;padding:24px 16px 40px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
-.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
-.kv{font-size:26px;font-weight:700}.kl{color:var(--muted);font-size:13px}.kn{color:var(--muted);font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:14px;margin-top:14px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
-.card.wide{grid-column:1/-1;margin-top:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(165px,100%),1fr));gap:10px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-bottom:4px solid #8a93a8;border-radius:10px;padding:12px 14px;min-width:0}
+.kpi.good{border-bottom-color:var(--good)}.kpi.warn{border-bottom-color:var(--amber);background:var(--warnbg)}.kpi.bad{border-bottom-color:var(--bad);background:var(--badbg)}
+.kv{font-size:26px;font-weight:700;line-height:1.15;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.kl{font-size:13px;font-weight:600;margin-top:4px}.kn{color:var(--muted);font-size:12px;margin-top:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px;margin-top:14px}
+@media (min-width:1000px){.grid .card:last-child:nth-child(3n+1){grid-column:1/-1}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0;display:flex;flex-direction:column;break-inside:avoid}
+.card h3{font-size:16px;margin:0 0 2px}.desc{margin:0 0 10px;color:var(--muted);font-size:13px;max-width:90ch}
+.cb{flex:1;display:flex;flex-direction:column;min-width:0}
+.card.wide,.kpis+.card{margin-top:14px}
 .ins{margin:0;padding-left:20px}.ins li{margin:4px 0}
-table{border-collapse:collapse;width:100%;font-size:13.5px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.tw{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+table.data{border:1px solid var(--line)}table.data th,table.data td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;overflow-wrap:break-word}
+table.data thead th{background:var(--soft);font-weight:600;font-size:12.5px}table.data tbody tr:nth-child(even) td{background:var(--zebra)}
+table.data .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}table.data .key{white-space:nowrap;font-weight:600}
+table.data tr.sub td{font-weight:700;background:var(--warnbg);border-top:2px solid #b9c2d6}table.data tr.total td{font-weight:700;background:var(--soft);border-top:2px solid #8a93a8}
+.zero{color:#b4bccd}
+.more{margin:6px 0 0;color:var(--muted);font-size:12px}.more.paper{display:none}
 .wm{margin-top:24px;text-align:center;color:var(--muted);font-size:12px}
-@media print{body{background:#fff}.no-print{display:none!important}.card,.kpi{break-inside:avoid}}
+@page{size:A4;margin:10mm}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{background:#fff;color:#1d2333;font-size:11px;line-height:1.3}.no-print{display:none!important}
+.report{padding:0;max-width:none}h1{font-size:18px}
+.kpis{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:5px}.kpi{padding:4px 7px;border-bottom-width:3px;border-radius:6px;background:none!important;break-inside:avoid}
+.kv{font-size:15px}.kl{font-size:9.5px;margin-top:1px}.kn{font-size:8.5px;margin-top:0}
+.card{padding:5px 9px;border-radius:6px}.card.wide,.kpis+.card{margin-top:6px}.card h3{font-size:11.5px}.desc{font-size:9px;margin:0 0 3px;line-height:1.25}
+.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px}.grid .card:last-child:nth-child(3n+1){grid-column:auto}
+.ins li{margin:1px 0}
+.tw{overflow:visible}.tw table.data{min-width:0!important}table{font-size:9.5px}table.data th,table.data td{padding:1px 5px}table.data thead th{font-size:9.5px}
+.xtra{display:none}.more.paper{display:block;font-size:9px;margin-top:2px}.wm{margin-top:6px;font-size:9px}}
 </style>
 <style>
 .top{max-width:1100px;margin:0 auto;padding:20px 16px 0;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;justify-content:space-between}
@@ -43,6 +64,7 @@ table{border-collapse:collapse;width:100%;font-size:13.5px}th,td{text-align:left
 .drop.over{border-color:var(--accent)}
 .drop h1{font-size:28px}
 .btn{display:inline-block;border:0;border-radius:10px;padding:10px 16px;font:600 15px system-ui,sans-serif;cursor:pointer;background:var(--accent);color:#fff}
+.btn.go{background:#1f7a52}
 .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
 .btn:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .priv{margin-top:18px;font-size:13.5px;color:var(--muted)}
@@ -52,6 +74,8 @@ select,input[type=text],input[type=time]{font:14px system-ui,sans-serif;padding:
 [hidden]{display:none!important}
 .print-only{display:none}
 @media print{.print-only{display:block}}
+#meta{margin:12px 0}
+.how h3{font-size:14px;margin:0 0 10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
 .how{max-width:760px;margin:0 auto 40px;padding:0 16px;color:var(--muted);font-size:14px}
 /* site-only-start */
 /* ?t=<source> shows that source only; embed=1 = inside a vpcapps.net landing page (page has its own header + steps) */
@@ -87,8 +111,8 @@ body[data-source] [data-src]:not(.on){display:none}
     <label data-for="attendance"><select id="a-off" aria-label="Weekly off days"><option value="0">Sunday off</option><option value="0,6">Saturday + Sunday off</option><option value="5">Friday off</option><option value="">No weekly off</option></select></label>
     <label data-for="etsy" class="btn ghost">Add the other Etsy file<input id="file2" type="file" accept=".csv" hidden></label>
     <input id="x-title" type="text" value="Report" aria-label="Report title">
-    <button id="export" class="btn" type="button">Download summary (HTML)</button>
-    <button id="print" class="btn ghost" type="button">Print / PDF</button>
+    <button id="export" class="btn go" type="button" title="One HTML file: opens in any browser, works offline, easy to email">⬇ Download shareable report</button>
+    <button id="print" class="btn" type="button">🖨 Print or save as PDF</button>
     <button id="again" class="btn ghost" type="button">Start over</button>
   </div>
   <p id="meta" class="muted"></p>

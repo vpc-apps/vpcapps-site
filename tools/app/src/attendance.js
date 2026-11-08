@@ -178,34 +178,63 @@ E8.Attendance = (function () {
   };
 
   template.render = function (m) {
-    var C = E8.Charts, esc = Eng.esc;
-    var kpi = function (label, value, note) {
-      return '<div class="kpi"><div class="kv">' + value + '</div><div class="kl">' + esc(label) + '</div>' + (note ? '<div class="kn">' + esc(note) + '</div>' : '') + '</div>';
-    };
-    var card = function (title, body, wide) { return '<section class="card' + (wide ? ' wide' : '') + '"><h3>' + esc(title) + '</h3>' + body + '</section>'; };
+    var C = E8.Charts, esc = Eng.esc, card = C.card;
+    var rate = Math.round(m.rate * 100), latePct = m.presentDays ? Math.round(m.late * 1000 / m.presentDays) / 10 : 0;
     var html = '<div class="kpis">' +
-      kpi('Attendance rate', Math.round(m.rate * 100) + '%', m.presentDays + ' of ' + m.expected + ' person-days') +
-      kpi('Late arrivals', m.late, 'after ' + hm(m.start) + ' + ' + m.grace + ' min') +
-      kpi('Absent days', m.absent) +
-      kpi('Avg hours / day', hm(m.avgHours * 60)) +
-      kpi('Overtime', Math.round(m.ot) + ' h') +
-      kpi('Missing punches', m.missing) + '</div>';
-    html += card('Key findings', '<ul class="ins">' + template.insights(m).map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>', true);
-    html += card('People present per working day', C.lines(m.days.map(function (d) { return d[0]; }), [{ name: 'Present', values: m.days.map(function (d) { return d[1]; }), color: '#2f9e6e' }], { w: 1060 }), true);
+      C.tile('Attendance rate', rate + '%', m.presentDays + ' of ' + m.expected + ' working person-days', rate >= 95 ? 'good' : rate >= 90 ? 'warn' : 'bad') +
+      C.tile('Late arrivals', String(m.late), latePct + '% of attended days, after ' + hm(m.start) + ' + ' + m.grace + ' min', latePct > 10 ? 'bad' : latePct > 5 ? 'warn' : 'good') +
+      C.tile('Absent days', String(m.absent), m.people ? (Math.round(m.absent * 10 / m.people) / 10) + ' per employee' : '', m.absent ? '' : 'good') +
+      C.tile('Average hours per day', hm(m.avgHours * 60), 'shift is ' + hm(m.end - m.start) + ' h') +
+      C.tile('Overtime', Math.round(m.ot) + ' h', 'days more than 30 min past the shift') +
+      C.tile('Missing punches', String(m.missing), m.missing ? 'only an in or only an out' : 'every day has an in and an out', m.missing ? 'warn' : 'good') + '</div>';
+    html += card('Key findings', 'The main points in plain words, most important first.', C.findings(template.insights(m)), 'wide');
+    html += card('Employees present per working day', 'How many people came in on each working day. Dips show holidays, strikes or device problems.',
+      C.lines(m.days.map(function (d) { return d[0]; }), [{ name: 'Present', values: m.days.map(function (d) { return d[1]; }), color: '#2f9e6e' }], { wide: true }), 'wide');
     html += '<div class="grid">';
-    html += card('Arrival times (15-minute slots)', C.bars(m.arrivals, { color: '#3b6fd8', max: 16 }));
-    html += card('Late arrivals by weekday', C.bars(m.lateByWd.map(function (n, i) { return [WD[i], n]; }).filter(function (r, i) { return m.off.indexOf(i) < 0; }), { color: '#e0742c' }));
-    html += card('Most late arrivals (top 10)', C.bars(m.list.map(function (s) { return [s.p.name, s.late]; }).filter(function (r) { return r[1]; }).sort(function (a, b) { return b[1] - a[1]; }), { color: '#c44a7a' }));
-    html += card('Most overtime hours (top 10)', C.bars(m.list.map(function (s) { return [s.p.name, Math.round(s.ot * 10) / 10]; }).filter(function (r) { return r[1]; }).sort(function (a, b) { return b[1] - a[1]; }), { color: '#8a63d2' }));
+    var cut = m.start + m.grace;
+    html += card('Arrival times', 'First punch per day in 15-minute slots. Orange slots are after the shift start plus grace, amber ones partly so.',
+      C.bars(m.arrivals, { max: 16, more: 'later slots', colors: m.arrivals.map(function (a) { var b = minutes(a[0]); return b >= cut ? '#e0742c' : b + 15 > cut ? '#c9a227' : '#3b6fd8'; }) }));
+    html += card('Late arrivals by weekday', 'Late arrivals on each working weekday. A tall Monday bar is common; a tall other day may point to a cause.',
+      C.bars(m.lateByWd.map(function (n, i) { return [WD[i], n]; }).filter(function (r, i) { return m.off.indexOf(i) < 0; }), { color: '#e0742c', keepZero: true }));
+    html += card('Most late arrivals', 'Employees with the most late days. The grey bar adds up everyone else.',
+      C.bars(m.list.map(function (s) { return [s.p.name, s.late]; }).sort(function (a, b) { return b[1] - a[1]; }), { color: '#c44a7a', max: 10, more: 'others' }));
+    html += card('Most overtime hours', 'Employees with the most hours past the shift end.',
+      C.bars(m.list.map(function (s) { return [s.p.name, Math.round(s.ot * 10) / 10]; }).sort(function (a, b) { return b[1] - a[1]; }), { color: '#8a63d2', max: 10, more: 'others', fmt: function (v) { return v + ' h'; } }));
     html += '</div>';
-    var rows = m.list.slice().sort(function (a, b) { return (b.late + b.absent) - (a.late + a.absent); }).slice(0, 25);
-    html += card('Employee summary (most late + absent first)', '<table><thead><tr><th>Employee</th><th>Present</th><th>Late</th><th>Absent</th><th>Early out</th><th>Avg h/day</th><th>OT h</th><th>Missing punch</th></tr></thead><tbody>' +
-      rows.map(function (s) {
-        return '<tr><td>' + esc(s.p.name) + (s.p.dept ? ' <span class="muted">· ' + esc(s.p.dept) + '</span>' : '') + '</td><td>' + s.present + '</td><td>' + s.late + '</td><td>' + s.absent +
-          '</td><td>' + s.early + '</td><td>' + (s.hoursDays ? hm(s.hours * 60 / s.hoursDays) : '–') + '</td><td>' + Math.round(s.ot * 10) / 10 + '</td><td>' + s.missing + '</td></tr>';
-      }).join('') + '</tbody></table>', true);
+    var depts = deptRows(m);
+    if (depts) html += card('By department', 'Exact counts per department to quote in a review. Rates use working days only.', depts, 'wide');
+    var rows = m.list.slice().sort(function (a, b) { return (b.late + b.absent) - (a.late + a.absent) || (a.p.name < b.p.name ? -1 : 1); });
+    html += card('Employee summary', 'One row per employee, most late plus absent days first.' + (rows.length > 25 ? ' Showing 25 of ' + rows.length + '.' : ''),
+      C.table([{ t: 'Employee' }, { t: 'Department' }, { t: 'Present', num: true }, { t: 'Late', num: true }, { t: 'Absent', num: true }, { t: 'Early out', num: true },
+        { t: 'Average h/day', num: true }, { t: 'Overtime h', num: true }, { t: 'Missing punch', num: true }],
+        rows.slice(0, 25).map(function (s) {
+          return ['<b>' + esc(s.p.name) + '</b>', esc(s.p.dept || '–'), s.present, s.late, s.absent, s.early, s.hoursDays ? hm(s.hours * 60 / s.hoursDays) : '–',
+            Math.round(s.ot * 10) / 10, s.missing].map(String);
+        }), { paper: 12, minW: 760 }), 'wide');
     return html;
   };
+
+  /** Per-department counts with a total row, or '' when the file has no department column. */
+  function deptRows(m) {
+    var by = {};
+    m.list.forEach(function (s) {
+      if (!s.p.dept) return;
+      var d = by[s.p.dept] || (by[s.p.dept] = { n: 0, present: 0, late: 0, absent: 0, missing: 0, ot: 0 });
+      d.n++; d.present += s.present; d.late += s.late; d.absent += s.absent; d.missing += s.missing; d.ot += s.ot;
+    });
+    var names = Object.keys(by).sort(function (a, b) { return by[b].n - by[a].n || (a < b ? -1 : 1); });
+    if (!names.length) return '';
+    var row = function (label, d) {
+      var exp = d.n * m.workDays;
+      return ['<b>' + Eng.esc(label) + '</b>', d.n, d.present, d.late, d.present ? (Math.round(d.late * 1000 / d.present) / 10) + '%' : '–', d.absent,
+        exp ? Math.min(100, Math.round((exp - d.absent) * 100 / exp)) + '%' : '–', d.missing, Math.round(d.ot)].map(String);
+    };
+    var all = { n: 0, present: 0, late: 0, absent: 0, missing: 0, ot: 0 };
+    m.list.forEach(function (s) { all.n++; all.present += s.present; all.late += s.late; all.absent += s.absent; all.missing += s.missing; all.ot += s.ot; });
+    return E8.Charts.table([{ t: 'Department' }, { t: 'Employees', num: true }, { t: 'Present days', num: true }, { t: 'Late', num: true }, { t: 'Late %', num: true },
+      { t: 'Absent', num: true }, { t: 'Attendance', num: true }, { t: 'Missing punch', num: true }, { t: 'Overtime h', num: true }],
+      names.map(function (k) { return row(k, by[k]); }), { foot: [row('All employees', all)], minW: 720, paper: 12 });
+  }
 
   return template;
 })();

@@ -137,6 +137,10 @@ var E8 = window.E8 || (window.E8 = {});
   }
 
   function init() {
+    // Chart styles live with the chart code (the export copies the same text).
+    var st = document.createElement('style');
+    st.textContent = E8.Charts.CSS;
+    document.head.appendChild(st);
     var drop = $('drop');
     $('file').addEventListener('change', function (e) { if (e.target.files.length) { state = fresh(); readFiles(e.target.files); } });
     $('file2').addEventListener('change', function (e) { if (e.target.files.length) readFiles(e.target.files); });
