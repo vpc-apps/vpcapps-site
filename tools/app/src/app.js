@@ -1,10 +1,12 @@
 // E8 app: file(s) → detect template (and which part, for multi-file sources) →
 // controls → dashboard → single-file export.
-// Free tier: first FREE_ROWS rows per file and a watermark on the HTML export and on Print/PDF
-// (E8.pro unlocks both later).
+// Free tier: first FREE_ROWS rows per file. The "Made with…" watermark on the HTML export and on Print/PDF
+// is OFF while we launch free (user, 11-08); SHOW_WATERMARK is the one switch that brings it back.
+// E8.pro removes both later.
 'use strict';
 
 var E8 = window.E8 || (window.E8 = {});
+if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
 
 (function () {
   var Eng = E8.Engine;
@@ -12,7 +14,8 @@ var E8 = window.E8 || (window.E8 = {});
   var TITLES = { jira: 'QA status report', etsy: 'Etsy profit report', attendance: 'Attendance report' };
   var SAMPLES = { jira: ['samples/jira_sample.csv'], etsy: ['samples/etsy_order_items_sample.csv', 'samples/etsy_statement_sample.csv'],
     attendance: ['samples/attendance_punches_sample.csv'] };
-  var WATERMARK = 'Made with Export to Dashboard · vpcapps.net/tools';
+  var WATERMARK = 'Made with CSV to Dashboard · vpcapps.net/tools';
+  var watermark = function () { return E8.SHOW_WATERMARK && !E8.pro; };
   var state = fresh();
   var $ = function (id) { return document.getElementById(id); };
 
@@ -31,7 +34,7 @@ var E8 = window.E8 || (window.E8 = {});
   function readFiles(list) {
     var files = Array.prototype.slice.call(list);
     var bad = files.filter(function (f) { return !/\.(csv|tsv|txt)$/i.test(f.name); });
-    if (bad.length) return error('Please choose a CSV export (.csv). From Excel: File → Save As → CSV.');
+    if (bad.length) return error('Please choose a CSV, TSV or TXT export (.csv, .tsv, .txt). From Excel: File → Save As → CSV.');
     Promise.all(files.map(function (f) {
       return new Promise(function (ok, fail) {
         var fr = new FileReader();
@@ -99,8 +102,8 @@ var E8 = window.E8 || (window.E8 = {});
       (state.capped ? ' · reads the first ' + Eng.FREE_ROWS.toLocaleString() + ' rows per file' : '');
     $('body').innerHTML = state.model.total ? t.render(state.model) : '<p class="muted">No rows match these settings.</p>';
     // In the page rather than added on the button click, so the browser's own Print (Ctrl+P) carries it too.
-    $('print-wm').textContent = E8.pro ? '' : WATERMARK;
-    $('print-wm').hidden = !!E8.pro;
+    $('print-wm').textContent = watermark() ? WATERMARK : '';
+    $('print-wm').hidden = !watermark();
   }
 
   function metaLine() {
@@ -120,7 +123,7 @@ var E8 = window.E8 || (window.E8 = {});
     var html = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
       '<title>' + Eng.esc(title) + '</title><style>' + css + '</style></head><body><main class="report">' +
       '<header><h1>' + Eng.esc(title) + '</h1><p class="muted">' + Eng.esc(metaLine()) + '</p></header>' + state.tpl.render(m) +
-      (E8.pro ? '' : '<footer class="wm">' + WATERMARK + '</footer>') +
+      (watermark() ? '<footer class="wm">' + WATERMARK + '</footer>' : '') +
       '</main></body></html>';
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));

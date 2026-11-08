@@ -4,13 +4,13 @@
 <script>(function(){var framed;try{framed=window.top!==window.self;}catch(e){framed=true;}
 if(!framed)return;var ok=false;try{ok=window.top.location.host===location.host;}catch(e){}
 if(ok)return;document.write('<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fdf1e7;font:16px system-ui,sans-serif;color:#2b2140;text-align:center;z-index:2147483647">'+
-'<div style="padding:24px"><p style="font-size:20px;font-weight:700;margin:0 0 8px">Use Export to Dashboard free on vpcapps.net</p>'+
+'<div style="padding:24px"><p style="font-size:20px;font-weight:700;margin:0 0 8px">Use CSV to Dashboard free on vpcapps.net</p>'+
 '<p style="margin:0 0 18px;color:#6b5f80">This tool by VPC Apps runs on its own page:<br><b>'+location.host+location.pathname+'</b></p>'+
 '<a href="'+location.href.replace(/"/g,'%22')+'" target="_top" rel="noopener" style="display:inline-block;background:#e2495f;color:#fff;padding:12px 20px;border-radius:12px;text-decoration:none;font-weight:700">Open the tool</a></div></div>'+
 '<plaintext style="display:none">');})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Export to Dashboard: free, private, offline</title>
+<title>CSV to Dashboard: Instant Charts &amp; Reports</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="canonical" href="https://vpcapps.net/tools/">
 <link rel="manifest" href="/tools/manifest.webmanifest">
@@ -87,7 +87,7 @@ body[data-source] [data-src]:not(.on){display:none}
 </style>
 </head>
 <body>
-<div class="top no-print"><div class="brand">VPC Apps <span id="brand-sub">· Export to Dashboard</span></div><div class="muted">Free · private · works offline</div></div>
+<div class="top no-print"><div class="brand">VPC Apps <span id="brand-sub">· CSV to Dashboard</span></div><div class="muted">Free · private · works offline</div></div>
 
 <section id="drop" class="drop no-print">
   <h1 id="hero">Turn your export into a dashboard</h1>
@@ -109,7 +109,7 @@ body[data-source] [data-src]:not(.on){display:none}
     <label data-for="attendance" class="muted">Shift <input id="a-start" type="time" value="09:30" aria-label="Shift start"> – <input id="a-end" type="time" value="18:30" aria-label="Shift end"></label>
     <label data-for="attendance" class="muted">Grace <input id="a-grace" type="text" inputmode="numeric" value="10" size="2" aria-label="Grace minutes"> min</label>
     <label data-for="attendance"><select id="a-off" aria-label="Weekly off days"><option value="0">Sunday off</option><option value="0,6">Saturday + Sunday off</option><option value="5">Friday off</option><option value="">No weekly off</option></select></label>
-    <label data-for="etsy" class="btn ghost">Add the other Etsy file<input id="file2" type="file" accept=".csv" hidden></label>
+    <label data-for="etsy" class="btn ghost">Add the other Etsy file<input id="file2" type="file" accept=".csv,.tsv,.txt" hidden></label>
     <input id="x-title" type="text" value="Report" aria-label="Report title">
     <button id="export" class="btn go" type="button" title="One HTML file: opens in any browser, works offline, easy to email">⬇ Download shareable report</button>
     <button id="print" class="btn" type="button">🖨 Print or save as PDF</button>

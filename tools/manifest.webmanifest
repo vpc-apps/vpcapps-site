@@ -1,5 +1,5 @@
 {
- "name": "Export to Dashboard (VPC Apps)",
+ "name": "CSV to Dashboard (VPC Apps)",
  "short_name": "Dashboard",
  "description": "CSV export to dashboard, in your browser.",
  "start_url": "/tools/app/",

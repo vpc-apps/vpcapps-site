@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check that your file never leaves your device · VPC Apps</title>
+<meta name="description" content="Three five-minute checks: use the tool offline, watch the Network tab while it reads your file, and see that the Chrome extension asks for no permissions.">
+<link rel="canonical" href="https://vpcapps.net/tools/check/">
+<meta property="og:site_name" content="VPC Apps">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Check that your file never leaves your device">
+<meta property="og:description" content="Three five-minute checks: use the tool offline, watch the Network tab while it reads your file, and see that the Chrome extension asks for no permissions.">
+<meta property="og:url" content="https://vpcapps.net/tools/check/">
+<meta property="og:image" content="https://vpcapps.net/assets/img/tools/hub-og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ff5a8a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/fredoka.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script src="/assets/js/site.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://vpcapps.net/"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://vpcapps.net/tools/"}, {"@type": "ListItem", "position": 3, "name": "Check it yourself", "item": "https://vpcapps.net/tools/check/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></a>
+    <nav aria-label="Main"><ul><li><a href="/games/">Games</a></li><li><a href="/tools/" aria-current="page">Tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
+    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
+  </div>
+</header>
+<main id="main">
+<nav class="wrap crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/tools/">Tools</a> › <span>Check it yourself</span></nav>
+<section class="wrap section narrow page-head">
+  <h1>Check that your file never leaves your device</h1>
+  <p class="lead">CSV to Dashboard reads your file inside your browser. You don't have to take our word for it: these three checks take about five minutes. Use a sample file or a harmless test file.</p>
+</section>
+<section class="wrap section narrow">
+  <h2>1. Cut the connection</h2>
+  <ol class="steps">
+    <li>Open the tool: <a href="/tools/app/">vpcapps.net/tools/app/</a> (visit it once while online, so your browser keeps a copy), or the Chrome extension.</li>
+    <li>Turn on airplane mode, or in Chrome press <b>F12</b> (Mac: <b>Cmd+Option+I</b>), open the <b>Network</b> tab and change "No throttling" to <b>Offline</b>.</li>
+    <li>Reload the page and choose a file. The dashboard still appears, with no connection at all.</li>
+  </ol>
+  <figure class="shot"><img src="/assets/img/tools/check-offline.webp" alt="The tool showing a Jira dashboard while the browser is offline" width="1280" height="800" loading="lazy"><figcaption class="muted small">The tool reading the Jira sample with the browser set to offline (synthetic data).</figcaption></figure>
+</section>
+<section class="wrap section narrow">
+  <h2>2. Watch the network</h2>
+  <ol class="steps">
+    <li>Go back online, press <b>F12</b> and open the <b>Network</b> tab.</li>
+    <li>Click the clear button (🚫) to empty the list.</li>
+    <li>Choose your file and wait for the dashboard. The list stays empty: no request carries your file, or anything else.</li>
+  </ol>
+  <p class="muted small">Two things you may see. <b>Download shareable report</b> can add an entry starting with <code>blob:</code>: that is the file being made in your browser's memory. The <b>Try a sample</b> buttons load a sample file from the tool itself. On the website, loading the page also reaches vpcapps.net and our visit counter (Cloudflare Web Analytics); choosing a file adds nothing.</p>
+  <figure class="shot"><img src="/assets/img/tools/check-network.webp" alt="The tool waiting for a file to be chosen" width="1280" height="800" loading="lazy"><figcaption class="muted small">The moment to clear the Network list: the tool before you choose a file.</figcaption></figure>
+</section>
+<section class="wrap section narrow">
+  <h2>3. See what the Chrome extension may access</h2>
+  <ol class="steps">
+    <li>If you use the Chrome extension (coming to the Chrome Web Store), go to <code>chrome://extensions</code>.</li>
+    <li>Find <b>CSV to Dashboard: Instant Charts &amp; Reports</b> and click <b>Details</b>.</li>
+    <li>It says "This extension requires no special permissions" and "This extension has no additional site access". It cannot read your other tabs or send anything to a website.</li>
+  </ol>
+  <figure class="shot"><img src="/assets/img/tools/check-extension.webp" alt="Chrome&#x27;s details page: no special permissions, no additional site access" width="680" height="352" loading="lazy"><figcaption class="muted small">Chrome&#x27;s own details page for the extension, from our test install.</figcaption></figure>
+</section>
+<section class="wrap section narrow">
+  <div class="panel"><h2>What these checks show</h2><p>They show what the version you have does, on your computer, today; repeat them after an update if it matters to you. Chrome itself still talks to Google (for example to check for updates), and other extensions you have installed may be able to read web pages. If you download or print a report, that file holds figures from your export, and where it goes is up to you. Found something different? Tell us at <a href="mailto:support@vpcapps.net">support@vpcapps.net</a>. See also our <a href="/privacy/">privacy policy</a>.</p></div>
+</section>
+<section class="wrap section narrow"><p class="muted"><a href="/tools/">Back to the tools</a></p></section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="28" height="28"><span>VPC Apps</span></a>
+      <p class="muted">Bite-size puzzle games for your phone and your browser.</p></div>
+      <ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
+      <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
+    </div>
+    <p class="muted small">© 2026 VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+</footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a470f94b795a45578b8f87cbfcca8c9d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

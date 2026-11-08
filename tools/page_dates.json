@@ -1,7 +1,7 @@
 {
  "/": {
-  "hash": "05c2725cfc650285",
-  "date": "2026-11-07"
+  "hash": "ff58dea851461b84",
+  "date": "2026-11-08"
  },
  "/404.html": {
   "hash": "5f7c79b2a08c5ae9",
@@ -12,8 +12,8 @@
   "date": "2026-11-01"
  },
  "/apps/": {
-  "hash": "9e50d042e6867469",
-  "date": "2026-11-07"
+  "hash": "87e4e1c5396123c7",
+  "date": "2026-11-08"
  },
  "/balloon-domino/privacy.html": {
   "hash": "f007da08df3802ae",
@@ -88,8 +88,8 @@
   "date": "2026-11-01"
  },
  "/privacy/": {
-  "hash": "59915026a09a95e0",
-  "date": "2026-11-07"
+  "hash": "b80c8aa9eb1fc881",
+  "date": "2026-11-08"
  },
  "/shuriken-ricochet/privacy.html": {
   "hash": "71a5c09ddc738abf",
@@ -104,19 +104,23 @@
   "date": "2026-10-31"
  },
  "/tools/": {
-  "hash": "9cb991e9ede95a46",
-  "date": "2026-11-07"
+  "hash": "9a417c2f1a4a8eeb",
+  "date": "2026-11-08"
  },
  "/tools/attendance-report-analyzer/": {
-  "hash": "c86a9f97f2a932f9",
-  "date": "2026-11-07"
+  "hash": "a39bf14ad548560a",
+  "date": "2026-11-08"
+ },
+ "/tools/check/": {
+  "hash": "e3f018afe9739db2",
+  "date": "2026-11-08"
  },
  "/tools/etsy-profit-dashboard/": {
-  "hash": "bea04ec358b63329",
-  "date": "2026-11-07"
+  "hash": "57c1e7cadf2976c3",
+  "date": "2026-11-08"
  },
  "/tools/jira-csv-dashboard/": {
-  "hash": "816e302dd3bcae81",
-  "date": "2026-11-07"
+  "hash": "d69cf2e34db5b09d",
+  "date": "2026-11-08"
  }
 }
