@@ -1,0 +1,601 @@
+Order date,Order ID,Region,Product,Customer,Quantity,Unit price,Amount,Payment status
+2026-08-06,SO-10001,West,Monitor arm,Gita Shah Ltd,1,$79.00,$79.00,Paid
+2026-09-19,SO-10002,South,Webcam,Jon Lund Ltd,1,$69.00,$69.00,Paid
+2026-08-21,SO-10003,South,Standing desk,Ben Novak Ltd,3,$429.00,"$1,287.00",Paid
+2026-09-27,SO-10004,West,Office chair,Wren Iyer Ltd,1,$189.00,$189.00,Paid
+2026-06-25,SO-10005,West,Desk mat,Asha Rao Ltd,3,$19.90,$59.70,Paid
+2026-06-01,SO-10006,North,Standing desk,Ben Novak Ltd,1,$429.00,$429.00,Paid
+2026-05-07,SO-10007,West,Laptop stand,Yusuf Wei Ltd,1,$45.00,$45.00,Paid
+2026-07-17,SO-10008,North,Standing desk,Chen Iyer Ltd,1,$429.00,$429.00,Paid
+2026-09-04,SO-10009,North,Monitor arm,Asha Rao Ltd,1,$79.00,$79.00,Paid
+2026-08-11,SO-10010,Central,USB hub,Asha Rao Ltd,2,$29.00,$58.00,Paid
+2026-08-27,SO-10011,North,Standing desk,Lena Novak Ltd,1,$429.00,$429.00,Paid
+2026-10-22,SO-10012,West,Cable kit,Iris Moreno Ltd,1,$15.50,$15.50,Paid
+2026-10-03,SO-10013,South,Webcam,Asha Rao Ltd,1,$69.00,$69.00,Paid
+2026-08-26,SO-10014,West,Desk mat,Asha Rao Ltd,5,$19.90,$99.50,Paid
+2026-09-16,SO-10015,East,Cable kit,Chen Iyer Ltd,2,$15.50,$31.00,Paid
+2026-10-07,SO-10016,North,Keyboard,Asha Rao Ltd,10,$59.90,$599.00,Paid
+2026-05-08,SO-10017,South,Standing desk,Asha Rao Ltd,10,$429.00,"$4,290.00",Paid
+2026-09-23,SO-10018,East,Standing desk,Asha Rao Ltd,10,$429.00,"$4,290.00",Paid
+2026-05-31,SO-10019,Central,Laptop stand,Omar Wei Ltd,2,$45.00,$90.00,Paid
+2026-07-31,SO-10020,South,Mouse,Gita Shah Ltd,1,$24.50,$24.50,Pending
+2026-10-11,SO-10021,West,USB hub,Milo Iyer Ltd,1,$29.00,$29.00,Paid
+2026-05-19,SO-10022,South,USB hub,Jon Lund Ltd,3,$29.00,$87.00,Pending
+2026-07-18,SO-10023,West,Standing desk,Hugo Carter Ltd,2,$429.00,$858.00,Paid
+2026-10-28,SO-10024,East,Laptop stand,Chen Iyer Ltd,5,$45.00,$225.00,Paid
+2026-07-01,SO-10025,Central,USB hub,Dana Berg Ltd,10,$29.00,$290.00,Paid
+2026-08-30,SO-10026,West,Office chair,Dana Berg Ltd,2,$189.00,$378.00,Paid
+2026-08-05,SO-10027,South,Laptop stand,Chen Iyer Ltd,1,$45.00,$45.00,Paid
+2026-08-02,SO-10028,North,Standing desk,Asha Rao Ltd,5,$429.00,"$2,145.00",Pending
+2026-09-09,SO-10029,Central,Standing desk,Eli Wei Ltd,1,$429.00,$429.00,Paid
+2026-07-09,SO-10030,West,Desk lamp,Milo Iyer Ltd,2,$34.50,$69.00,Paid
+2026-07-23,SO-10031,West,USB hub,Asha Rao Ltd,1,$29.00,$29.00,Paid
+2026-05-11,SO-10032,East,Mouse,Dana Berg Ltd,1,$24.50,$24.50,Paid
+2026-08-21,SO-10033,North,Desk mat,Ben Novak Ltd,2,$19.90,$39.80,Paid
+2026-09-17,SO-10034,East,Cable kit,Eli Wei Ltd,10,$15.50,$155.00,Paid
+2026-05-19,SO-10035,South,Webcam,Wren Iyer Ltd,3,$69.00,$207.00,Paid
+2026-06-10,SO-10036,East,Office chair,Ben Novak Ltd,1,$189.00,$189.00,Pending
+2026-07-22,SO-10037,West,Monitor arm,Jon Khan Ltd,1,$79.00,$79.00,Pending
+2026-10-25,SO-10038,East,Desk lamp,Eli Wei Ltd,1,$34.50,$34.50,Pending
+2026-07-10,SO-10039,Central,Standing desk,Omar Wei Ltd,10,$429.00,"$4,290.00",Paid
+2026-10-16,SO-10040,Central,Cable kit,Kai Rao Ltd,2,$15.50,$31.00,Pending
+2026-07-02,SO-10041,South,Keyboard,Tom Lund Ltd,1,$59.90,$59.90,Paid
+2026-07-12,SO-10042,East,Keyboard,Asha Rao Ltd,2,$59.90,$119.80,Paid
+2026-09-24,SO-10043,Central,Standing desk,Farah Khan Ltd,5,$429.00,"$2,145.00",Paid
+2026-08-04,SO-10044,West,Monitor arm,Gita Shah Ltd,3,$79.00,$237.00,Paid
+2026-08-16,SO-10045,South,Monitor arm,Asha Rao Ltd,1,$79.00,$79.00,Paid
+2026-05-06,SO-10046,North,Headset,Eli Wei Ltd,5,$89.00,$445.00,Paid
+2026-08-29,SO-10047,West,Desk lamp,Dana Berg Ltd,1,$34.50,$34.50,Paid
+2026-10-24,SO-10048,North,Desk mat,Farah Novak Ltd,1,$19.90,$19.90,Paid
+2026-08-24,SO-10049,North,Webcam,Asha Rao Ltd,2,$69.00,$138.00,Paid
+2026-10-12,SO-10050,West,USB hub,Chen Iyer Ltd,5,$29.00,$145.00,Paid
+2026-09-28,SO-10051,East,USB hub,Asha Rao Ltd,1,$29.00,$29.00,Pending
+2026-10-10,SO-10052,West,Keyboard,Milo Iyer Ltd,10,$59.90,$599.00,Paid
+2026-06-27,SO-10053,North,Desk lamp,Quinn Shah Ltd,1,$34.50,$34.50,Paid
+2026-07-23,SO-10054,East,Standing desk,Asha Rao Ltd,1,$429.00,$429.00,Paid
+2026-05-02,SO-10055,North,Office chair,Farah Khan Ltd,1,$189.00,$189.00,Pending
+2026-07-30,SO-10056,South,Standing desk,Lena Carter Ltd,1,$429.00,$429.00,Paid
+2026-05-20,SO-10057,South,Keyboard,Nina Berg Ltd,1,$59.90,$59.90,Paid
+2026-08-26,SO-10058,East,USB hub,Dana Berg Ltd,2,$29.00,$58.00,Paid
+2026-07-29,SO-10059,East,Webcam,Dana Berg Ltd,10,$69.00,$690.00,Pending
+2026-08-07,SO-10060,North,Keyboard,Asha Rao Ltd,1,$59.90,$59.90,Paid
+2026-08-19,SO-10061,West,Headset,Ravi Carter Ltd,1,$89.00,$89.00,Pending
+2026-06-29,SO-10062,North,Mouse,Farah Khan Ltd,1,$24.50,$24.50,Paid
+2026-07-01,SO-10063,Central,Monitor arm,Iris Moreno Ltd,1,$79.00,$79.00,Paid
+2026-08-27,SO-10064,North,Cable kit,Gita Shah Ltd,5,$15.50,$77.50,Paid
+2026-06-28,SO-10065,South,Office chair,Chen Iyer Ltd,5,$189.00,$945.00,Paid
+2026-05-25,SO-10066,South,Headset,Chen Iyer Ltd,2,$89.00,$178.00,Paid
+2026-08-11,SO-10067,West,Desk mat,Ben Novak Ltd,5,$19.90,$99.50,Paid
+2026-08-19,SO-10068,East,Keyboard,Asha Rao Ltd,2,$59.90,$119.80,Paid
+2026-10-09,SO-10069,Central,Desk lamp,Tom Lund Ltd,3,$34.50,$103.50,Paid
+2026-05-15,SO-10070,West,Desk lamp,Ben Novak Ltd,10,$34.50,$345.00,Paid
+2026-09-14,SO-10071,West,Standing desk,Omar Wei Ltd,10,$429.00,"$4,290.00",Paid
+2026-09-01,SO-10072,South,Desk lamp,Asha Rao Ltd,1,$34.50,$34.50,Paid
+2026-10-19,SO-10073,Central,Cable kit,Chen Iyer Ltd,1,$15.50,$15.50,Paid
+2026-07-26,SO-10074,South,Mouse,Farah Novak Ltd,3,$24.50,$73.50,Pending
+2026-06-22,SO-10075,Central,Desk lamp,Chen Iyer Ltd,5,$34.50,$172.50,Paid
+2026-10-28,SO-10076,Central,Standing desk,Lena Novak Ltd,1,$429.00,$429.00,Paid
+2026-10-11,SO-10077,West,Standing desk,Asha Rao Ltd,10,$429.00,"$4,290.00",Paid
+2026-05-24,SO-10078,South,Standing desk,Hugo Carter Ltd,10,$429.00,"$4,290.00",Paid
+2026-06-17,SO-10079,South,Desk mat,Asha Rao Ltd,5,$19.90,$99.50,Paid
+2026-06-15,SO-10080,North,USB hub,Chen Iyer Ltd,1,$29.00,$29.00,Paid
+2026-07-07,SO-10081,East,Desk lamp,Ben Novak Ltd,1,$34.50,$34.50,Paid
+2026-08-28,SO-10082,East,Mouse,Dana Berg Ltd,2,$24.50,$49.00,Paid
+2026-05-10,SO-10083,East,Headset,Asha Rao Ltd,5,$89.00,$445.00,Pending
+2026-10-10,SO-10084,North,USB hub,Nina Berg Ltd,2,$29.00,$58.00,Paid
+2026-10-11,SO-10085,East,Laptop stand,Nina Berg Ltd,1,$45.00,$45.00,Paid
+2026-08-23,SO-10086,Central,Cable kit,Asha Rao Ltd,1,$15.50,$15.50,Paid
+2026-10-11,SO-10087,South,Standing desk,Jon Lund Ltd,2,$429.00,$858.00,Paid
+2026-05-27,SO-10088,Central,Keyboard,Asha Rao Ltd,2,$59.90,$119.80,Pending
+2026-08-27,SO-10089,Central,Standing desk,Iris Moreno Ltd,3,$429.00,"$1,287.00",Paid
+2026-07-17,SO-10090,North,Laptop stand,Asha Rao Ltd,5,$45.00,$225.00,Paid
+2026-10-21,SO-10091,North,USB hub,Asha Shah Ltd,2,$29.00,$58.00,Paid
+2026-09-16,SO-10092,West,Desk lamp,Kai Rao Ltd,2,$34.50,$69.00,Paid
+2026-07-22,SO-10093,East,Laptop stand,Asha Rao Ltd,2,$45.00,$90.00,Paid
+2026-07-01,SO-10094,Central,Desk lamp,Quinn Shah Ltd,1,$34.50,$34.50,Paid
+2026-10-19,SO-10095,East,Mouse,Lena Carter Ltd,2,$24.50,$49.00,Paid
+2026-08-10,SO-10096,East,Laptop stand,Dana Berg Ltd,1,$45.00,$45.00,Paid
+2026-07-11,SO-10097,East,Webcam,Eli Wei Ltd,1,$69.00,$69.00,Paid
+2026-10-10,SO-10098,Central,Webcam,Farah Khan Ltd,1,$69.00,$69.00,Paid
+2026-09-20,SO-10099,North,USB hub,Iris Moreno Ltd,1,$29.00,$29.00,Paid
+2026-10-09,SO-10100,South,Office chair,Asha Shah Ltd,2,$189.00,$378.00,Paid
+2026-06-23,SO-10101,West,Cable kit,Asha Rao Ltd,10,$15.50,$155.00,Paid
+2026-05-29,SO-10102,South,Monitor arm,Chen Iyer Ltd,1,$79.00,$79.00,Paid
+2026-06-18,SO-10103,Central,Webcam,Asha Rao Ltd,1,$69.00,$69.00,Paid
+2026-10-27,SO-10104,Central,Desk mat,Lena Novak Ltd,2,$19.90,$39.80,Paid
+2026-08-02,SO-10105,South,Desk mat,Iris Moreno Ltd,5,$19.90,$99.50,Refunded
+2026-05-23,SO-10106,North,Cable kit,Gita Shah Ltd,1,$15.50,$15.50,Paid
+2026-08-27,SO-10107,East,Laptop stand,Farah Khan Ltd,2,$45.00,$90.00,Refunded
+2026-08-29,SO-10108,West,Laptop stand,Kai Rao Ltd,5,$45.00,$225.00,Paid
+2026-07-16,SO-10109,North,Webcam,Asha Rao Ltd,2,$69.00,$138.00,Paid
+2026-08-07,SO-10110,South,Office chair,Dana Berg Ltd,5,$189.00,$945.00,Paid
+2026-05-15,SO-10111,North,Headset,Asha Rao Ltd,3,$89.00,$267.00,Paid
+2026-06-14,SO-10112,North,Laptop stand,Kai Rao Ltd,1,$45.00,$45.00,Paid
+2026-07-23,SO-10113,South,Headset,Chen Iyer Ltd,5,$89.00,$445.00,Paid
+2026-10-06,SO-10114,West,Headset,Farah Khan Ltd,1,$89.00,$89.00,Paid
+2026-10-18,SO-10115,East,Webcam,Quinn Shah Ltd,1,$69.00,$69.00,Paid
+2026-08-13,SO-10116,South,Keyboard,Asha Rao Ltd,1,$59.90,$59.90,Pending
+2026-06-03,SO-10117,South,Webcam,Iris Moreno Ltd,5,$69.00,$345.00,Paid
+2026-07-17,SO-10118,West,Office chair,Eli Wei Ltd,3,$189.00,$567.00,Paid
+2026-10-01,SO-10119,North,Laptop stand,Asha Rao Ltd,1,$45.00,$45.00,Paid
+2026-07-22,SO-10120,Central,Standing desk,Eli Wei Ltd,1,$429.00,$429.00,Paid
+2026-06-01,SO-10121,West,Headset,Chen Iyer Ltd,5,$89.00,$445.00,Paid
+2026-10-02,SO-10122,South,Mouse,Kai Shah Ltd,1,$24.50,$24.50,Paid
+2026-08-26,SO-10123,West,Office chair,Dana Berg Ltd,1,$189.00,$189.00,Paid
+2026-05-27,SO-10124,North,Monitor arm,Asha Shah Ltd,1,$79.00,$79.00,Paid
+2026-08-13,SO-10125,East,Keyboard,Asha Rao Ltd,1,$59.90,$59.90,Paid
+2026-10-22,SO-10126,East,Desk lamp,Kai Rao Ltd,1,$34.50,$34.50,Paid
+2026-06-04,SO-10127,Central,USB hub,Asha Rao Ltd,2,$29.00,$58.00,Paid
+2026-07-13,SO-10128,West,Headset,Chen Iyer Ltd,2,$89.00,$178.00,Paid
+2026-07-13,SO-10129,Central,Cable kit,Chen Iyer Ltd,5,$15.50,$77.50,Paid
+2026-09-22,SO-10130,West,Keyboard,Asha Rao Ltd,1,$59.90,$59.90,Paid
+2026-10-25,SO-10131,North,Keyboard,Iris Moreno Ltd,1,$59.90,$59.90,Paid
+2026-09-17,SO-10132,North,Monitor arm,Ben Novak Ltd,1,$79.00,$79.00,Paid
+2026-09-12,SO-10133,North,Keyboard,Quinn Shah Ltd,10,$59.90,$599.00,Paid
+2026-08-15,SO-10134,Central,Monitor arm,Asha Rao Ltd,1,$79.00,$79.00,Paid
+2026-09-29,SO-10135,East,Mouse,Lena Carter Ltd,10,$24.50,$245.00,Paid
+2026-07-15,SO-10136,North,Webcam,Dana Berg Ltd,1,$69.00,$69.00,Pending
+2026-08-02,SO-10137,West,Office chair,Ben Novak Ltd,1,$189.00,$189.00,Pending
+2026-05-10,SO-10138,West,Cable kit,Chen Iyer Ltd,1,$15.50,$15.50,Paid
+2026-06-17,SO-10139,East,Keyboard,Asha Rao Ltd,1,$59.90,$59.90,Paid
+2026-05-09,SO-10140,South,Office chair,Asha Rao Ltd,2,$189.00,$378.00,Pending
+2026-07-22,SO-10141,North,USB hub,Chen Moreno Ltd,1,$29.00,$29.00,Paid
+2026-09-20,SO-10142,East,Cable kit,Asha Rao Ltd,1,$15.50,$15.50,Paid
+2026-07-26,SO-10143,West,Laptop stand,Asha Rao Ltd,1,$45.00,$45.00,Paid
+2026-09-12,SO-10144,South,Mouse,Chen Iyer Ltd,1,$24.50,$24.50,Paid
+2026-06-07,SO-10145,Central,Cable kit,Gita Shah Ltd,1,$15.50,$15.50,Paid
+2026-08-26,SO-10146,South,Cable kit,Iris Moreno Ltd,5,$15.50,$77.50,Paid
+2026-09-05,SO-10147,South,Desk lamp,Xia Berg Ltd,2,$34.50,$69.00,Paid
+2026-06-19,SO-10148,West,Standing desk,Dana Berg Ltd,10,$429.00,"$4,290.00",Paid
+2026-07-05,SO-10149,South,Office chair,Asha Rao Ltd,1,$189.00,$189.00,Pending
+2026-08-28,SO-10150,West,Headset,Chen Iyer Ltd,2,$89.00,$178.00,Paid
+2026-09-19,SO-10151,East,Webcam,Hugo Carter Ltd,1,$69.00,$69.00,Paid
+2026-07-27,SO-10152,Central,USB hub,Hugo Carter Ltd,2,$29.00,$58.00,Paid
+2026-05-10,SO-10153,West,Office chair,Asha Rao Ltd,3,$189.00,$567.00,Paid
+2026-07-25,SO-10154,South,Mouse,Milo Iyer Ltd,2,$24.50,$49.00,Paid
+2026-07-14,SO-10155,East,Office chair,Chen Iyer Ltd,2,$189.00,$378.00,Paid
+2026-08-18,SO-10156,South,USB hub,Iris Moreno Ltd,1,$29.00,$29.00,Paid
+2026-08-31,SO-10157,East,Standing desk,Asha Rao Ltd,2,$429.00,$858.00,Paid
+2026-05-27,SO-10158,South,Standing desk,Ravi Carter Ltd,5,$429.00,"$2,145.00",Paid
+2026-05-07,SO-10159,West,Webcam,Asha Rao Ltd,2,$69.00,$138.00,Paid
+2026-06-24,SO-10160,North,Standing desk,Ben Novak Ltd,3,$429.00,"$1,287.00",Paid
+2026-10-12,SO-10161,West,Desk lamp,Chen Iyer Ltd,2,$34.50,$69.00,Paid
+2026-07-19,SO-10162,North,Cable kit,Asha Rao Ltd,1,$15.50,$15.50,Paid
+2026-06-30,SO-10163,Central,Desk lamp,Hugo Carter Ltd,5,$34.50,$172.50,Paid
+2026-08-22,SO-10164,North,Headset,Gita Shah Ltd,2,$89.00,$178.00,Paid
+2026-05-21,SO-10165,Central,Keyboard,Pia Khan Ltd,1,$59.90,$59.90,Paid
+2026-06-13,SO-10166,East,Cable kit,Hugo Carter Ltd,2,$15.50,$31.00,Paid
+2026-06-22,SO-10167,North,Office chair,Hugo Carter Ltd,1,$189.00,$189.00,Paid
+2026-08-29,SO-10168,West,Monitor arm,Dana Berg Ltd,2,$79.00,$158.00,Paid
+2026-07-03,SO-10169,West,USB hub,Eli Wei Ltd,2,$29.00,$58.00,Paid
+2026-10-27,SO-10170,West,Webcam,Chen Iyer Ltd,10,$69.00,$690.00,Paid
+2026-07-07,SO-10171,East,Cable kit,Farah Khan Ltd,2,$15.50,$31.00,Paid
+2026-10-24,SO-10172,East,Office chair,Eli Wei Ltd,1,$189.00,$189.00,Paid
+2026-05-30,SO-10173,Central,Desk lamp,Ben Novak Ltd,1,$34.50,$34.50,Refunded
+2026-10-09,SO-10174,East,Standing desk,Eli Wei Ltd,1,$429.00,$429.00,Paid
+2026-06-05,SO-10175,East,Office chair,Eli Wei Ltd,2,$189.00,$378.00,Paid
+2026-09-08,SO-10176,West,Cable kit,Tom Lund Ltd,5,$15.50,$77.50,Paid
+2026-09-08,SO-10177,East,Laptop stand,Eli Wei Ltd,2,$45.00,$90.00,Paid
+2026-07-13,SO-10178,Central,Office chair,Eli Wei Ltd,1,$189.00,$189.00,Paid
+2026-09-13,SO-10179,West,Monitor arm,Dana Berg Ltd,5,$79.00,$395.00,Paid
+2026-10-18,SO-10180,East,USB hub,Farah Novak Ltd,10,$29.00,$290.00,Paid
+2026-05-07,SO-10181,North,Laptop stand,Sara Moreno Ltd,2,$45.00,$90.00,Pending
+2026-08-06,SO-10182,East,Desk mat,Zara Khan Ltd,1,$19.90,$19.90,Paid
+2026-09-30,SO-10183,South,Webcam,Milo Moreno Ltd,5,$69.00,$345.00,Paid
+2026-08-24,SO-10184,East,Keyboard,Asha Rao Ltd,1,$59.90,$59.90,Paid
+2026-05-18,SO-10185,East,Desk lamp,Omar Wei Ltd,10,$34.50,$345.00,Paid
+2026-06-06,SO-10186,East,Standing desk,Gita Shah Ltd,3,$429.00,"$1,287.00",Paid
+2026-06-21,SO-10187,South,Cable kit,Chen Iyer Ltd,10,$15.50,$155.00,Paid
+2026-09-17,SO-10188,North,Keyboard,Chen Iyer Ltd,3,$59.90,$179.70,Paid
+2026-09-30,SO-10189,West,Laptop stand,Chen Iyer Ltd,2,$45.00,$90.00,Paid
+2026-09-30,SO-10190,Central,Desk lamp,Asha Rao Ltd,1,$34.50,$34.50,Paid
+2026-10-22,SO-10191,West,Laptop stand,Ben Novak Ltd,2,$45.00,$90.00,Paid
+2026-10-30,SO-10192,East,Keyboard,Uma Rao Ltd,3,$59.90,$179.70,Pending
+2026-09-08,SO-10193,North,Cable kit,Ben Novak Ltd,2,$15.50,$31.00,Paid
+2026-09-11,SO-10194,Central,Cable kit,Iris Moreno Ltd,3,$15.50,$46.50,Paid
+2026-06-25,SO-10195,North,Mouse,Asha Rao Ltd,1,$24.50,$24.50,Paid
+2026-09-27,SO-10196,East,Headset,Eli Wei Ltd,1,$89.00,$89.00,Paid
+2026-09-29,SO-10197,Central,Standing desk,Chen Iyer Ltd,3,$429.00,"$1,287.00",Paid
+2026-06-25,SO-10198,North,USB hub,Milo Iyer Ltd,1,$29.00,$29.00,Paid
+2026-10-10,SO-10199,Central,Desk mat,Chen Iyer Ltd,3,$19.90,$59.70,Paid
+2026-08-25,SO-10200,Central,Cable kit,Dana Berg Ltd,1,$15.50,$15.50,Paid
+2026-09-02,SO-10201,North,Headset,Dana Berg Ltd,10,$89.00,$890.00,Pending
+2026-06-19,SO-10202,North,Mouse,Asha Rao Ltd,2,$24.50,$49.00,Paid
+2026-05-03,SO-10203,East,Keyboard,Kai Rao Ltd,2,$59.90,$119.80,Paid
+2026-05-17,SO-10204,North,Standing desk,Ben Novak Ltd,2,$429.00,$858.00,Paid
+2026-07-13,SO-10205,East,Standing desk,Asha Rao Ltd,1,$429.00,$429.00,Refunded
+2026-09-05,SO-10206,East,Desk mat,Ben Novak Ltd,1,$19.90,$19.90,Paid
+2026-10-29,SO-10207,West,Monitor arm,Ben Novak Ltd,1,$79.00,$79.00,Paid
+2026-06-20,SO-10208,Central,Cable kit,Eli Wei Ltd,5,$15.50,$77.50,Paid
+2026-08-23,SO-10209,Central,Standing desk,Farah Khan Ltd,2,$429.00,$858.00,Paid
+2026-08-05,SO-10210,South,Webcam,Ben Novak Ltd,5,$69.00,$345.00,Paid
+2026-05-07,SO-10211,West,Keyboard,Eli Wei Ltd,5,$59.90,$299.50,Paid
+2026-05-01,SO-10212,Central,USB hub,Eli Wei Ltd,10,$29.00,$290.00,Paid
+2026-05-27,SO-10213,North,Laptop stand,Farah Khan Ltd,3,$45.00,$135.00,Paid
+2026-10-09,SO-10214,Central,Keyboard,Nina Lund Ltd,1,$59.90,$59.90,Paid
+2026-07-15,SO-10215,North,Office chair,Asha Rao Ltd,1,$189.00,$189.00,Paid
+2026-06-25,SO-10216,South,Standing desk,Chen Iyer Ltd,5,$429.00,"$2,145.00",Paid
+2026-06-18,SO-10217,North,Standing desk,Chen Iyer Ltd,5,$429.00,"$2,145.00",Paid
+2026-10-22,SO-10218,Central,Monitor arm,Chen Iyer Ltd,2,$79.00,$158.00,Pending
+2026-07-22,SO-10219,East,Cable kit,Wren Iyer Ltd,10,$15.50,$155.00,Pending
+2026-10-01,SO-10220,North,Standing desk,Pia Khan Ltd,2,$429.00,$858.00,Paid
+2026-09-13,SO-10221,South,Office chair,Asha Rao Ltd,2,$189.00,$378.00,Paid
+2026-08-30,SO-10222,South,Desk lamp,Dana Berg Ltd,1,$34.50,$34.50,Refunded
+2026-08-16,SO-10223,North,Standing desk,Ben Novak Ltd,1,$429.00,$429.00,Paid
+2026-07-24,SO-10224,North,Office chair,Asha Rao Ltd,3,$189.00,$567.00,Paid
+2026-06-28,SO-10225,East,Cable kit,Milo Iyer Ltd,10,$15.50,$155.00,Paid
+2026-05-23,SO-10226,Central,USB hub,Ben Novak Ltd,2,$29.00,$58.00,Pending
+2026-08-19,SO-10227,West,Desk mat,Milo Iyer Ltd,1,$19.90,$19.90,Paid
+2026-05-04,SO-10228,North,Monitor arm,Nina Berg Ltd,1,$79.00,$79.00,Paid
+2026-08-09,SO-10229,South,Mouse,Chen Iyer Ltd,2,$24.50,$49.00,Paid
+2026-09-09,SO-10230,South,USB hub,Farah Khan Ltd,5,$29.00,$145.00,Paid
+2026-10-16,SO-10231,Central,Monitor arm,Asha Rao Ltd,10,$79.00,$790.00,Paid
+2026-08-03,SO-10232,Central,Cable kit,Asha Rao Ltd,1,$15.50,$15.50,Paid
+2026-06-15,SO-10233,East,Keyboard,Jon Khan Ltd,1,$59.90,$59.90,Paid
+2026-09-16,SO-10234,North,Office chair,Asha Rao Ltd,1,$189.00,$189.00,Paid
+2026-09-22,SO-10235,Central,Keyboard,Pia Khan Ltd,10,$59.90,$599.00,Paid
+2026-09-26,SO-10236,East,Standing desk,Gita Shah Ltd,5,$429.00,"$2,145.00",Paid
+2026-06-06,SO-10237,Central,Monitor arm,Chen Iyer Ltd,1,$79.00,$79.00,Paid
+2026-08-31,SO-10238,East,Webcam,Dana Lund Ltd,3,$69.00,$207.00,Paid
+2026-05-05,SO-10239,South,Office chair,Ben Novak Ltd,1,$189.00,$189.00,Paid
+2026-10-18,SO-10240,North,Headset,Jon Lund Ltd,1,$89.00,$89.00,Paid
+2026-07-16,SO-10241,Central,Office chair,Ben Novak Ltd,2,$189.00,$378.00,Pending
+2026-09-09,SO-10242,East,Mouse,Asha Rao Ltd,3,$24.50,$73.50,Paid
+2026-06-08,SO-10243,West,Laptop stand,Asha Rao Ltd,2,$45.00,$90.00,Paid
+2026-07-16,SO-10244,North,Desk lamp,Dana Berg Ltd,5,$34.50,$172.50,Paid
+2026-06-21,SO-10245,Central,Standing desk,Ben Novak Ltd,1,$429.00,$429.00,Paid
+2026-07-26,SO-10246,Central,Headset,Eli Wei Ltd,1,$89.00,$89.00,Paid
+2026-06-29,SO-10247,North,Standing desk,Asha Rao Ltd,10,$429.00,"$4,290.00",Paid
+2026-08-24,SO-10248,South,Mouse,Asha Rao Ltd,1,$24.50,$24.50,Pending
+2026-08-28,SO-10249,North,USB hub,Asha Rao Ltd,5,$29.00,$145.00,Paid
+2026-09-04,SO-10250,East,Keyboard,Quinn Shah Ltd,2,$59.90,$119.80,Paid
+2026-05-28,SO-10251,West,Office chair,Sara Moreno Ltd,2,$189.00,$378.00,Paid
+2026-07-01,SO-10252,South,Desk lamp,Kai Rao Ltd,2,$34.50,$69.00,Pending
+2026-09-07,SO-10253,South,Laptop stand,Chen Iyer Ltd,1,$45.00,$45.00,Paid
+2026-07-01,SO-10254,East,Mouse,Farah Khan Ltd,1,$24.50,$24.50,Paid
+2026-05-25,SO-10255,South,Mouse,Asha Rao Ltd,10,$24.50,$245.00,Refunded
+2026-07-07,SO-10256,South,Laptop stand,Ravi Carter Ltd,1,$45.00,$45.00,Paid
+2026-05-04,SO-10257,South,Standing desk,Ben Novak Ltd,10,$429.00,"$4,290.00",Paid
+2026-05-29,SO-10258,West,Webcam,Asha Rao Ltd,1,$69.00,$69.00,Paid
+2026-09-08,SO-10259,North,Standing desk,Kai Shah Ltd,1,$429.00,$429.00,Paid
+2026-06-25,SO-10260,East,Webcam,Asha Rao Ltd,1,$69.00,$69.00,Pending
+2026-08-05,SO-10261,South,Desk lamp,Hugo Carter Ltd,3,$34.50,$103.50,Paid
+2026-10-11,SO-10262,West,Laptop stand,Ben Novak Ltd,5,$45.00,$225.00,Paid
+2026-07-06,SO-10263,West,Headset,Lena Carter Ltd,1,$89.00,$89.00,Pending
+2026-10-30,SO-10264,South,Headset,Jon Lund Ltd,1,$89.00,$89.00,Paid
+2026-09-13,SO-10265,East,Standing desk,Nina Berg Ltd,3,$429.00,"$1,287.00",Paid
+2026-07-01,SO-10266,Central,Webcam,Lena Carter Ltd,1,$69.00,$69.00,Paid
+2026-07-13,SO-10267,North,USB hub,Asha Rao Ltd,2,$29.00,$58.00,Paid
+2026-09-16,SO-10268,Central,Desk lamp,Asha Rao Ltd,10,$34.50,$345.00,Paid
+2026-10-28,SO-10269,East,Laptop stand,Chen Iyer Ltd,2,$45.00,$90.00,Paid
+2026-09-19,SO-10270,Central,USB hub,Asha Rao Ltd,2,$29.00,$58.00,Paid
+2026-10-11,SO-10271,East,Cable kit,Chen Iyer Ltd,3,$15.50,$46.50,Paid
+2026-08-07,SO-10272,East,Cable kit,Chen Iyer Ltd,1,$15.50,$15.50,Paid
+2026-06-03,SO-10273,East,Cable kit,Dana Berg Ltd,1,$15.50,$15.50,Paid
+2026-06-29,SO-10274,West,Headset,Eli Rao Ltd,1,$89.00,$89.00,Paid
+2026-07-03,SO-10275,South,Desk lamp,Asha Rao Ltd,3,$34.50,$103.50,Paid
+2026-07-28,SO-10276,West,Monitor arm,Ben Novak Ltd,10,$79.00,$790.00,Paid
+2026-07-03,SO-10277,North,Monitor arm,Chen Moreno Ltd,2,$79.00,$158.00,Paid
+2026-06-02,SO-10278,North,Desk mat,Farah Khan Ltd,2,$19.90,$39.80,Pending
+2026-08-25,SO-10279,Central,Standing desk,Chen Iyer Ltd,3,$429.00,"$1,287.00",Paid
+2026-06-18,SO-10280,North,Headset,Hugo Carter Ltd,2,$89.00,$178.00,Paid
+2026-10-27,SO-10281,Central,Mouse,Jon Lund Ltd,2,$24.50,$49.00,Paid
+2026-06-20,SO-10282,South,Headset,Dana Lund Ltd,2,$89.00,$178.00,Paid
+2026-05-01,SO-10283,North,Keyboard,Jon Lund Ltd,1,$59.90,$59.90,Paid
+2026-08-25,SO-10284,Central,Keyboard,Kai Rao Ltd,5,$59.90,$299.50,Paid
+2026-08-06,SO-10285,North,Desk lamp,Wren Iyer Ltd,10,$34.50,$345.00,Paid
+2026-06-25,SO-10286,West,Desk mat,Asha Rao Ltd,1,$19.90,$19.90,Paid
+2026-07-09,SO-10287,East,Cable kit,Farah Khan Ltd,2,$15.50,$31.00,Paid
+2026-09-19,SO-10288,West,USB hub,Hugo Carter Ltd,3,$29.00,$87.00,Paid
+2026-10-20,SO-10289,West,Webcam,Asha Rao Ltd,2,$69.00,$138.00,Paid
+2026-05-31,SO-10290,North,Mouse,Hugo Berg Ltd,1,$24.50,$24.50,Pending
+2026-05-20,SO-10291,Central,Headset,Eli Wei Ltd,1,$89.00,$89.00,Paid
+2026-05-13,SO-10292,Central,Headset,Eli Wei Ltd,10,$89.00,$890.00,Paid
+2026-07-02,SO-10293,West,Desk lamp,Chen Iyer Ltd,1,$34.50,$34.50,Paid
+2026-05-27,SO-10294,Central,Mouse,Chen Iyer Ltd,5,$24.50,$122.50,Paid
+2026-08-01,SO-10295,South,Laptop stand,Jon Lund Ltd,2,$45.00,$90.00,Paid
+2026-07-08,SO-10296,North,USB hub,Omar Wei Ltd,1,$29.00,$29.00,Pending
+2026-06-21,SO-10297,South,Desk lamp,Yusuf Wei Ltd,10,$34.50,$345.00,Paid
+2026-08-21,SO-10298,Central,Desk lamp,Omar Wei Ltd,1,$34.50,$34.50,Paid
+2026-07-07,SO-10299,North,Webcam,Jon Lund Ltd,5,$69.00,$345.00,Paid
+2026-08-31,SO-10300,North,Webcam,Gita Shah Ltd,2,$69.00,$138.00,Paid
+2026-07-03,SO-10301,East,Standing desk,Ben Novak Ltd,1,$429.00,$429.00,Pending
+2026-08-14,SO-10302,Central,Cable kit,Eli Wei Ltd,2,$15.50,$31.00,Paid
+2026-10-18,SO-10303,West,Laptop stand,Jon Lund Ltd,2,$45.00,$90.00,Paid
+2026-07-08,SO-10304,South,Headset,Iris Moreno Ltd,5,$89.00,$445.00,Paid
+2026-06-30,SO-10305,South,Headset,Chen Iyer Ltd,1,$89.00,$89.00,Paid
+2026-08-23,SO-10306,North,Desk mat,Hugo Carter Ltd,1,$19.90,$19.90,Paid
+2026-10-27,SO-10307,East,Standing desk,Hugo Carter Ltd,2,$429.00,$858.00,Pending
+2026-07-03,SO-10308,Central,Webcam,Asha Rao Ltd,2,$69.00,$138.00,Paid
+2026-05-07,SO-10309,East,Monitor arm,Asha Rao Ltd,2,$79.00,$158.00,Pending
+2026-08-02,SO-10310,North,Keyboard,Chen Iyer Ltd,2,$59.90,$119.80,Paid
+2026-05-27,SO-10311,South,Standing desk,Hugo Carter Ltd,1,$429.00,$429.00,Paid
+2026-06-18,SO-10312,West,USB hub,Milo Iyer Ltd,2,$29.00,$58.00,Paid
+2026-09-08,SO-10313,South,Webcam,Ben Novak Ltd,1,$69.00,$69.00,Paid
+2026-07-31,SO-10314,Central,Headset,Nina Berg Ltd,1,$89.00,$89.00,Paid
+2026-05-09,SO-10315,East,Desk mat,Lena Novak Ltd,2,$19.90,$39.80,Paid
+2026-06-27,SO-10316,South,Standing desk,Ben Novak Ltd,1,$429.00,$429.00,Paid
+2026-07-16,SO-10317,Central,Keyboard,Lena Novak Ltd,5,$59.90,$299.50,Paid
+2026-07-19,SO-10318,North,Office chair,Jon Khan Ltd,1,$189.00,$189.00,Paid
+2026-10-29,SO-10319,North,Desk mat,Chen Iyer Ltd,5,$19.90,$99.50,Paid
+2026-09-29,SO-10320,South,Desk mat,Uma Rao Ltd,1,$19.90,$19.90,Paid
+2026-08-09,SO-10321,Central,Monitor arm,Eli Wei Ltd,5,$79.00,$395.00,Paid
+2026-10-07,SO-10322,South,Webcam,Gita Shah Ltd,1,$69.00,$69.00,Paid
+2026-05-16,SO-10323,North,Standing desk,Dana Berg Ltd,1,$429.00,$429.00,Pending
+2026-10-01,SO-10324,West,Desk mat,Dana Berg Ltd,1,$19.90,$19.90,Paid
+2026-08-10,SO-10325,North,USB hub,Omar Wei Ltd,5,$29.00,$145.00,Paid
+2026-10-03,SO-10326,South,Monitor arm,Pia Khan Ltd,1,$79.00,$79.00,Paid
+2026-08-29,SO-10327,West,Office chair,Ben Novak Ltd,3,$189.00,$567.00,Paid
+2026-09-30,SO-10328,East,Desk mat,Iris Moreno Ltd,1,$19.90,$19.90,Paid
+2026-05-06,SO-10329,Central,Mouse,Ben Novak Ltd,1,$24.50,$24.50,Paid
+2026-05-30,SO-10330,Central,Desk mat,Asha Rao Ltd,10,$19.90,$199.00,Paid
+2026-08-26,SO-10331,West,Standing desk,Eli Wei Ltd,1,$429.00,$429.00,Paid
+2026-09-26,SO-10332,North,Headset,Uma Rao Ltd,10,$89.00,$890.00,Pending
+2026-05-04,SO-10333,West,Desk lamp,Ben Novak Ltd,5,$34.50,$172.50,Paid
+2026-08-12,SO-10334,West,Laptop stand,Tom Lund Ltd,2,$45.00,$90.00,Pending
+2026-08-22,SO-10335,West,Webcam,Asha Rao Ltd,3,$69.00,$207.00,Paid
+2026-06-14,SO-10336,North,Desk lamp,Ben Novak Ltd,1,$34.50,$34.50,Paid
+2026-09-03,SO-10337,Central,Standing desk,Eli Wei Ltd,1,$429.00,$429.00,Paid
+2026-09-11,SO-10338,Central,Mouse,Dana Berg Ltd,5,$24.50,$122.50,Paid
+2026-09-21,SO-10339,North,Webcam,Ben Novak Ltd,3,$69.00,$207.00,Pending
+2026-07-07,SO-10340,East,Keyboard,Chen Iyer Ltd,2,$59.90,$119.80,Paid
+2026-08-25,SO-10341,Central,Headset,Hugo Carter Ltd,2,$89.00,$178.00,Paid
+2026-08-26,SO-10342,South,Headset,Jon Lund Ltd,2,$89.00,$178.00,Paid
+2026-09-13,SO-10343,Central,Mouse,Asha Rao Ltd,1,$24.50,$24.50,Paid
+2026-09-23,SO-10344,West,Webcam,Gita Shah Ltd,5,$69.00,$345.00,Paid
+2026-09-15,SO-10345,North,Office chair,Chen Iyer Ltd,2,$189.00,$378.00,Paid
+2026-08-09,SO-10346,North,USB hub,Ben Novak Ltd,5,$29.00,$145.00,Refunded
+2026-09-17,SO-10347,Central,Monitor arm,Jon Lund Ltd,3,$79.00,$237.00,Paid
+2026-10-07,SO-10348,West,Cable kit,Jon Khan Ltd,2,$15.50,$31.00,Paid
+2026-07-05,SO-10349,South,USB hub,Hugo Carter Ltd,1,$29.00,$29.00,Paid
+2026-08-12,SO-10350,North,Monitor arm,Asha Rao Ltd,1,$79.00,$79.00,Paid
+2026-08-04,SO-10351,West,Desk mat,Kai Rao Ltd,2,$19.90,$39.80,Paid
+2026-07-27,SO-10352,East,Webcam,Ben Novak Ltd,10,$69.00,$690.00,Paid
+2026-10-14,SO-10353,East,USB hub,Ben Carter Ltd,5,$29.00,$145.00,Paid
+2026-06-16,SO-10354,West,Mouse,Asha Rao Ltd,1,$24.50,$24.50,Pending
+2026-06-23,SO-10355,North,Mouse,Jon Khan Ltd,5,$24.50,$122.50,Paid
+2026-07-12,SO-10356,East,Webcam,Jon Lund Ltd,5,$69.00,$345.00,Paid
+2026-08-27,SO-10357,East,Office chair,Asha Rao Ltd,2,$189.00,$378.00,Paid
+2026-07-30,SO-10358,South,USB hub,Asha Rao Ltd,1,$29.00,$29.00,Paid
+2026-07-23,SO-10359,South,Keyboard,Lena Novak Ltd,10,$59.90,$599.00,Paid
+2026-08-11,SO-10360,North,USB hub,Gita Shah Ltd,10,$29.00,$290.00,Paid
+2026-06-12,SO-10361,Central,Office chair,Asha Rao Ltd,5,$189.00,$945.00,Paid
+2026-08-11,SO-10362,Central,Webcam,Iris Wei Ltd,10,$69.00,$690.00,Paid
+2026-06-18,SO-10363,North,Cable kit,Asha Rao Ltd,10,$15.50,$155.00,Paid
+2026-07-04,SO-10364,East,Monitor arm,Iris Wei Ltd,10,$79.00,$790.00,Paid
+2026-06-06,SO-10365,South,Office chair,Chen Iyer Ltd,1,$189.00,$189.00,Paid
+2026-06-24,SO-10366,South,Cable kit,Chen Iyer Ltd,1,$15.50,$15.50,Paid
+2026-08-20,SO-10367,South,Standing desk,Dana Berg Ltd,1,$429.00,$429.00,Paid
+2026-10-05,SO-10368,West,Headset,Ben Novak Ltd,2,$89.00,$178.00,Paid
+2026-08-31,SO-10369,West,Keyboard,Wren Iyer Ltd,5,$59.90,$299.50,Paid
+2026-05-30,SO-10370,South,USB hub,Iris Moreno Ltd,1,$29.00,$29.00,Paid
+2026-07-19,SO-10371,East,USB hub,Kai Shah Ltd,5,$29.00,$145.00,Paid
+2026-05-06,SO-10372,Central,Keyboard,Hugo Berg Ltd,5,$59.90,$299.50,Paid
+2026-09-24,SO-10373,North,Mouse,Jon Lund Ltd,2,$24.50,$49.00,Pending
+2026-07-09,SO-10374,West,Desk mat,Asha Rao Ltd,2,$19.90,$39.80,Paid
+2026-05-15,SO-10375,Central,Keyboard,Farah Khan Ltd,2,$59.90,$119.80,Paid
+2026-08-20,SO-10376,Central,Office chair,Eli Wei Ltd,2,$189.00,$378.00,Paid
+2026-09-24,SO-10377,South,Monitor arm,Asha Rao Ltd,3,$79.00,$237.00,Paid
+2026-08-10,SO-10378,East,Desk mat,Kai Rao Ltd,3,$19.90,$59.70,Paid
+2026-09-15,SO-10379,Central,Desk mat,Asha Rao Ltd,1,$19.90,$19.90,Paid
+2026-08-30,SO-10380,North,Mouse,Asha Rao Ltd,10,$24.50,$245.00,Pending
+2026-06-14,SO-10381,West,Standing desk,Eli Wei Ltd,1,$429.00,$429.00,Paid
+2026-09-22,SO-10382,North,Office chair,Dana Berg Ltd,2,$189.00,$378.00,Paid
+2026-05-28,SO-10383,East,Desk mat,Gita Shah Ltd,2,$19.90,$39.80,Paid
+2026-07-08,SO-10384,East,Standing desk,Yusuf Wei Ltd,2,$429.00,$858.00,Paid
+2026-08-26,SO-10385,East,Cable kit,Uma Rao Ltd,1,$15.50,$15.50,Paid
+2026-10-26,SO-10386,West,USB hub,Pia Khan Ltd,1,$29.00,$29.00,Pending
+2026-09-08,SO-10387,North,USB hub,Ben Novak Ltd,1,$29.00,$29.00,Paid
+2026-10-04,SO-10388,East,Laptop stand,Dana Berg Ltd,1,$45.00,$45.00,Paid
+2026-05-09,SO-10389,South,Headset,Lena Novak Ltd,1,$89.00,$89.00,Paid
+2026-10-11,SO-10390,North,Desk lamp,Chen Moreno Ltd,5,$34.50,$172.50,Refunded
+2026-09-16,SO-10391,North,Cable kit,Asha Rao Ltd,1,$15.50,$15.50,Paid
+2026-06-22,SO-10392,West,Laptop stand,Asha Rao Ltd,3,$45.00,$135.00,Paid
+2026-10-16,SO-10393,South,Webcam,Eli Wei Ltd,5,$69.00,$345.00,Paid
+2026-07-30,SO-10394,West,Desk mat,Hugo Carter Ltd,1,$19.90,$19.90,Paid
+2026-07-23,SO-10395,North,Desk lamp,Asha Rao Ltd,5,$34.50,$172.50,Paid
+2026-08-13,SO-10396,North,Laptop stand,Hugo Carter Ltd,3,$45.00,$135.00,Paid
+2026-07-09,SO-10397,East,Keyboard,Xia Berg Ltd,10,$59.90,$599.00,Paid
+2026-07-15,SO-10398,Central,Office chair,Asha Rao Ltd,5,$189.00,$945.00,Paid
+2026-09-02,SO-10399,Central,Headset,Iris Moreno Ltd,3,$89.00,$267.00,Paid
+2026-10-13,SO-10400,South,Desk lamp,Asha Rao Ltd,10,$34.50,$345.00,Paid
+2026-10-02,SO-10401,North,Laptop stand,Jon Lund Ltd,2,$45.00,$90.00,Paid
+2026-09-19,SO-10402,East,Cable kit,Eli Wei Ltd,5,$15.50,$77.50,Paid
+2026-08-21,SO-10403,West,Office chair,Ben Novak Ltd,5,$189.00,$945.00,Paid
+2026-07-22,SO-10404,North,Desk lamp,Chen Moreno Ltd,2,$34.50,$69.00,Paid
+2026-10-13,SO-10405,Central,Desk mat,Asha Rao Ltd,10,$19.90,$199.00,Refunded
+2026-10-31,SO-10406,North,Keyboard,Chen Iyer Ltd,3,$59.90,$179.70,Paid
+2026-09-05,SO-10407,South,Webcam,Eli Wei Ltd,5,$69.00,$345.00,Paid
+2026-06-21,SO-10408,West,Standing desk,Asha Rao Ltd,5,$429.00,"$2,145.00",Pending
+2026-07-24,SO-10409,Central,Desk lamp,Asha Rao Ltd,1,$34.50,$34.50,Paid
+2026-08-24,SO-10410,West,Desk mat,Chen Iyer Ltd,3,$19.90,$59.70,Paid
+2026-08-15,SO-10411,South,Keyboard,Dana Berg Ltd,2,$59.90,$119.80,Paid
+2026-10-25,SO-10412,South,Standing desk,Ben Novak Ltd,2,$429.00,$858.00,Paid
+2026-07-12,SO-10413,West,Cable kit,Asha Rao Ltd,2,$15.50,$31.00,Pending
+2026-10-05,SO-10414,West,Keyboard,Ben Novak Ltd,1,$59.90,$59.90,Paid
+2026-06-28,SO-10415,Central,Mouse,Ben Novak Ltd,10,$24.50,$245.00,Paid
+2026-06-08,SO-10416,East,Keyboard,Omar Wei Ltd,2,$59.90,$119.80,Paid
+2026-06-20,SO-10417,South,Keyboard,Omar Wei Ltd,1,$59.90,$59.90,Paid
+2026-10-16,SO-10418,South,Desk mat,Chen Iyer Ltd,1,$19.90,$19.90,Paid
+2026-08-18,SO-10419,East,Laptop stand,Asha Rao Ltd,1,$45.00,$45.00,Pending
+2026-07-29,SO-10420,Central,Headset,Ben Novak Ltd,2,$89.00,$178.00,Paid
+2026-06-24,SO-10421,North,Headset,Wren Iyer Ltd,2,$89.00,$178.00,Paid
+2026-09-23,SO-10422,Central,Cable kit,Asha Rao Ltd,2,$15.50,$31.00,Paid
+2026-06-22,SO-10423,North,Headset,Pia Khan Ltd,2,$89.00,$178.00,Paid
+2026-09-21,SO-10424,West,USB hub,Ben Novak Ltd,2,$29.00,$58.00,Paid
+2026-06-30,SO-10425,Central,Webcam,Asha Rao Ltd,3,$69.00,$207.00,Paid
+2026-08-08,SO-10426,North,Desk mat,Hugo Carter Ltd,2,$19.90,$39.80,Pending
+2026-10-08,SO-10427,West,Laptop stand,Hugo Berg Ltd,5,$45.00,$225.00,Paid
+2026-07-30,SO-10428,East,Office chair,Kai Rao Ltd,3,$189.00,$567.00,Pending
+2026-08-13,SO-10429,North,Keyboard,Gita Shah Ltd,2,$59.90,$119.80,Paid
+2026-06-02,SO-10430,West,Keyboard,Asha Rao Ltd,2,$59.90,$119.80,Paid
+2026-07-12,SO-10431,Central,Office chair,Asha Rao Ltd,1,$189.00,$189.00,Paid
+2026-08-25,SO-10432,West,Office chair,Asha Rao Ltd,3,$189.00,$567.00,Paid
+2026-07-24,SO-10433,South,Keyboard,Hugo Carter Ltd,10,$59.90,$599.00,Pending
+2026-06-20,SO-10434,East,Desk lamp,Ben Novak Ltd,2,$34.50,$69.00,Paid
+2026-10-17,SO-10435,Central,USB hub,Kai Shah Ltd,2,$29.00,$58.00,Paid
+2026-09-18,SO-10436,Central,Monitor arm,Asha Rao Ltd,5,$79.00,$395.00,Paid
+2026-06-14,SO-10437,Central,Laptop stand,Lena Novak Ltd,1,$45.00,$45.00,Paid
+2026-07-19,SO-10438,Central,Office chair,Asha Rao Ltd,2,$189.00,$378.00,Paid
+2026-07-22,SO-10439,South,Cable kit,Asha Rao Ltd,2,$15.50,$31.00,Paid
+2026-10-21,SO-10440,East,Monitor arm,Asha Rao Ltd,5,$79.00,$395.00,Pending
+2026-06-24,SO-10441,South,Keyboard,Farah Khan Ltd,10,$59.90,$599.00,Pending
+2026-10-28,SO-10442,Central,Monitor arm,Hugo Berg Ltd,2,$79.00,$158.00,Pending
+2026-09-16,SO-10443,South,Keyboard,Eli Wei Ltd,1,$59.90,$59.90,Refunded
+2026-08-28,SO-10444,Central,Monitor arm,Eli Rao Ltd,1,$79.00,$79.00,Paid
+2026-07-30,SO-10445,Central,Keyboard,Iris Moreno Ltd,3,$59.90,$179.70,Paid
+2026-06-07,SO-10446,East,Standing desk,Wren Iyer Ltd,10,$429.00,"$4,290.00",Paid
+2026-06-07,SO-10447,South,Desk lamp,Dana Berg Ltd,1,$34.50,$34.50,Paid
+2026-10-27,SO-10448,Central,Cable kit,Chen Iyer Ltd,2,$15.50,$31.00,Paid
+2026-06-14,SO-10449,North,Standing desk,Asha Rao Ltd,1,$429.00,$429.00,Paid
+2026-10-20,SO-10450,East,USB hub,Hugo Carter Ltd,1,$29.00,$29.00,Paid
+2026-05-12,SO-10451,North,Standing desk,Iris Moreno Ltd,3,$429.00,"$1,287.00",Paid
+2026-05-30,SO-10452,North,Keyboard,Eli Wei Ltd,10,$59.90,$599.00,Paid
+2026-08-03,SO-10453,Central,Headset,Dana Berg Ltd,10,$89.00,$890.00,Paid
+2026-06-21,SO-10454,Central,Monitor arm,Asha Rao Ltd,2,$79.00,$158.00,Paid
+2026-08-30,SO-10455,North,Desk lamp,Ben Novak Ltd,2,$34.50,$69.00,Paid
+2026-08-05,SO-10456,West,Mouse,Ben Novak Ltd,1,$24.50,$24.50,Paid
+2026-06-25,SO-10457,East,Monitor arm,Asha Rao Ltd,5,$79.00,$395.00,Paid
+2026-09-07,SO-10458,East,USB hub,Ben Novak Ltd,3,$29.00,$87.00,Paid
+2026-08-02,SO-10459,South,Cable kit,Dana Berg Ltd,5,$15.50,$77.50,Paid
+2026-10-27,SO-10460,East,Office chair,Asha Rao Ltd,5,$189.00,$945.00,Paid
+2026-08-06,SO-10461,North,Standing desk,Jon Lund Ltd,1,$429.00,$429.00,Paid
+2026-10-27,SO-10462,North,Office chair,Eli Wei Ltd,3,$189.00,$567.00,Paid
+2026-06-02,SO-10463,East,Headset,Iris Moreno Ltd,1,$89.00,$89.00,Paid
+2026-08-30,SO-10464,East,Laptop stand,Farah Khan Ltd,3,$45.00,$135.00,Paid
+2026-09-15,SO-10465,East,Monitor arm,Eli Wei Ltd,3,$79.00,$237.00,Paid
+2026-07-04,SO-10466,North,Desk mat,Milo Iyer Ltd,2,$19.90,$39.80,Paid
+2026-05-07,SO-10467,East,Standing desk,Asha Rao Ltd,1,$429.00,$429.00,Pending
+2026-10-10,SO-10468,Central,USB hub,Asha Shah Ltd,2,$29.00,$58.00,Paid
+2026-09-20,SO-10469,East,Desk lamp,Iris Wei Ltd,2,$34.50,$69.00,Paid
+2026-06-13,SO-10470,East,Office chair,Jon Lund Ltd,2,$189.00,$378.00,Paid
+2026-10-16,SO-10471,East,USB hub,Asha Rao Ltd,1,$29.00,$29.00,Pending
+2026-08-23,SO-10472,East,Keyboard,Asha Rao Ltd,10,$59.90,$599.00,Paid
+2026-08-21,SO-10473,North,Monitor arm,Iris Wei Ltd,1,$79.00,$79.00,Paid
+2026-09-03,SO-10474,North,Desk mat,Nina Berg Ltd,1,$19.90,$19.90,Pending
+2026-07-29,SO-10475,East,Headset,Chen Iyer Ltd,1,$89.00,$89.00,Paid
+2026-05-07,SO-10476,South,Desk lamp,Quinn Shah Ltd,2,$34.50,$69.00,Paid
+2026-07-13,SO-10477,East,Desk mat,Sara Moreno Ltd,1,$19.90,$19.90,Paid
+2026-06-22,SO-10478,North,Laptop stand,Asha Rao Ltd,1,$45.00,$45.00,Paid
+2026-05-08,SO-10479,East,Keyboard,Asha Rao Ltd,1,$59.90,$59.90,Paid
+2026-10-19,SO-10480,North,Mouse,Chen Iyer Ltd,2,$24.50,$49.00,Paid
+2026-09-09,SO-10481,West,Keyboard,Sara Moreno Ltd,3,$59.90,$179.70,Paid
+2026-10-11,SO-10482,North,Desk mat,Asha Rao Ltd,1,$19.90,$19.90,Paid
+2026-10-11,SO-10483,Central,Desk lamp,Eli Wei Ltd,2,$34.50,$69.00,Paid
+2026-08-23,SO-10484,North,Mouse,Pia Khan Ltd,5,$24.50,$122.50,Pending
+2026-07-26,SO-10485,East,Laptop stand,Asha Rao Ltd,3,$45.00,$135.00,Paid
+2026-09-09,SO-10486,South,Desk lamp,Chen Iyer Ltd,2,$34.50,$69.00,Paid
+2026-08-17,SO-10487,North,Standing desk,Gita Shah Ltd,5,$429.00,"$2,145.00",Paid
+2026-06-29,SO-10488,East,USB hub,Chen Iyer Ltd,10,$29.00,$290.00,Pending
+2026-06-27,SO-10489,East,Laptop stand,Ben Novak Ltd,1,$45.00,$45.00,Paid
+2026-06-08,SO-10490,East,USB hub,Ben Novak Ltd,3,$29.00,$87.00,Paid
+2026-07-04,SO-10491,South,Keyboard,Hugo Carter Ltd,10,$59.90,$599.00,Paid
+2026-09-13,SO-10492,North,Desk mat,Asha Rao Ltd,2,$19.90,$39.80,Paid
+2026-10-05,SO-10493,East,Standing desk,Dana Berg Ltd,1,$429.00,$429.00,Paid
+2026-07-14,SO-10494,North,Mouse,Chen Iyer Ltd,1,$24.50,$24.50,Paid
+2026-08-08,SO-10495,North,Keyboard,Lena Novak Ltd,2,$59.90,$119.80,Pending
+2026-10-01,SO-10496,Central,USB hub,Nina Berg Ltd,5,$29.00,$145.00,Paid
+2026-07-23,SO-10497,Central,Monitor arm,Asha Rao Ltd,10,$79.00,$790.00,Paid
+2026-08-10,SO-10498,East,Desk mat,Dana Berg Ltd,2,$19.90,$39.80,Paid
+2026-07-28,SO-10499,North,Mouse,Farah Khan Ltd,1,$24.50,$24.50,Paid
+2026-06-16,SO-10500,West,Headset,Asha Rao Ltd,2,$89.00,$178.00,Pending
+2026-06-29,SO-10501,Central,USB hub,Asha Shah Ltd,2,$29.00,$58.00,Paid
+2026-08-16,SO-10502,Central,Monitor arm,Ben Carter Ltd,1,$79.00,$79.00,Paid
+2026-06-04,SO-10503,South,Headset,Asha Rao Ltd,1,$89.00,$89.00,Paid
+2026-08-30,SO-10504,South,Desk lamp,Nina Berg Ltd,1,$34.50,$34.50,Paid
+2026-07-22,SO-10505,East,Headset,Lena Novak Ltd,1,$89.00,$89.00,Paid
+2026-08-15,SO-10506,East,Monitor arm,Asha Rao Ltd,3,$79.00,$237.00,Paid
+2026-10-04,SO-10507,Central,Office chair,Farah Khan Ltd,10,$189.00,"$1,890.00",Paid
+2026-09-12,SO-10508,West,Desk lamp,Chen Iyer Ltd,2,$34.50,$69.00,Paid
+2026-05-02,SO-10509,Central,Keyboard,Ben Novak Ltd,3,$59.90,$179.70,Paid
+2026-05-23,SO-10510,North,Desk lamp,Eli Rao Ltd,1,$34.50,$34.50,Paid
+2026-09-08,SO-10511,East,Office chair,Eli Rao Ltd,2,$189.00,$378.00,Paid
+2026-10-06,SO-10512,East,Keyboard,Asha Rao Ltd,2,$59.90,$119.80,Paid
+2026-09-24,SO-10513,East,Headset,Ben Novak Ltd,1,$89.00,$89.00,Paid
+2026-06-08,SO-10514,West,Monitor arm,Quinn Shah Ltd,5,$79.00,$395.00,Paid
+2026-08-15,SO-10515,Central,Monitor arm,Dana Berg Ltd,2,$79.00,$158.00,Paid
+2026-07-13,SO-10516,Central,Headset,Asha Rao Ltd,1,$89.00,$89.00,Refunded
+2026-07-28,SO-10517,Central,USB hub,Asha Rao Ltd,2,$29.00,$58.00,Paid
+2026-08-18,SO-10518,North,USB hub,Dana Lund Ltd,1,$29.00,$29.00,Paid
+2026-08-01,SO-10519,West,Laptop stand,Pia Khan Ltd,2,$45.00,$90.00,Pending
+2026-08-05,SO-10520,South,Laptop stand,Gita Shah Ltd,5,$45.00,$225.00,Paid
+2026-06-16,SO-10521,South,Monitor arm,Dana Berg Ltd,1,$79.00,$79.00,Paid
+2026-05-02,SO-10522,North,Monitor arm,Asha Rao Ltd,10,$79.00,$790.00,Paid
+2026-07-06,SO-10523,East,Mouse,Iris Moreno Ltd,1,$24.50,$24.50,Pending
+2026-08-10,SO-10524,East,Desk mat,Uma Rao Ltd,10,$19.90,$199.00,Paid
+2026-10-15,SO-10525,East,Standing desk,Ben Novak Ltd,2,$429.00,$858.00,Paid
+2026-10-29,SO-10526,North,Desk mat,Asha Rao Ltd,1,$19.90,$19.90,Paid
+2026-05-17,SO-10527,South,USB hub,Tom Lund Ltd,3,$29.00,$87.00,Paid
+2026-06-17,SO-10528,North,Office chair,Lena Carter Ltd,1,$189.00,$189.00,Paid
+2026-08-03,SO-10529,North,Desk lamp,Lena Carter Ltd,1,$34.50,$34.50,Paid
+2026-07-21,SO-10530,North,Keyboard,Asha Rao Ltd,1,$59.90,$59.90,Paid
+2026-08-24,SO-10531,East,USB hub,Dana Lund Ltd,1,$29.00,$29.00,Paid
+2026-08-21,SO-10532,West,USB hub,Ben Carter Ltd,10,$29.00,$290.00,Pending
+2026-08-14,SO-10533,Central,Webcam,Chen Iyer Ltd,2,$69.00,$138.00,Paid
+2026-09-04,SO-10534,East,Desk lamp,Asha Rao Ltd,1,$34.50,$34.50,Paid
+2026-05-27,SO-10535,Central,Desk lamp,Ben Novak Ltd,1,$34.50,$34.50,Paid
+2026-08-01,SO-10536,North,Office chair,Farah Khan Ltd,1,$189.00,$189.00,Paid
+2026-06-26,SO-10537,North,Standing desk,Asha Rao Ltd,3,$429.00,"$1,287.00",Pending
+2026-10-22,SO-10538,Central,Office chair,Dana Berg Ltd,2,$189.00,$378.00,Refunded
+2026-09-10,SO-10539,West,Headset,Iris Moreno Ltd,10,$89.00,$890.00,Paid
+2026-07-02,SO-10540,North,Standing desk,Nina Berg Ltd,2,$429.00,$858.00,Paid
+2026-08-18,SO-10541,East,Desk lamp,Hugo Carter Ltd,1,$34.50,$34.50,Paid
+2026-08-31,SO-10542,North,Laptop stand,Asha Rao Ltd,10,$45.00,$450.00,Paid
+2026-10-06,SO-10543,East,Office chair,Xia Berg Ltd,2,$189.00,$378.00,Paid
+2026-06-20,SO-10544,South,Keyboard,Chen Iyer Ltd,1,$59.90,$59.90,Paid
+2026-10-02,SO-10545,South,Desk mat,Asha Rao Ltd,10,$19.90,$199.00,Paid
+2026-08-09,SO-10546,North,Office chair,Asha Rao Ltd,2,$189.00,$378.00,Pending
+2026-05-09,SO-10547,South,Monitor arm,Ben Carter Ltd,1,$79.00,$79.00,Refunded
+2026-06-29,SO-10548,South,Webcam,Gita Shah Ltd,1,$69.00,$69.00,Paid
+2026-10-20,SO-10549,South,Headset,Dana Berg Ltd,2,$89.00,$178.00,Paid
+2026-10-13,SO-10550,East,Mouse,Uma Rao Ltd,3,$24.50,$73.50,Paid
+2026-08-08,SO-10551,West,Desk mat,Asha Rao Ltd,1,$19.90,$19.90,Paid
+2026-07-01,SO-10552,Central,Headset,Asha Rao Ltd,10,$89.00,$890.00,Paid
+2026-09-03,SO-10553,South,Monitor arm,Wren Iyer Ltd,2,$79.00,$158.00,Paid
+2026-10-06,SO-10554,West,Keyboard,Sara Moreno Ltd,10,$59.90,$599.00,Paid
+2026-09-19,SO-10555,West,Office chair,Asha Rao Ltd,5,$189.00,$945.00,Paid
+2026-09-25,SO-10556,North,Cable kit,Asha Rao Ltd,1,$15.50,$15.50,Paid
+2026-07-08,SO-10557,West,Desk mat,Omar Wei Ltd,10,$19.90,$199.00,Paid
+2026-09-10,SO-10558,East,Laptop stand,Asha Rao Ltd,1,$45.00,$45.00,Paid
+2026-08-14,SO-10559,West,Standing desk,Asha Rao Ltd,10,$429.00,"$4,290.00",Paid
+2026-05-29,SO-10560,North,Desk lamp,Iris Moreno Ltd,5,$34.50,$172.50,Paid
+2026-06-28,SO-10561,East,Webcam,Tom Lund Ltd,10,$69.00,$690.00,Pending
+2026-06-15,SO-10562,East,Office chair,Chen Iyer Ltd,5,$189.00,$945.00,Paid
+2026-10-22,SO-10563,West,Cable kit,Eli Wei Ltd,2,$15.50,$31.00,Paid
+2026-06-01,SO-10564,South,Standing desk,Asha Rao Ltd,1,$429.00,$429.00,Paid
+2026-05-02,SO-10565,North,Keyboard,Asha Rao Ltd,1,$59.90,$59.90,Paid
+2026-07-26,SO-10566,South,Desk lamp,Dana Berg Ltd,1,$34.50,$34.50,Paid
+2026-06-15,SO-10567,East,Keyboard,Ben Novak Ltd,3,$59.90,$179.70,Paid
+2026-10-16,SO-10568,East,Webcam,Asha Rao Ltd,10,$69.00,$690.00,Paid
+2026-08-22,SO-10569,South,Standing desk,Chen Moreno Ltd,2,$429.00,$858.00,Paid
+2026-06-09,SO-10570,East,Mouse,Asha Rao Ltd,5,$24.50,$122.50,Paid
+2026-07-07,SO-10571,East,Desk lamp,Pia Khan Ltd,10,$34.50,$345.00,Pending
+2026-08-11,SO-10572,West,Keyboard,Milo Iyer Ltd,10,$59.90,$599.00,Pending
+2026-05-06,SO-10573,Central,USB hub,Ben Novak Ltd,1,$29.00,$29.00,Refunded
+2026-06-01,SO-10574,East,Laptop stand,Nina Lund Ltd,1,$45.00,$45.00,Paid
+2026-08-29,SO-10575,South,Cable kit,Asha Rao Ltd,1,$15.50,$15.50,Paid
+2026-06-10,SO-10576,South,Monitor arm,Ben Novak Ltd,10,$79.00,$790.00,Paid
+2026-05-14,SO-10577,West,Desk mat,Hugo Carter Ltd,1,$19.90,$19.90,Paid
+2026-09-30,SO-10578,Central,USB hub,Asha Rao Ltd,1,$29.00,$29.00,Paid
+2026-09-18,SO-10579,South,Office chair,Ben Novak Ltd,1,$189.00,$189.00,Paid
+2026-07-29,SO-10580,Central,Standing desk,Ben Carter Ltd,1,$429.00,$429.00,Paid
+2026-07-01,SO-10581,Central,USB hub,Farah Khan Ltd,1,$29.00,$29.00,Paid
+2026-05-08,SO-10582,East,Laptop stand,Asha Rao Ltd,1,$45.00,$45.00,Paid
+2026-10-07,SO-10583,South,Webcam,Pia Khan Ltd,3,$69.00,$207.00,Paid
+2026-08-07,SO-10584,South,Mouse,Gita Shah Ltd,1,$24.50,$24.50,Paid
+2026-08-21,SO-10585,South,Mouse,Ben Novak Ltd,1,$24.50,$24.50,Paid
+2026-06-08,SO-10586,East,Headset,Ravi Carter Ltd,2,$89.00,$178.00,Paid
+2026-05-06,SO-10587,North,Cable kit,Asha Rao Ltd,1,$15.50,$15.50,Paid
+2026-09-27,SO-10588,South,Webcam,Ravi Carter Ltd,1,$69.00,$69.00,Paid
+2026-10-27,SO-10589,North,Desk lamp,Iris Moreno Ltd,5,$34.50,$172.50,Refunded
+2026-08-14,SO-10590,East,Laptop stand,Asha Shah Ltd,5,$45.00,$225.00,Pending
+2026-06-07,SO-10591,East,Desk mat,Milo Iyer Ltd,1,$19.90,$19.90,Paid
+2026-09-15,SO-10592,West,Desk lamp,Dana Berg Ltd,1,$34.50,$34.50,Paid
+2026-05-07,SO-10593,South,Headset,Ben Novak Ltd,2,$89.00,$178.00,Paid
+2026-07-12,SO-10594,South,Desk lamp,Asha Rao Ltd,1,$34.50,$34.50,Paid
+2026-06-05,SO-10595,West,Keyboard,Zara Khan Ltd,2,$59.90,$119.80,Paid
+2026-08-13,SO-10596,South,Keyboard,Vik Novak Ltd,1,$59.90,$59.90,Paid
+2026-05-18,SO-10597,South,Desk lamp,Kai Rao Ltd,1,$34.50,$34.50,Paid
+2026-08-05,SO-10598,South,Webcam,Ben Novak Ltd,3,$69.00,$207.00,Paid
+2026-09-17,SO-10599,North,Laptop stand,Hugo Carter Ltd,2,$45.00,$90.00,Paid
+2026-09-24,SO-10600,North,Laptop stand,Ravi Carter Ltd,5,$45.00,$225.00,Paid

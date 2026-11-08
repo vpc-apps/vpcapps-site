@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Any CSV to dashboard: instant charts and a summary · VPC Apps</title>
+<meta name="description" content="Free CSV to dashboard for any table: drop a CSV, TSV or TXT file and get charts, key numbers, a data quality check and a summary. Nothing is uploaded.">
+<link rel="canonical" href="https://vpcapps.net/tools/any-csv-dashboard/">
+<meta property="og:site_name" content="VPC Apps">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Any CSV to dashboard: instant charts and a summary">
+<meta property="og:description" content="Free CSV to dashboard for any table: drop a CSV, TSV or TXT file and get charts, key numbers, a data quality check and a summary. Nothing is uploaded.">
+<meta property="og:url" content="https://vpcapps.net/tools/any-csv-dashboard/">
+<meta property="og:image" content="https://vpcapps.net/assets/img/tools/generic-og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ff5a8a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+<link rel="manifest" href="/tools/manifest.webmanifest">
+<link rel="preload" href="/assets/fonts/fredoka.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script src="/assets/js/site.js" defer></script>
+<script>(function(){var framed;try{framed=window.top!==window.self;}catch(e){framed=true;}
+if(!framed)return;var ok=false;try{ok=window.top.location.host===location.host;}catch(e){}
+if(ok)return;document.write('<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fdf1e7;font:16px system-ui,sans-serif;color:#2b2140;text-align:center;z-index:2147483647">'+
+'<div style="padding:24px"><p style="font-size:20px;font-weight:700;margin:0 0 8px">Use CSV to Dashboard free on vpcapps.net</p>'+
+'<p style="margin:0 0 18px;color:#6b5f80">This tool by VPC Apps runs on its own page:<br><b>'+location.host+location.pathname+'</b></p>'+
+'<a href="'+location.href.replace(/"/g,'%22')+'" target="_top" rel="noopener" style="display:inline-block;background:#e2495f;color:#fff;padding:12px 20px;border-radius:12px;text-decoration:none;font-weight:700">Open the tool</a></div></div>'+
+'<plaintext style="display:none">');})();</script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('/tools/sw.js').catch(function(){})});</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Any CSV to dashboard", "description": "Free CSV to dashboard for any table: drop a CSV, TSV or TXT file and get charts, key numbers, a data quality check and a summary. Nothing is uploaded.", "url": "https://vpcapps.net/tools/any-csv-dashboard/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (web browser)", "image": "https://vpcapps.net/assets/img/tools/generic-og.jpg", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "VPC Apps", "url": "https://vpcapps.net"}, "featureList": ["Headline numbers: rows, how complete the data is, the total and average of your main amount column, and the date range.", "Findings written out for you, such as the most common values, how much the top 5 customers or products make up, and columns that are mostly blank.", "Charts: rows by your most useful category columns, rows and totals per day, week or month, and the spread of your main number column.", "Exact tables: min, median, average and max for every number column, counts for two categories side by side, and a data quality check of every column.", "An Adjust panel to choose the date, the measure and up to 4 breakdown columns, plus a one-file HTML report and a print-ready PDF layout."]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is my file uploaded anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. The file is read and analysed by JavaScript in your own browser tab. Nothing from it is sent to us or to any server, and the tool keeps working offline after your first visit."}}, {"@type": "Question", "name": "How does it decide what to chart?", "acceptedAnswer": {"@type": "Answer", "text": "It reads every column and decides what it holds: numbers, money, percentages, dates, yes/no, categories, IDs or free text. Then it applies a few simple rules: categories with 5 to 30 different values are charted first, a money column named like Amount or Total becomes the main measure, ratings from 1 to 5 are averaged instead of added up, and ID columns are left out of the charts."}}, {"@type": "Question", "name": "What if it picks the wrong columns?", "acceptedAnswer": {"@type": "Answer", "text": "Open Adjust above the dashboard and choose the date column, the measure and up to 4 breakdown columns. Your choice is kept while the page is open."}}, {"@type": "Question", "name": "Is there a limit?", "acceptedAnswer": {"@type": "Answer", "text": "The tool reads the first 5,000 rows of each file."}}, {"@type": "Question", "name": "Jira, Etsy or attendance export?", "acceptedAnswer": {"@type": "Answer", "text": "Those are recognised automatically and get a tailored report, with their own pages under More free tools below."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://vpcapps.net/"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://vpcapps.net/tools/"}, {"@type": "ListItem", "position": 3, "name": "Any CSV to dashboard", "item": "https://vpcapps.net/tools/any-csv-dashboard/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></a>
+    <nav aria-label="Main"><ul><li><a href="/games/">Games</a></li><li><a href="/tools/" aria-current="page">Tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
+    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
+  </div>
+</header>
+<main id="main">
+<nav class="wrap crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/tools/">Tools</a> › <span>Any CSV to dashboard</span></nav>
+<section class="wrap section tool-head">
+  <h1>Turn any CSV file into a dashboard</h1>
+  <p class="lead">Sales lists, ticket exports, inventories, survey results: drop any CSV table and get a general dashboard of its columns in seconds, with key numbers, top values, trends over time, number statistics, a data quality check and findings in plain English.</p>
+  <p class="tags"><span class="tag">Free</span><span class="tag">No upload, no account</span><span class="tag">Works offline</span></p>
+</section>
+<section class="wrap section" id="try" aria-label="Any CSV to dashboard tool">
+  <iframe class="e8-frame" src="/tools/app/?t=generic&amp;embed=1" title="Any CSV to dashboard tool"></iframe>
+  <p class="player-links"><a href="/tools/app/?t=generic">Open full screen ↗</a> · <a href="/tools/app/samples/generic_sales_sample.csv" download>Download the sample CSV</a> (synthetic data)</p>
+</section>
+<section class="wrap section split">
+  <div><h2>What you get</h2><ul class="checks"><li>Headline numbers: rows, how complete the data is, the total and average of your main amount column, and the date range.</li><li>Findings written out for you, such as the most common values, how much the top 5 customers or products make up, and columns that are mostly blank.</li><li>Charts: rows by your most useful category columns, rows and totals per day, week or month, and the spread of your main number column.</li><li>Exact tables: min, median, average and max for every number column, counts for two categories side by side, and a data quality check of every column.</li><li>An Adjust panel to choose the date, the measure and up to 4 breakdown columns, plus a one-file HTML report and a print-ready PDF layout.</li></ul></div>
+  <figure class="shot"><img src="/assets/img/tools/generic-1280.webp" alt="Example Any CSV to dashboard dashboard made from the sample file" width="1280" height="800" loading="lazy">
+  <figcaption class="muted small">Made from the sample file (synthetic data).</figcaption></figure>
+</section>
+<section class="wrap section narrow"><h2>How to export the file</h2><ol class="steps"><li>From Excel or Google Sheets: <b>File → Save As</b> (or <b>Download</b>) <b>→ CSV</b>. Most other tools have an <b>Export → CSV</b> button.</li><li>Make sure the first row holds the column names.</li><li>Drop the file above. Comma, semicolon and tab separated files (.csv, .tsv, .txt) all work.</li><li>Open <b>Adjust</b> if you want a different date, measure or breakdown columns.</li></ol></section>
+<section class="wrap section narrow">
+  <div class="panel"><h2>Your file never leaves your device</h2><p>The tool is a web page that runs entirely in your browser. When you choose a file, it is read and analysed on your computer: nothing is uploaded, stored or seen by us. After your first visit it also works with no internet connection. The page counts anonymous visits with Cloudflare Web Analytics (no cookies, nothing from your file); ad blockers may block it. See our <a href="/privacy/">privacy policy</a>.</p></div>
+  
+</section>
+<section class="wrap section narrow faq"><h2>Questions</h2><details><summary>Is my file uploaded anywhere?</summary><p>No. The file is read and analysed by JavaScript in your own browser tab. Nothing from it is sent to us or to any server, and the tool keeps working offline after your first visit.</p></details><details><summary>How does it decide what to chart?</summary><p>It reads every column and decides what it holds: numbers, money, percentages, dates, yes/no, categories, IDs or free text. Then it applies a few simple rules: categories with 5 to 30 different values are charted first, a money column named like Amount or Total becomes the main measure, ratings from 1 to 5 are averaged instead of added up, and ID columns are left out of the charts.</p></details><details><summary>What if it picks the wrong columns?</summary><p>Open Adjust above the dashboard and choose the date column, the measure and up to 4 breakdown columns. Your choice is kept while the page is open.</p></details><details><summary>Is there a limit?</summary><p>The tool reads the first 5,000 rows of each file.</p></details><details><summary>Jira, Etsy or attendance export?</summary><p>Those are recognised automatically and get a tailored report, with their own pages under More free tools below.</p></details></section>
+<section class="wrap section narrow"><p class="muted">More free tools: <a href="/tools/jira-csv-dashboard/">Jira CSV to dashboard</a> · <a href="/tools/etsy-profit-dashboard/">Etsy profit dashboard</a> · <a href="/tools/attendance-report-analyzer/">Attendance report analyzer</a> · <a href="/tools/">all tools</a> · <a href="/tools/check/">Check that your file never leaves your device</a></p></section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="28" height="28"><span>VPC Apps</span></a>
+      <p class="muted">Bite-size puzzle games for your phone and your browser.</p></div>
+      <ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
+      <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
+    </div>
+    <p class="muted small">© 2026 VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+</footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a470f94b795a45578b8f87cbfcca8c9d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

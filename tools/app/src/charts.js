@@ -63,8 +63,9 @@ E8.Charts = (function () {
   function lines(keys, series, opt) {
     opt = opt || {};
     if (!keys.length) return empty();
-    // Card widths: wide ~1040 on screen, ~720 on A4, ~380 on a phone; a grid card ~330 on screen and phone, ~230 on A4.
-    var sizes = opt.wide ? [[1040, 'ln-l'], [720, 'ln-p'], [400, 'ln-s']] : [[340, 'ln-l ln-s'], [250, 'ln-p']];
+    // Card widths: wide ~1040 on screen, ~720 on A4, ~380 on a phone; a grid card ~330 on screen and phone (ln-g, shown at
+    // every screen width; it used to share ln-l/ln-s and so was hidden on both), ~230 on A4.
+    var sizes = opt.wide ? [[1040, 'ln-l'], [720, 'ln-p'], [400, 'ln-s']] : [[340, 'ln-g'], [250, 'ln-p']];
     return legend(series.map(function (s, i) { return { name: s.name, color: s.color || PALETTE[i] }; })) +
       sizes.map(function (z) { return line(keys, series, z[0], z[1], opt.title); }).join('');
   }
@@ -160,7 +161,7 @@ E8.Charts = (function () {
     '.hb-b.hb-over{background-image:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.55) 6px 9px)!important}' +
     '.hb-v{color:var(--muted,#5d667c);font-variant-numeric:tabular-nums;white-space:nowrap;min-width:2ch}' +
     '.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted,#5d667c);margin-bottom:6px}.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px;-webkit-print-color-adjust:exact;print-color-adjust:exact}' +
-    '@media print{svg.ln-l,svg.ln-s{display:none}svg.ln-p{display:block}svg.ln{max-height:150px}.hb{min-height:0!important;gap:2px}.hb-row{min-height:0;max-height:none;flex:0 0 auto}.hb-t{height:12px;min-height:0}.hb-b,.hb-s{height:10px}.hb-l,.hb-v{font-size:10px}.legend{font-size:10px;margin-bottom:2px}}';
+    '@media print{svg.ln-l,svg.ln-s,svg.ln-g{display:none}svg.ln-p{display:block}svg.ln{max-height:150px}.hb{min-height:0!important;gap:2px}.hb-row{min-height:0;max-height:none;flex:0 0 auto}.hb-t{height:12px;min-height:0}.hb-b,.hb-s{height:10px}.hb-l,.hb-v{font-size:10px}.legend{font-size:10px;margin-bottom:2px}}';
 
   return { bars: bars, stack: stack, lines: lines, axisLabel: axisLabel, card: card, tile: tile, table: table, findings: findings, CSS: CSS, PALETTE: PALETTE };
 })();

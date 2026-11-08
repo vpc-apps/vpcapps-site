@@ -11,9 +11,11 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
 (function () {
   var Eng = E8.Engine;
   var TEMPLATES = [E8.Jira, E8.Etsy, E8.Attendance];
-  var TITLES = { jira: 'QA status report', etsy: 'Etsy profit report', attendance: 'Attendance report' };
+  var TITLES = { jira: 'QA status report', etsy: 'Etsy profit report', attendance: 'Attendance report', generic: 'Data summary' };
   var SAMPLES = { jira: ['samples/jira_sample.csv'], etsy: ['samples/etsy_order_items_sample.csv', 'samples/etsy_statement_sample.csv'],
-    attendance: ['samples/attendance_punches_sample.csv'] };
+    attendance: ['samples/attendance_punches_sample.csv'], generic: ['samples/generic_sales_sample.csv'] };
+  // Generic dashboard: the user's Adjust choices per file layout (same columns), for this page session only.
+  var genericChoice = {};
   var WATERMARK = 'Made with CSV to Dashboard · vpcapps.net/tools';
   var watermark = function () { return E8.SHOW_WATERMARK && !E8.pro; };
   var state = fresh();
@@ -46,14 +48,21 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
       .catch(function () { error('Could not read that file.'); });
   }
 
-  /** Adds one file to the current analysis (same template) or starts a new one. */
+  var NOT_TABLE = ' Tips: from Excel use File → Save As → CSV (UTF-8); check that the values are separated by commas, semicolons or tabs, and that the first row holds the column names.';
+
+  /** Adds one file to the current analysis (same template) or starts a new one. Unknown tables get the Generic dashboard. */
   function add(text, name) {
+    var head = text.slice(0, 4000);
+    if (/\u0000/.test(head) || (head.match(/\uFFFD/g) || []).length > 20 || /^PK\u0003\u0004/.test(head)) {
+      return error('“' + name + '” doesn’t look like a table: it seems to be a binary file (for example an .xlsx or .pdf saved as .csv).' + NOT_TABLE);
+    }
     var rows = Eng.parseCSV(text);
     if (!rows.length) return error('That file looks empty.');
     var data = Eng.toRecords(rows);
     var id = identify(data);
-    if (!id) return error('“' + name + '” isn’t a format we read yet. Supported: Jira issues export; Etsy Order Items and payments statement CSVs; biometric attendance (punch log or daily In/Out report).');
-    if (!data.records.length) return error('“' + name + '” has the right columns but no rows. Export again with your data included.');
+    if (!id && data.unique.length < 2) return error('“' + name + '” doesn’t look like a table: we found only one column.' + NOT_TABLE);
+    if (!id) id = { tpl: E8.Generic, part: 'main' };
+    if (!data.records.length) return error('“' + name + '” ' + (id.tpl === E8.Generic ? 'has column names but no rows.' : 'has the right columns but no rows. Export again with your data included.'));
     if (!E8.pro && data.records.length > Eng.FREE_ROWS) { data.records = data.records.slice(0, Eng.FREE_ROWS); state.capped = true; }
     if (state.tpl !== id.tpl) { var capped = state.capped; state = fresh(); state.capped = capped; state.tpl = id.tpl; }
     state.parts[id.part] = data;
@@ -66,6 +75,8 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
     var t = state.tpl;
     document.querySelectorAll('[data-for]').forEach(function (el) { el.hidden = el.getAttribute('data-for') !== t.id; });
     if (t.id === 'jira') buildJiraFilters();
+    if (t.id === 'generic') buildGenericFilters();
+    $('gnote').hidden = t.id !== 'generic';
     if (t.id === 'etsy') $('file2').parentNode.hidden = !!(state.parts.orders && state.parts.statement);
     if (!$('x-title').dataset.edited) $('x-title').value = TITLES[t.id];
     update();
@@ -83,9 +94,26 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
     if (bug) $('f-type').value = bug;
   }
 
+  /** Adjust panel for the Generic dashboard: date, measure and up to 4 breakdowns, each with an "automatic" choice. */
+  function buildGenericFilters() {
+    var data = state.parts.main, ch = E8.Generic.choices(data), saved = genericChoice[data.header.join('\u0001')] || {};
+    var opt = function (v, label) { return '<option value="' + Eng.esc(v) + '">' + Eng.esc(label || v) + '</option>'; };
+    $('g-date').innerHTML = opt('', 'Date: automatic') + opt('-', 'No date') + ch.dates.map(function (x) { return opt(x); }).join('');
+    $('g-measure').innerHTML = opt('', 'Measure: automatic') + opt('-', 'No measure') + ch.measures.map(function (x) { return opt(x); }).join('');
+    for (var i = 0; i < 4; i++) $('g-b' + i).innerHTML = opt('', i ? 'none' : 'Breakdowns: automatic') + ch.breakdowns.map(function (x) { return opt(x); }).join('');
+    $('g-date').value = saved.date || '';
+    $('g-measure').value = saved.measure || '';
+    for (var j = 0; j < 4; j++) $('g-b' + j).value = (saved.breakdowns || [])[j] || '';
+  }
+
   function update() {
     var t = state.tpl;
-    if (t.id === 'jira') {
+    if (t.id === 'generic') {
+      var bs = [0, 1, 2, 3].map(function (i) { return $('g-b' + i).value; }).filter(String);
+      state.opt = { date: $('g-date').value, measure: $('g-measure').value, breakdowns: bs.filter(function (b, i) { return bs.indexOf(b) === i; }) };
+      genericChoice[state.parts.main.header.join('\u0001')] = state.opt;
+      state.model = t.analyse(state.parts.main, state.opt);
+    } else if (t.id === 'jira') {
       state.opt = { type: $('f-type').value, project: $('f-project').value, breakdown: $('f-extra').value || null };
       state.model = t.analyse(state.parts.main, state.opt);
     } else if (t.id === 'attendance') {
@@ -109,6 +137,7 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
   function metaLine() {
     var m = state.model;
     if (state.tpl.id === 'jira') return m.total + ' issues · data as of ' + m.asOf.toDateString();
+    if (state.tpl.id === 'generic') return m.total.toLocaleString('en-US') + ' rows · ' + m.cols + ' columns';
     if (state.tpl.id === 'attendance') return m.people + ' employees · ' + m.workDays + ' working days · ' + m.from.toDateString() + ' – ' + m.to.toDateString();
     if (m.orders) return m.orders.lines + ' order lines · ' + m.orders.from.toDateString() + ' – ' + m.orders.to.toDateString();
     return m.total + ' statement lines';
@@ -151,7 +180,7 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
     ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
     drop.addEventListener('drop', function (e) { if (e.dataTransfer.files.length) { state = fresh(); readFiles(e.dataTransfer.files); } });
     document.querySelectorAll('[data-tpl]').forEach(function (b) { b.addEventListener('click', function () { loadSample(b.getAttribute('data-tpl')); }); });
-    ['f-type', 'f-project', 'f-extra'].forEach(function (id) { $(id).addEventListener('change', update); });
+    ['f-type', 'f-project', 'f-extra', 'g-date', 'g-measure', 'g-b0', 'g-b1', 'g-b2', 'g-b3'].forEach(function (id) { $(id).addEventListener('change', update); });
     $('f-cogs').addEventListener('input', function () { if (state.tpl) update(); });
     ['a-start', 'a-end', 'a-grace', 'a-off'].forEach(function (id) { $(id).addEventListener('change', function () { if (state.tpl) update(); }); });
     $('x-title').addEventListener('input', function () { $('x-title').dataset.edited = '1'; });
@@ -171,6 +200,7 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
   var HERO = {
     jira: ['Drop your Jira CSV export', 'Get a QA and bug dashboard: created vs resolved trend, ageing, by priority, assignee and component, with an executive summary to share.'],
     etsy: ['Drop your Etsy CSV files', 'Order Items CSV, payments statement CSV, or both: get your true profit after every Etsy fee, ads and refunds, plus best sellers by month.'],
+    generic: ['Drop any CSV file', 'A sales list, a ticket export, an inventory or a survey: get key numbers, top values, trends over time, number stats and a data quality check, with findings in plain English.'],
     attendance: ['Drop your attendance export', 'A biometric punch log (ZKTeco, BioTime) or a daily In/Out report (eSSL eTimeTrackLite): get late arrivals, overtime, absences and missing punches per employee.']
   };
 

@@ -758,7 +758,7 @@ def tools_hub():
 <section class="wrap section"><div class="grid tools-grid">{cards}</div></section>
 <section class="wrap section split">
   <div><h2>How it works</h2><ol class="steps">
-    <li>Export a CSV from the tool you already use (Jira, Etsy, your attendance machine).</li>
+    <li>Export a CSV from the tool you already use (Jira, Etsy, your attendance machine), or use any other CSV table.</li>
     <li>Drop it on the page. The format is recognised and the numbers appear in a second.</li>
     <li>Adjust the settings, then download a one-file HTML summary or print it as a PDF.</li></ol></div>
   <div><h2>Free, private, offline</h2><ul class="checks">
@@ -768,7 +768,7 @@ def tools_hub():
 </section>'''
     url = SITE['url'] + '/tools/'
     page('/tools/', TOOL['full_name'],
-         'Free CSV to dashboard tools for Jira, Etsy and biometric attendance exports: a dashboard, plain-English '
+         'Free CSV to dashboard for Jira, Etsy and attendance exports, or any other CSV: a dashboard, plain-English '
          'findings and a summary to share. Nothing is uploaded.', body,
          og_image='/assets/img/tools/hub-og.jpg', active='/tools/', extra_head=TOOL_HEAD, manifest=TOOL_MANIFEST,
          ld=[tool_app_ld(TOOL['full_name'], 'Turn Jira, Etsy and attendance CSV exports into dashboards in your browser.', url,
@@ -870,7 +870,7 @@ def check_page():
 
 
 SAMPLES_DL = {'jira': '/tools/app/samples/jira_sample.csv', 'etsy': '/tools/app/samples/etsy_order_items_sample.csv',
-              'attendance': '/tools/app/samples/attendance_punches_sample.csv'}
+              'attendance': '/tools/app/samples/attendance_punches_sample.csv', 'generic': '/tools/app/samples/generic_sales_sample.csv'}
 
 
 def tool_offline():
