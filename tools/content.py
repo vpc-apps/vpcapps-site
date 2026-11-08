@@ -67,10 +67,10 @@ WORLD = ('Most of our games live in <b>Hoshikaze Valley</b>, a small ninja world
          '<b>Ren</b>, the young ninja; <b>Mika</b>, his friend; <b>Pon</b>, a tanuki who hands out hints; '
          'and <b>Lord Onibi</b>, who keeps stealing the valley\'s spirit lanterns.')
 
-# Export to Dashboard tool (E8, built in APPs/products/e8_dashboard, served from /tools/app/).
+# CSV to Dashboard tool (E8, was Export to Dashboard until 11-08, built in APPs/products/e8_dashboard, served from /tools/app/).
 # One landing page per template; copy aims at the search terms in
 # APPs/docs/research/e8_export_dashboard_demand_2026-11-02.md. Steps and FAQ answers are HTML.
-TOOL = dict(name='Export to Dashboard', free_rows='5,000')
+TOOL = dict(name='CSV to Dashboard', full_name='CSV to Dashboard: Instant Charts & Reports', free_rows='5,000')
 TOOLS = [
     dict(t='jira', slug='jira-csv-dashboard', short='Jira CSV to dashboard',
          title='Jira CSV export to dashboard and executive summary',

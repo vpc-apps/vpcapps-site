@@ -214,7 +214,7 @@ def import_games():
 TOOL_GUARD = """<script>(function(){var framed;try{framed=window.top!==window.self;}catch(e){framed=true;}
 if(!framed)return;var ok=false;try{ok=window.top.location.host===location.host;}catch(e){}
 if(ok)return;document.write('<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fdf1e7;font:16px system-ui,sans-serif;color:#2b2140;text-align:center;z-index:2147483647">'+
-'<div style="padding:24px"><p style="font-size:20px;font-weight:700;margin:0 0 8px">Use Export to Dashboard free on vpcapps.net</p>'+
+'<div style="padding:24px"><p style="font-size:20px;font-weight:700;margin:0 0 8px">Use CSV to Dashboard free on vpcapps.net</p>'+
 '<p style="margin:0 0 18px;color:#6b5f80">This tool by VPC Apps runs on its own page:<br><b>'+location.host+location.pathname+'</b></p>'+
 '<a href="'+location.href.replace(/"/g,'%22')+'" target="_top" rel="noopener" style="display:inline-block;background:#e2495f;color:#fff;padding:12px 20px;border-radius:12px;text-decoration:none;font-weight:700">Open the tool</a></div></div>'+
 '<plaintext style="display:none">');})();</script>"""
@@ -223,7 +223,7 @@ SW_REGISTER = ("<script>if('serviceWorker' in navigator)addEventListener('load',
 
 
 def import_tools():
-    """The E8 Export to Dashboard app (one copy, /tools/app/) + page images from its screenshots."""
+    """The E8 CSV to Dashboard app (one copy, /tools/app/) + page images from its screenshots."""
     dest = os.path.join(ROOT, 'tools', 'app')
     shutil.rmtree(dest, ignore_errors=True)
     os.makedirs(dest)
@@ -499,7 +499,7 @@ def home():
   <div><h2>A little world</h2><p>{WORLD}</p></div>
 </section>
 <section class="wrap section">
-  <div class="panel"><h2>Free tools</h2><p>Games come first, but we also make small, useful tools. <a href="/tools/">Export to Dashboard</a> turns a Jira, Etsy or attendance CSV export into a dashboard and a summary to share, right in your browser: your file never leaves your device. <a href="/tools/">Try it →</a></p></div>
+  <div class="panel"><h2>Free tools</h2><p>Games come first, but we also make small, useful tools. <a href="/tools/">CSV to Dashboard</a> turns a Jira, Etsy or attendance CSV export into a dashboard and a summary to share, right in your browser: your file never leaves your device. <a href="/tools/">Try it →</a></p></div>
 </section>'''
     site_ld = {'@context': 'https://schema.org', '@type': 'WebSite', 'name': SITE['name'], 'url': SITE['url']}
     page('/', SITE['name'], SITE['description'], body, ld=[ORG, site_ld])
@@ -586,7 +586,7 @@ def apps():
   <h1>Apps</h1>
   <p class="lead">Games come first at VPC Apps, but not only games.</p>
   <p>We are working on small, focused apps and tools: the kind that do one job well, open fast, work offline where they can and don't ask for more permissions than they need. They will be listed here, each with its own page and privacy policy, as soon as they are ready.</p>
-  <div class="panel"><h2>Live now: Export to Dashboard</h2><p>A free browser tool that turns a CSV export into a dashboard, findings in plain English and a summary to share: <a href="/tools/jira-csv-dashboard/">Jira issues</a>, <a href="/tools/etsy-profit-dashboard/">Etsy sales and fees</a> and <a href="/tools/attendance-report-analyzer/">biometric attendance</a>. Your file never leaves your device. <a href="/tools/">Open the tools →</a></p></div>
+  <div class="panel"><h2>Live now: CSV to Dashboard: Instant Charts &amp; Reports</h2><p>A free browser tool that turns a CSV export into a dashboard, findings in plain English and a summary to share: <a href="/tools/jira-csv-dashboard/">Jira issues</a>, <a href="/tools/etsy-profit-dashboard/">Etsy sales and fees</a> and <a href="/tools/attendance-report-analyzer/">biometric attendance</a>. Your file never leaves your device. <a href="/tools/">Open the tools →</a></p></div>
   <h2>What to expect from our apps</h2>
   <ul class="checks">
     <li>Free to use, with any paid extra clearly marked.</li>
@@ -690,7 +690,7 @@ def privacy():
   <h2>Browser games</h2>
   <p>When you play a game on this site, it stores your progress (levels unlocked, stars, settings) in your browser's local storage on your device. You can delete it at any time by clearing your browser's site data. Some game demos are loaded from our older site, vpc-apps.github.io, which is also hosted by GitHub Pages and run by us under the same rules.</p>
   <h2>Free tools</h2>
-  <p>Our tools at <a href="/tools/">vpcapps.net/tools</a> (such as Export to Dashboard) process the files you choose locally in your browser and send nothing from them to us or anyone else; your files never leave your device. The tool pages count visits like the rest of the site (see Visit counter), and that count never includes your file, its name or its contents.</p>
+  <p>Our tools at <a href="/tools/">vpcapps.net/tools</a> (such as CSV to Dashboard) process the files you choose locally in your browser and send nothing from them to us or anyone else; your files never leave your device. The tool pages count visits like the rest of the site (see Visit counter), and that count never includes your file, its name or its contents.</p>
   <h2>Videos and images</h2>
   <p>All videos, images and fonts are served from this site. We don't embed third-party players or social media widgets.</p>
   <h2>Advertising</h2>
@@ -749,7 +749,7 @@ def tools_hub():
 </article>''' for t in TOOLS)
     body = f'''<section class="wrap section page-head">
   <p class="eyebrow">Free tool</p>
-  <h1>{E(TOOL['name'])}</h1>
+  <h1>{E(TOOL['full_name'])}</h1>
   <p class="lead">Turn a CSV export into a dashboard, findings in plain English and a summary you can share. Pick your source:</p>
   <p class="privacy-line">🔒 Your file never leaves your device: everything is worked out in your browser. No upload, no account.</p>
 </section>
@@ -765,11 +765,11 @@ def tools_hub():
     <li>Works offline after your first visit. In Chrome or Edge you can install it as an app from the address bar.</li></ul></div>
 </section>'''
     url = SITE['url'] + '/tools/'
-    page('/tools/', f'{TOOL["name"]}: free CSV to dashboard tools',
+    page('/tools/', TOOL['full_name'],
          'Free CSV to dashboard tools for Jira, Etsy and biometric attendance exports: a dashboard, plain-English '
          'findings and a summary to share. Nothing is uploaded.', body,
          og_image='/assets/img/tools/hub-og.jpg', active='/tools/', extra_head=TOOL_HEAD, manifest=TOOL_MANIFEST,
-         ld=[tool_app_ld(TOOL['name'], 'Turn Jira, Etsy and attendance CSV exports into dashboards in your browser.', url,
+         ld=[tool_app_ld(TOOL['full_name'], 'Turn Jira, Etsy and attendance CSV exports into dashboards in your browser.', url,
                          SITE['url'] + '/assets/img/tools/hub-og.jpg'),
              {'@context': 'https://schema.org', '@type': 'ItemList', 'itemListElement': [
                  {'@type': 'ListItem', 'position': i, 'url': f'{SITE["url"]}/tools/{t["slug"]}/'} for i, t in enumerate(TOOLS, 1)]}])
@@ -834,7 +834,7 @@ def tool_offline():
     for f in files + [p.strip('/') + '/index.html' for p in pages[:-1]] + ['assets/css/site.css', 'assets/js/site.js']:
         with open(os.path.join(ROOT, *f.split('/')), 'rb') as fh:
             h.update(fh.read())
-    sw = f'''// Export to Dashboard offline cache. Scope /tools/ only. Generated by tools/build.py.
+    sw = f'''// CSV to Dashboard offline cache. Scope /tools/ only. Generated by tools/build.py.
 var CACHE = 'e8-{h.hexdigest()[:12]}';
 var SHELL = {json.dumps(shell, indent=0)};
 self.addEventListener('install', function (e) {{
