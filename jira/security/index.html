@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Go/No-Go Release Scorecard for Jira: security · VPC Apps</title>
+<meta name="description" content="Security of Go/No-Go Release Scorecard for Jira: Forge-hosted, read-only scopes, no outside servers, and how to report a vulnerability.">
+<link rel="canonical" href="https://vpcapps.net/jira/security/">
+<meta property="og:site_name" content="VPC Apps">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Go/No-Go Release Scorecard for Jira: security">
+<meta property="og:description" content="Security of Go/No-Go Release Scorecard for Jira: Forge-hosted, read-only scopes, no outside servers, and how to report a vulnerability.">
+<meta property="og:url" content="https://vpcapps.net/jira/security/">
+<meta property="og:image" content="https://vpcapps.net/assets/img/brand/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ff5a8a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/fredoka.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script src="/assets/js/site.js" defer></script>
+<style>.doc table{width:100%;border-collapse:collapse;margin:12px 0 20px;font-size:.95em}.doc th,.doc td{border:1px solid var(--line,#ddd);padding:8px 10px;text-align:left;vertical-align:top}.doc th{background:var(--soft,#f6f6f8)}.doc .tw{overflow-x:auto}.doc h2{margin-top:32px}.doc .todo{background:#fff3cd;color:#5f3a00;padding:0 4px;border-radius:3px}</style></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></a>
+    <nav aria-label="Main"><ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
+    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
+  </div>
+</header>
+<main id="main">
+<section class="wrap section narrow doc page-head">
+  <p class="eyebrow">Security</p>
+  <h1>Security: Go/No-Go Release Scorecard for Jira</h1>
+  <p class="muted">Last updated 8 November 2026.</p>
+</section>
+<section class="wrap section narrow doc">
+  <h2>How the app is built</h2>
+  <ul>
+    <li><b>Atlassian Forge, Runs on Atlassian.</b> The app is hosted entirely on Atlassian’s Forge platform. Atlassian’s deploy check reports it eligible for the Runs on Atlassian program: no remote servers and no outgoing connections to other services.</li>
+    <li><b>Read-only access.</b> It asks for two scopes only: <code>read:jira-work</code> (to read projects, releases, issues and your own permissions) and <code>storage:app</code> (to keep the go/no-go limits). It never creates, changes or deletes issues.</li>
+    <li><b>Your permissions, nothing more.</b> Reports are calculated in your browser from data Jira returns for you, so a user sees only what their Jira permissions allow.</li>
+    <li><b>Data stays in Atlassian.</b> No issue data leaves Atlassian’s platform and your browser. The app stores only rule settings, in Forge hosted storage for your site. See the <a href="/jira/privacy/">privacy policy</a>.</li>
+    <li><b>Changes are checked on the server.</b> Saving limits requires Administer Projects on that project or Administer Jira, checked by Atlassian’s platform as the user, and the values are validated strictly.</li>
+    <li><b>No credentials.</b> The app handles no passwords, API tokens or shared secrets; Forge authenticates every call.</li>
+    <li><b>One outside file.</b> The dashboard-gadget icon is an image hosted on vpcapps.net, fetched by the browser like any web image. No Jira data is sent with it.</li>
+    <li><b>Safe output.</b> All Jira text is escaped on screen and in downloads; downloaded reports contain no scripts.</li>
+  </ul>
+  <h2>Reporting a vulnerability</h2>
+  <p>Email <a href="mailto:support@vpcapps.net?subject=Security">support@vpcapps.net</a> with “Security” in the subject. Please include the steps to reproduce, the affected version (the build number at the bottom of the app) and the impact you expect. Do not include real customer data.</p>
+  <ul>
+    <li>We acknowledge reports within <span class="todo">[USER: reply time, for example 2 business days]</span>.</li>
+    <li>We fix confirmed vulnerabilities within the timeframes Atlassian sets in its <a href="https://developer.atlassian.com/platform/marketplace/security-requirements/">security requirements for Marketplace apps</a>, and tell the reporter when the fix is live.</li>
+    <li>Please give us reasonable time to fix an issue before disclosing it, and do not test against Jira sites you do not own.</li>
+  </ul>
+  <h2>Contact</h2>
+  <p>VPC Apps, a brand of Venture Path Consulting, <span class="todo">[USER: business address, as on the GST registration]</span>, Visakhapatnam, Andhra Pradesh, India. <a href="mailto:support@vpcapps.net">support@vpcapps.net</a>.</p>
+</section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="28" height="28"><span>VPC Apps</span></a>
+      <p class="muted">Bite-size puzzle games for your phone and your browser.</p></div>
+      <ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
+      <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
+    </div>
+    <p class="muted small">© 2026 VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+</footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a470f94b795a45578b8f87cbfcca8c9d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

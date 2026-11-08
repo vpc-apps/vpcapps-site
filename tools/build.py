@@ -23,6 +23,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 from content import ANALYTICS, GAMES, OLD_SITE, PLAY, SITE, TOOL, TOOLS, WORLD  # noqa: E402
+import jira_pages  # noqa: E402  (vpcapps.net/jira/: Jira app docs, privacy, security)
 
 APPS = os.path.normpath(os.path.join(ROOT, '..', 'APPs'))
 E8 = os.path.join(APPS, 'products', 'e8_dashboard')
@@ -992,6 +993,7 @@ def main(argv=None):
     contact()
     press()
     privacy()
+    jira_pages.build(page)
     terms()
     legacy_pages()
     not_found()

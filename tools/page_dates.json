@@ -47,6 +47,18 @@
   "hash": "5fd2d6735ed7b516",
   "date": "2026-11-01"
  },
+ "/jira/": {
+  "hash": "29b8b80d1abedaa0",
+  "date": "2026-11-08"
+ },
+ "/jira/privacy/": {
+  "hash": "a7445dca4743d4f9",
+  "date": "2026-11-08"
+ },
+ "/jira/security/": {
+  "hash": "39dc5dfd760cc2e0",
+  "date": "2026-11-08"
+ },
  "/lantern-chain/privacy.html": {
   "hash": "f2f19e1cb79f427a",
   "date": "2026-11-01"

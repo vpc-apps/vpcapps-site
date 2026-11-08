@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Go/No-Go Release Scorecard for Jira: documentation · VPC Apps</title>
+<meta name="description" content="How to set up and use Go/No-Go Release Scorecard for Jira: verdicts, rules, criteria templates, views, release comparison, printing and your data.">
+<link rel="canonical" href="https://vpcapps.net/jira/">
+<meta property="og:site_name" content="VPC Apps">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Go/No-Go Release Scorecard for Jira: documentation">
+<meta property="og:description" content="How to set up and use Go/No-Go Release Scorecard for Jira: verdicts, rules, criteria templates, views, release comparison, printing and your data.">
+<meta property="og:url" content="https://vpcapps.net/jira/">
+<meta property="og:image" content="https://vpcapps.net/assets/img/brand/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ff5a8a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/fredoka.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script src="/assets/js/site.js" defer></script>
+<style>.doc table{width:100%;border-collapse:collapse;margin:12px 0 20px;font-size:.95em}.doc th,.doc td{border:1px solid var(--line,#ddd);padding:8px 10px;text-align:left;vertical-align:top}.doc th{background:var(--soft,#f6f6f8)}.doc .tw{overflow-x:auto}.doc h2{margin-top:32px}.doc .todo{background:#fff3cd;color:#5f3a00;padding:0 4px;border-radius:3px}</style></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></a>
+    <nav aria-label="Main"><ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
+    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
+  </div>
+</header>
+<main id="main">
+<section class="wrap section narrow doc page-head">
+  <p class="eyebrow">Documentation</p>
+  <h1>Go/No-Go Release Scorecard for Jira</h1>
+  <p class="lead">Know if this release can ship, with the reasons. The app reads a release’s defects in your Jira project and shows GO, AT RISK, NO-GO or NO DATA. It works on Jira Cloud.</p>
+  <p class="muted">Contents: <a href="#setup">Set up</a> · <a href="#team-managed">Team-managed spaces</a> · <a href="#verdicts">How verdicts work</a> · <a href="#rules">Rules, templates and views</a> · <a href="#compare">Compared with the previous release</a> · <a href="#print">Print and share</a> · <a href="#gadget">Dashboard gadget</a> · <a href="#trouble">Troubleshooting</a> · <a href="#data">Your data</a> · <a href="#support">Support</a></p>
+</section>
+<section class="wrap section narrow doc">
+  <h2 id="setup">Set up</h2>
+  <ol class="steps">
+    <li>A Jira admin installs the app from the Atlassian Marketplace.</li>
+    <li>Open your project. <b>Go/No-Go Release Scorecard</b> appears as a tab in the project’s navigation (in some layouts under <b>Apps</b> or the <b>+</b> next to the tabs).</li>
+    <li>Pick a release. The first one offered is the next unreleased release.</li>
+  </ol>
+  <p>For a useful result, your project needs:</p>
+  <div class="tw"><table><thead><tr><th>Needed</th><th>Why</th></tr></thead><tbody><tr><td>An issue type with “Bug” or “Defect” in its name</td><td>Only these are scored</td></tr><tr><td>At least one release</td><td>The picker lists your project’s releases</td></tr><tr><td><b>Fix versions</b> set on defects</td><td>This links a defect to a release</td></tr><tr><td><b>Priority</b> on defects</td><td>The two priority rules read it</td></tr><tr><td>Affects versions on defects (optional)</td><td>Used for “found in the last release after it shipped”</td></tr></tbody></table></div>
+  <p>Company-managed projects usually have Fix versions and Priority on the Bug screen already.</p>
+
+  <h2 id="team-managed">Team-managed spaces</h2>
+  <p>A new team-managed space shows neither Fix versions nor Priority on a Bug. Two steps fix this:</p>
+  <p><b>Add Fix versions:</b> click the <b>+</b> next to the space tabs, choose <b>Releases</b>, then <b>Add to navigation</b>. The Fix versions field then appears on your work items.</p>
+  <p><b>Add Priority:</b> go to <b>Space settings → Work types → Bug</b>, click <b>Priority</b>, then <b>Save changes</b>.</p>
+  <p>Team-managed layouts do not offer Affects versions, so “found after it shipped” stays empty there. It is for information and does not change the verdict. In a team-managed space the app shows a short setup box with only the steps your report needs; it is left out of prints and downloads.</p>
+
+  <h2 id="verdicts">How verdicts work</h2>
+  <p>Each rule compares a number with two limits: at or below <b>GO</b> it passes; above GO but at or below <b>AT RISK</b> it is at risk; above AT RISK it fails. The overall verdict is the worst result of any rule. If no defects are linked to the release, the verdict is <b>NO DATA</b>, never GO.</p>
+  <p>Default limits:</p>
+  <div class="tw"><table><thead><tr><th>Rule</th><th>How it is counted</th><th>GO at or below</th><th>AT RISK at or below</th></tr></thead><tbody><tr><td>Open blocker / critical defects</td><td>Open defects with priority Highest, Blocker, Critical, Urgent, Showstopper or P0</td><td>0</td><td>0</td></tr><tr><td>Open high-priority defects</td><td>Open defects with priority High, Major or P1</td><td>2</td><td>5</td></tr><tr><td>Reopen rate</td><td>Share of the release’s defects moved from a done status back to a not-done status at least once</td><td>10%</td><td>20%</td></tr><tr><td>Defects open more than 30 days</td><td>Open defects created over 30 days ago</td><td>3</td><td>10</td></tr><tr><td>Created minus resolved, last 14 days</td><td>Defects in this release created, minus those resolved, in the last 14 days</td><td>0</td><td>5</td></tr><tr><td>Open defects without steps or attachment</td><td>Share of open defects with no attachment and no description text such as “steps to reproduce”, “expected result” or “actual result”</td><td>25%</td><td>100%</td></tr></tbody></table></div>
+  <ul>
+    <li>“Open” means the status is not in Jira’s Done category.</li>
+    <li>The four count rules can instead be set as a <b>% of all defects</b> in the release (“Count as” in the rules editor, 0–100). Reopen rate and the evidence rule are always percentages.</li>
+    <li>Priorities with other names, such as “P2”, are not counted by the priority rules. Description text is matched in English only.</li>
+    <li>The app reads the first 2,000 defects of a release; above that the report says <b>partial data</b>.</li>
+  </ul>
+  <p>The verdict supports your decision; it does not replace it. It reflects only what is recorded in Jira and does not read test runs or test cases.</p>
+
+  <h2 id="rules">Rules, templates and views</h2>
+  <p><b>Changing the limits.</b> Project admins and Jira admins see <b>Edit rules</b>. Change the numbers (whole numbers; each AT RISK limit at or above its GO limit) and click <b>Save rules</b>. Limits are kept per project and apply to everyone viewing that project. The report then says the verdict was recalculated and highlights the checks whose result changed. <b>Use defaults</b> restores the Standard limits. Everyone else sees <b>View rules</b>, read-only. The rules card says whether the report uses limits set for this project or the defaults.</p>
+  <p><b>Criteria templates.</b> In the rules editor, start from a template, then adjust; nothing is saved until you click Save rules.</p>
+  <div class="tw"><table><thead><tr><th>Template</th><th>For</th><th>In short</th></tr></thead><tbody><tr><td>Strict</td><td>Regulated or enterprise releases</td><td>No open critical or high defects, nothing left open for 30 days, a low reopen rate</td></tr><tr><td>Standard</td><td>Most teams</td><td>The built-in defaults in the table above</td></tr><tr><td>Fast-moving</td><td>Startups and internal tools</td><td>Limits as a share of all defects, more room for open work; only critical defects block</td></tr></tbody></table></div>
+  <p><b>Report views.</b> The <b>View</b> menu chooses which reports you see, print in full and download:</p>
+  <div class="tw"><table><thead><tr><th>View</th><th>Shows</th></tr></thead><tbody><tr><td>Executive</td><td>The verdict, a card per rule, the comparison with the previous release, the trend and open blocker defects</td></tr><tr><td>QA lead</td><td>Everything: all charts and tables</td></tr><tr><td>Release manager</td><td>The comparison, priority mix, carried-over defects, defects found after the last release shipped, status by priority, age and assignee</td></tr></tbody></table></div>
+
+  <h2 id="compare">Compared with the previous release</h2>
+  <p>When the project has a previous released release (marked released, with a release date) that has defects, the report adds:</p>
+  <ul>
+    <li>Change cards: defects, highest/critical, high, reopen rate and median days to fix, with green (better) or red (worse) arrows. Lower is better on every card; rate changes are in percentage points.</li>
+    <li>Priority mix: this release and the previous one side by side.</li>
+    <li>Carried over: defects of this release that are also set to the previous release, or were moved out of it (from the Fix version history). Shown only when there are any.</li>
+  </ul>
+  <p>With no previous release, or one without defects, the comparison is left out rather than showing empty numbers. It is on screen and in the download, not on the one-page print.</p>
+
+  <h2 id="print">Print and share</h2>
+  <ul>
+    <li><b>Print summary (1 page)</b>: the verdict, one card per rule and the key charts on one A4 page, readable in black and white.</li>
+    <li><b>Print full report</b>: every chart and table of the chosen view, over several pages.</li>
+    <li><b>Download shareable report</b>: one HTML file with no scripts, for people without Jira access.</li>
+  </ul>
+  <p>Use the app’s own buttons. The browser’s Print menu, or Ctrl+P while the focus is on Jira’s page, may come out blank, because the app sits in a frame inside the Jira page. Pressing Ctrl+P after clicking inside the app prints the summary.</p>
+  <p>Printed and downloaded reports contain defect keys, summaries, priorities and assignee names. Treat them as you would any Jira export.</p>
+
+  <h2 id="gadget">Dashboard gadget</h2>
+  <ol class="steps">
+    <li>On a Jira dashboard, choose <b>Add gadget</b> and find <b>Go/No-Go Release Scorecard</b>.</li>
+    <li>In its settings, enter a <b>project key</b>, such as WEB, and optionally a <b>release</b> (empty means the next unreleased one) and a view.</li>
+  </ol>
+
+  <h2 id="trouble">Troubleshooting</h2>
+  <div class="tw"><table><thead><tr><th>You see</th><th>What to do</th></tr></thead><tbody><tr><td>No defects are linked to this release (NO DATA)</td><td>Check the defects use Fix versions with this exact release. In a team-managed space, add the Releases view first</td></tr><tr><td>This project has no releases yet</td><td>Add a release, set it as Fix versions on the defects, and come back</td></tr><tr><td>This project has no issue type named Bug or Defect</td><td>The app only scores those types. Add one, or rename yours if that suits your project</td></tr><tr><td>Priority rules show 0 but you have urgent defects</td><td>Add Priority to the Bug type (above), and check your priority names against the rules table</td></tr><tr><td>“Found after it shipped” is always empty</td><td>Set Affects versions on defects, and check the previous release is marked released with a release date. Team-managed spaces do not offer this field</td></tr><tr><td>No comparison with the previous release</td><td>Shown only when there is a previous released release with a release date that has defects</td></tr><tr><td>Partial data</td><td>The release has over 2,000 defects, so only the first 2,000 were read</td></tr><tr><td>Could not read this from Jira</td><td>The message gives the reason. The app sees only what you can see, so ask for access if needed. If Jira is busy, wait a minute and reload</td></tr><tr><td>Only project admins and Jira admins can change these rules</td><td>Ask one of them to change the limit</td></tr><tr><td>The saved go/no-go rules could not be loaded</td><td>The verdict uses the defaults for now. Reload to try again. Editing is off until they load, so saved limits cannot be overwritten</td></tr><tr><td>Could not save the rules</td><td>The app already tried twice. Nothing changed; try again in a moment</td></tr><tr><td>The licence for this site is not active</td><td>A Jira admin can renew it under Apps</td></tr><tr><td>The print comes out blank</td><td>Use the app’s own Print summary or Print full report button</td></tr><tr><td>Age numbers look wrong</td><td>They are based on Jira’s created and resolved dates; imported defects may carry their import date</td></tr></tbody></table></div>
+
+  <h2 id="data">Your data</h2>
+  <ul>
+    <li>The app reads issues in your browser, with your own Jira permissions, through Atlassian’s platform. Nothing goes to VPC Apps or any other outside service.</li>
+    <li>It stores only what an admin sets for a project: the rule limits, how each rule is counted and the template it came from, in Atlassian’s Forge storage for your site. No issue data and no personal data is stored.</li>
+    <li>To check who may edit limits, the app asks Jira for the viewer’s own project permissions, on Atlassian’s platform. The answer is not stored.</li>
+    <li><b>In-scope End-User Data for data residency:</b> the saved rule settings and the project ID they belong to, in Forge hosted storage, which follows your Jira site’s location. <b>Out of scope:</b> nothing else is stored; issue data is read at viewing time and not kept.</li>
+    <li>After you uninstall, Atlassian’s Forge storage keeps the app’s data for 28 days, then removes it.</li>
+    <li>This documentation page, like the rest of vpcapps.net, counts anonymous visits with Cloudflare Web Analytics (no cookies). The app inside Jira has no visit counter.</li>
+  </ul>
+  <p>See the <a href="/jira/privacy/">privacy policy</a> and the <a href="/jira/security/">security policy</a>.</p>
+  <p class="muted">Jira is a trademark of Atlassian. VPC Apps is an independent Atlassian Marketplace partner; this app is not made or endorsed by Atlassian.</p>
+
+  <h2 id="support">Support</h2>
+  <p>Email <a href="mailto:support@vpcapps.net">support@vpcapps.net</a> with the release name, what you saw, and the build number shown at the bottom of the app. Please do not send customer data or real defect content; a screenshot with details hidden is fine. We reply within <span class="todo">[USER: reply time, for example 2 business days]</span>.</p>
+</section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="28" height="28"><span>VPC Apps</span></a>
+      <p class="muted">Bite-size puzzle games for your phone and your browser.</p></div>
+      <ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
+      <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
+    </div>
+    <p class="muted small">© 2026 VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+</footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a470f94b795a45578b8f87cbfcca8c9d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
