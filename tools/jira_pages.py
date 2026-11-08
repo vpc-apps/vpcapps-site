@@ -10,7 +10,7 @@ UPDATED_ON = '8 November 2026'
 TRADE_NAME = 'Venture Path Consulting'
 LEGAL_NAME = '[USER: proprietor’s legal name, as on the GST registration]'
 ADDRESS = '[USER: business address, as on the GST registration], Visakhapatnam, Andhra Pradesh, India'
-REPLY_TIME = '[USER: reply time, for example 2 business days]'
+REPLY_TIME = '2 business days'
 
 STYLE = ('<style>.doc table{width:100%;border-collapse:collapse;margin:12px 0 20px;font-size:.95em}'
          '.doc th,.doc td{border:1px solid var(--line,#ddd);padding:8px 10px;text-align:left;vertical-align:top}'
