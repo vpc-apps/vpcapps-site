@@ -247,6 +247,8 @@ def import_tools():
         _img(src, os.path.join(out, f'{t["t"]}-1280.webp'), quality=80)
         og_card([src], t['short'], os.path.join(out, f'{t["t"]}-og.jpg'))
     og_card([os.path.join(E8, 'site_img', t['t'] + '.png') for t in TOOLS], TOOL['name'], os.path.join(out, 'hub-og.jpg'))
+    for n in ('offline', 'network', 'extension'):  # /tools/check/ screenshots (E8 tools/make_check_shots.py)
+        _img(os.path.join(E8, 'site_img', f'check_{n}.png'), os.path.join(out, f'check-{n}.webp'), quality=85)
     print('tool app: products/e8_dashboard -> tools/app/')
 
 
@@ -751,7 +753,7 @@ def tools_hub():
   <p class="eyebrow">Free tool</p>
   <h1>{E(TOOL['full_name'])}</h1>
   <p class="lead">Turn a CSV export into a dashboard, findings in plain English and a summary you can share. Pick your source:</p>
-  <p class="privacy-line">🔒 Your file never leaves your device: everything is worked out in your browser. No upload, no account.</p>
+  <p class="privacy-line">🔒 Your file never leaves your device: everything is worked out in your browser. No upload, no account. <a href="/tools/check/">Check it yourself</a>.</p>
 </section>
 <section class="wrap section"><div class="grid tools-grid">{cards}</div></section>
 <section class="wrap section split">
@@ -803,7 +805,7 @@ def tool_page(t):
   {t['extra']}
 </section>
 <section class="wrap section narrow faq"><h2>Questions</h2>{faqs}</section>
-<section class="wrap section narrow"><p class="muted">More free tools: {others} · <a href="/tools/">all tools</a></p></section>'''
+<section class="wrap section narrow"><p class="muted">More free tools: {others} · <a href="/tools/">all tools</a> · <a href="/tools/check/">Check that your file never leaves your device</a></p></section>'''
     url = SITE['url'] + path
     og = f'/assets/img/tools/{t["t"]}-og.jpg'
     faq_ld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
@@ -814,6 +816,57 @@ def tool_page(t):
         {'@type': 'ListItem', 'position': 3, 'name': t['short'], 'item': url}]}
     page(path, t['title'], t['desc'], body, og_image=og, active='/tools/', extra_head=TOOL_HEAD, manifest=TOOL_MANIFEST,
          ld=[tool_app_ld(t['short'], t['desc'], url, SITE['url'] + og, t['gets']), faq_ld, crumbs])
+
+
+def check_page():
+    """/tools/check/: three checks anyone can do to see that the tool never sends their file anywhere."""
+    def shot(n, w, h, alt, cap):
+        return (f'<figure class="shot"><img src="/assets/img/tools/check-{n}.webp" alt="{E(alt)}" width="{w}" height="{h}" loading="lazy">'
+                f'<figcaption class="muted small">{E(cap)}</figcaption></figure>')
+    body = f'''<nav class="wrap crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/tools/">Tools</a> › <span>Check it yourself</span></nav>
+<section class="wrap section narrow page-head">
+  <h1>Check that your file never leaves your device</h1>
+  <p class="lead">{E(TOOL['name'])} reads your file inside your browser. You don't have to take our word for it: these three checks take about five minutes. Use a sample file or a harmless test file.</p>
+</section>
+<section class="wrap section narrow">
+  <h2>1. Cut the connection</h2>
+  <ol class="steps">
+    <li>Open the tool: <a href="/tools/app/">vpcapps.net/tools/app/</a> (visit it once while online, so your browser keeps a copy), or the Chrome extension.</li>
+    <li>Turn on airplane mode, or in Chrome press <b>F12</b> (Mac: <b>Cmd+Option+I</b>), open the <b>Network</b> tab and change "No throttling" to <b>Offline</b>.</li>
+    <li>Reload the page and choose a file. The dashboard still appears, with no connection at all.</li>
+  </ol>
+  {shot('offline', 1280, 800, 'The tool showing a Jira dashboard while the browser is offline', 'The tool reading the Jira sample with the browser set to offline (synthetic data).')}
+</section>
+<section class="wrap section narrow">
+  <h2>2. Watch the network</h2>
+  <ol class="steps">
+    <li>Go back online, press <b>F12</b> and open the <b>Network</b> tab.</li>
+    <li>Click the clear button (🚫) to empty the list.</li>
+    <li>Choose your file and wait for the dashboard. The list stays empty: no request carries your file, or anything else.</li>
+  </ol>
+  <p class="muted small">Two things you may see. <b>Download shareable report</b> can add an entry starting with <code>blob:</code>: that is the file being made in your browser's memory. The <b>Try a sample</b> buttons load a sample file from the tool itself. On the website, loading the page also reaches vpcapps.net and our visit counter (Cloudflare Web Analytics); choosing a file adds nothing.</p>
+  {shot('network', 1280, 800, 'The tool waiting for a file to be chosen', 'The moment to clear the Network list: the tool before you choose a file.')}
+</section>
+<section class="wrap section narrow">
+  <h2>3. See what the Chrome extension may access</h2>
+  <ol class="steps">
+    <li>If you use the Chrome extension (coming to the Chrome Web Store), go to <code>chrome://extensions</code>.</li>
+    <li>Find <b>{E(TOOL['full_name'])}</b> and click <b>Details</b>.</li>
+    <li>It says "This extension requires no special permissions" and "This extension has no additional site access". It cannot read your other tabs or send anything to a website.</li>
+  </ol>
+  {shot('extension', 680, 352, "Chrome's details page: no special permissions, no additional site access", "Chrome's own details page for the extension, from our test install.")}
+</section>
+<section class="wrap section narrow">
+  <div class="panel"><h2>What these checks show</h2><p>They show what the version you have does, on your computer, today; repeat them after an update if it matters to you. Chrome itself still talks to Google (for example to check for updates), and other extensions you have installed may be able to read web pages. If you download or print a report, that file holds figures from your export, and where it goes is up to you. Found something different? Tell us at <a href="mailto:support@vpcapps.net">support@vpcapps.net</a>. See also our <a href="/privacy/">privacy policy</a>.</p></div>
+</section>
+<section class="wrap section narrow"><p class="muted"><a href="/tools/">Back to the tools</a></p></section>'''
+    crumbs = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': SITE['url'] + '/'},
+        {'@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': SITE['url'] + '/tools/'},
+        {'@type': 'ListItem', 'position': 3, 'name': 'Check it yourself', 'item': SITE['url'] + '/tools/check/'}]}
+    page('/tools/check/', 'Check that your file never leaves your device',
+         'Three five-minute checks: use the tool offline, watch the Network tab while it reads your file, and see that the '
+         'Chrome extension asks for no permissions.', body, og_image='/assets/img/tools/hub-og.jpg', active='/tools/', ld=[crumbs])
 
 
 SAMPLES_DL = {'jira': '/tools/app/samples/jira_sample.csv', 'etsy': '/tools/app/samples/etsy_order_items_sample.csv',
@@ -933,6 +986,7 @@ def main(argv=None):
     tools_hub()
     for t in TOOLS:
         tool_page(t)
+    check_page()
     apps()
     about()
     contact()
