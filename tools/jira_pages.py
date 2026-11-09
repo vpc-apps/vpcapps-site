@@ -8,8 +8,8 @@ SHORT = 'Go/No-Go Release Scorecard'
 UPDATED_ON = '8 November 2026'
 # Owner details (filled from the repo docs where known; the rest stays visibly open until the owner fills it).
 TRADE_NAME = 'Venture Path Consulting'
-LEGAL_NAME = '[USER: proprietor’s legal name, as on the GST registration]'
-ADDRESS = '[USER: business address, as on the GST registration], Visakhapatnam, Andhra Pradesh, India'
+LEGAL_NAME = ''  # not shown: the business name + address identify us (VPC Apps stays anonymous); the legal name goes only into Atlassian's partner verification
+ADDRESS = 'Door No 39-5-40, Muralinagar, Visakhapatnam 530007, Andhra Pradesh, India'
 REPLY_TIME = '2 business days'
 
 STYLE = ('<style>.doc table{width:100%;border-collapse:collapse;margin:12px 0 20px;font-size:.95em}'
@@ -162,7 +162,7 @@ def privacy_body():
   <p class="muted">Last updated {UPDATED_ON}.</p>
 </section>
 <section class="wrap section narrow doc">
-  <p>This policy covers the app named above (“the app”), offered on the Atlassian Marketplace by VPC Apps, a brand of {TRADE_NAME}, a sole proprietorship of {LEGAL_NAME}, {ADDRESS} (“we”). The website has <a href="/privacy/">its own policy</a>.</p>
+  <p>This policy covers the app named above (“the app”), offered on the Atlassian Marketplace by VPC Apps, a brand of {TRADE_NAME}, a sole proprietorship registered in India, {ADDRESS} (“we”). The website has <a href="/privacy/">its own policy</a>.</p>
   <h2>Summary</h2>
   <ul>
     <li>The app shows you a report built from your Jira data, in your browser.</li>
