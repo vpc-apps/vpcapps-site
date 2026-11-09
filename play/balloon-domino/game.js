@@ -191,6 +191,7 @@ zoom: 1 / s,
 scene: [Boot].concat(opts.scenes),
 });
 VPC.game = game;
+if (VPC.Telemetry) VPC.Telemetry.install(game);
 var pending = null;
 window.addEventListener('resize', function () {
 clearTimeout(pending);
@@ -965,6 +966,15 @@ var DEFAULT_CADENCE = { freeWins: 10, every: 3, gapSec: 180, preroll: false };
 var b = null, playing = false, prerollDone = false, lastAd = 0, started = Date.now();
 var loaded = false, sentPlaying = false;
 var winsSinceAd = 0, cooldownUntil = 0, listeners = [];
+var sleepers = {};
+function sleepFor(reason, on) {
+if (on) sleepers[reason] = true; else delete sleepers[reason];
+if (VPC.Telemetry) VPC.Telemetry.gap();
+if (!VPC.game) return;
+var any = Object.keys(sleepers).length > 0;
+if (any && VPC.game.loop.running) VPC.game.loop.sleep();
+else if (!any && !VPC.game.loop.running) VPC.game.loop.wake();
+}
 var api;
 function backend() {
 if (b) return b;
@@ -1025,14 +1035,14 @@ began = true;
 lastAd = Date.now();
 VPC.Audio.duck('ad', true);
 setPlaying(false);
-if (VPC.game) VPC.game.loop.sleep();
+sleepFor('ad', true);
 };
 var request = fake ? simulate(kind, onStart) : Promise.resolve().then(function () { return backend().requestAd(kind, onStart); });
 var timeout = new Promise(function (r) { setTimeout(function () { r([false, 'timeout']); }, 90000); });
 return Promise.race([request, timeout]).catch(function (e) { return [false, 'exception: ' + e]; }).then(function (res) {
 if (began) {
 lastAd = Date.now();
-if (VPC.game) VPC.game.loop.wake();
+sleepFor('ad', false);
 VPC.Audio.duck('ad', false);
 }
 block.remove();
@@ -1045,6 +1055,10 @@ return res;
 api = {
 busy: false,
 get id() { return backend().id || VPC.build.portal; },
+/** The player is in a level right now (telemetry samples only then). */
+get playing() { return playing; },
+/** The platform paused the game (tab switch, its own overlay). */
+get paused() { return !!sleepers.platform; },
 /** The build shows ads at all (interstitials). */
 get hasAds() { return !!fake || !!(backend().hasAds && backend().hasAds()); },
 /** The build has rewarded ads (else the game gives a free allowance). */
@@ -1058,6 +1072,7 @@ onChange: function (f) { listeners.push(f); return function () { listeners = lis
 init: function () {
 var be = backend();
 if (be.onQuiet) be.onQuiet(function (quiet) { VPC.Audio.duck('platform', quiet); });
+if (be.onPause) be.onPause(api.platformPause);
 if (be.onAdState) be.onAdState(notify);
 return Promise.resolve().then(function () { return be.init ? be.init() : null; }).catch(function (e) {
 VPC.log('portal init failed', String(e));
@@ -1067,7 +1082,13 @@ loadSave: function () {
 var be = backend();
 if (!be.load) return Promise.resolve(null);
 return Promise.resolve().then(be.load).catch(function () { return null; }).then(function (o) {
-if (be.save) VPC.Save.onChange(debounce(function () { be.save(VPC.Save.snapshot()); }, 1000));
+if (be.save) {
+var push = debounce(function () { be.save(VPC.Save.snapshot()); }, 1000);
+VPC.Save.onChange(push);
+var flush = function () { if (push.pending()) push.now(); };
+window.addEventListener('pagehide', flush);
+document.addEventListener('visibilitychange', function () { if (document.hidden) flush(); });
+}
 return o;
 });
 },
@@ -1077,25 +1098,43 @@ loaded = true;
 try { backend().loadingDone && backend().loadingDone(); } catch (e) {}
 if (playing) send(true, false);
 },
+/** The platform paused / resumed the game (Bridge PAUSE_STATE_CHANGED). */
+platformPause: function (on) { sleepFor('platform', !!on); VPC.log('platform pause', !!on); },
 gameplayStart: function () { setPlaying(true, false); },
 gameplayStop: function () { setPlaying(false); },
 /** A level was won: happytime, then maybe an interstitial (cadence). */
 levelWon: function () {
 try { backend().happytime && backend().happytime(); } catch (e) {}
 },
-/** Leaving the win screen: shows a between-level ad when due. */
-afterLevel: function () {
+/** A level was lost (Playgama level_failed). */
+levelFailed: function () {
+try { backend().levelFailed && backend().levelFailed(); } catch (e) {}
+},
+/** A custom analytics event (Playgama bridge.analytics.send); a no-op elsewhere. */
+track: function (name, data) {
+try { backend().track && backend().track(name, data || {}); } catch (e) {}
+},
+/** A natural pause (leaving the win screen; 'fail' / 'restart' when the
+*  game opts in): shows a between-level ad when due. */
+afterLevel: function (kind) {
 if (!api.hasAds) return Promise.resolve(false);
-var c = cadence(), wins = VPC.Save.get('portal_wins', 0) + 1;
-VPC.Save.set('portal_wins', wins);
+var c = cadence(), wins = VPC.Save.get('portal_wins', 0);
+if (!kind || kind === 'win') { wins++; VPC.Save.set('portal_wins', wins); }
 winsSinceAd++;
 if (wins <= c.freeWins || winsSinceAd < c.every) return Promise.resolve(false);
+if (Date.now() - started < (c.firstSec || 0) * 1000) return Promise.resolve(false);
 if (Date.now() - (lastAd || started) < c.gapSec * 1000) return Promise.resolve(false);
 return api.showInterstitial();
 },
 showInterstitial: function () {
 if (!api.hasAds) return Promise.resolve(false);
-return show('interstitial').then(function (r) { if (r[0]) winsSinceAd = 0; return r[0]; });
+return show('interstitial').then(function (r) {
+if (r[1] !== 'busy') {
+winsSinceAd = 0;
+if (!r[0]) lastAd = Date.now();
+}
+return r[0];
+});
 },
 showRewarded: function () {
 if (!api.rewardedReady()) return Promise.resolve(false);
@@ -1111,7 +1150,10 @@ return r[0];
 };
 function debounce(f, ms) {
 var t = null;
-return function () { clearTimeout(t); t = setTimeout(f, ms); };
+var d = function () { clearTimeout(t); t = setTimeout(function () { t = null; f(); }, ms); };
+d.pending = function () { return t !== null; };
+d.now = function () { clearTimeout(t); t = null; f(); };
+return d;
 }
 return api;
 })();
@@ -1120,6 +1162,130 @@ id: 'none',
 hasAds: function () { return false; },
 hasRewarded: function () { return false; },
 };
+'use strict';
+VPC.Telemetry = (function () {
+var WINDOW = 30000, MIN_FLUSH = 10000, TARGET_FPS = 60;
+var log = [];
+var cur = null; // the level in progress: { id, index, t0, attempt }
+var attempts = {};
+function send(name, data) {
+var d = {};
+Object.keys(data || {}).forEach(function (k) {
+var v = data[k];
+if (v === undefined || v === null) return;
+if (typeof v === 'number' && !isFinite(v)) return;
+d[k] = typeof v === 'number' || typeof v === 'boolean' ? v : String(v).slice(0, 40);
+});
+if (VPC.build.version) d.game_version = String(VPC.build.version);
+log.push({ name: name, data: d, t: Math.round(performance.now()) });
+if (log.length > 50) log.shift();
+VPC.Portal.track(name, d);
+}
+function progress(name, id, index, extra) {
+var d = Object.assign({ level_id: String(id), step_index: index }, extra || {});
+return send(name, d);
+}
+var frames = [], winStart = 0, active = 0, lastT = 0, wasActive = false;
+var errors = 0, rejections = 0;
+window.addEventListener('error', function () { errors++; });
+window.addEventListener('unhandledrejection', function () { rejections++; });
+function isActive() {
+return VPC.Portal.playing && !VPC.Portal.busy && !VPC.Portal.paused && !document.hidden &&
+!!VPC.game && VPC.game.loop.running;
+}
+function pct(sorted, p) {
+if (!sorted.length) return 0;
+var i = Math.min(sorted.length - 1, Math.max(0, Math.ceil(p * sorted.length) - 1));
+return sorted[i];
+}
+function flush(now) {
+var n = frames.length;
+if (n >= 10 && active > 0) {
+var sorted = frames.slice().sort(function (a, b) { return a - b; });
+var over = function (ms) { return frames.filter(function (f) { return f > ms; }).length; };
+var r1 = function (x) { return Math.round(x * 10) / 10; };
+send('performance_sample', {
+target_fps: TARGET_FPS,
+window_ms: Math.round(now - winStart),
+active_ms: Math.round(active),
+frame_count: n,
+fps_avg: r1(n / (active / 1000)),
+fps_p10: r1(1000 / Math.max(1, pct(sorted, 0.9))),
+frame_time_p50_ms: r1(pct(sorted, 0.5)),
+frame_time_p95_ms: r1(pct(sorted, 0.95)),
+frame_time_p99_ms: r1(pct(sorted, 0.99)),
+frame_time_max_ms: r1(sorted[n - 1]),
+frames_over_50ms: over(50),
+frames_over_100ms: over(100),
+frames_over_250ms: over(250),
+frames_over_500ms: over(500),
+frames_over_1000ms: over(1000),
+js_error_count: errors,
+unhandled_rejection_count: rejections,
+});
+}
+frames = []; active = 0; winStart = now; errors = 0; rejections = 0;
+}
+function step() {
+var now = performance.now(), on = isActive();
+if (!winStart) winStart = now;
+if (on && wasActive && lastT) {
+var dt = now - lastT;
+frames.push(dt);
+active += dt;
+}
+wasActive = on;
+lastT = now;
+if (now - winStart >= WINDOW) flush(now);
+}
+function install(game) {
+game.events.on('step', step);
+game.events.on('resume', function () { wasActive = false; });
+var hide = function () {
+wasActive = false;
+if (active >= MIN_FLUSH) flush(performance.now());
+};
+document.addEventListener('visibilitychange', function () { if (document.hidden) hide(); });
+window.addEventListener('pagehide', hide);
+}
+return {
+get log() { return log; },
+install: install,
+/** The loop slept (ad, platform pause): the next frame starts a new chain. */
+gap: function () { wasActive = false; },
+event: send,
+/** A level / step was entered (also on every retry; extra.continued = after a rewarded extra move). */
+started: function (id, index, extra) {
+var key = String(id);
+if (!(extra && extra.continued) || !attempts[key]) attempts[key] = (attempts[key] || 0) + 1;
+cur = { id: key, index: index, t0: Date.now(), attempt: attempts[key] };
+progress('progression_started', id, index, Object.assign({ attempt: cur.attempt }, extra || {}));
+},
+completed: function (id, index, extra) {
+var c = cur && cur.id === String(id) ? cur : null;
+progress('progression_completed', id, index, Object.assign({
+duration_sec: c ? Math.round((Date.now() - c.t0) / 1000) : undefined,
+attempt: c ? c.attempt : undefined,
+}, extra || {}));
+cur = null;
+},
+failed: function (id, index, extra) {
+var c = cur && cur.id === String(id) ? cur : null;
+progress('progression_failed', id, index, Object.assign({
+duration_sec: c ? Math.round((Date.now() - c.t0) / 1000) : undefined,
+attempt: c ? c.attempt : undefined,
+}, extra || {}));
+cur = null;
+},
+/** Once per player (saved): tutorial_started / tutorial_completed. */
+tutorial: function (what) {
+var key = 'tm_tutorial_' + what;
+if (VPC.Save.get(key, false)) return;
+VPC.Save.set(key, true);
+send('tutorial_' + what, {});
+},
+};
+})();
 var BD = window.BD || (window.BD = {});
 BD.SECTIONS = [['breeze', 'Breeze', 'Clear the sky with one tap'], ['gusty', 'Gusty', 'Bigger skies, fewer right answers'], ['storm', 'Storm', 'Armoured and bomb balloons'], ['double', 'Double', 'Two chains, two taps'], ['thunder', 'Thunder', 'Big skies, tough armour'], ['cyclone', 'Cyclone', 'Two chains, more traps'], ['hurricane', 'Hurricane', 'One right balloon. Find it'], ['tornado', 'Tornado', 'Arrows everywhere, most of them lie'], ['monsoon', 'Monsoon', 'Two chains in a crowded sky'], ['eclipse', 'Eclipse', 'The final skies']];
 BD.WEB_LEVEL1 = [1,0,'7,2,0;4,2,26;4,5,04;4,0,04;1,5,7;7,5,;1,0,1;7,0,;0,4,;0,1,',[0]];
@@ -2151,6 +2317,16 @@ var t = 0;
 for (var i = 1; i < api.unlocked && i <= BD.LEVELS.length; i++) t += api.stars(i);
 return t;
 },
+/** Once per calendar day: true (and +1 free hint) on a returning player's
+*  first level of the day. The first day only starts the clock. */
+claimDailyGift: function () {
+var t = today(), last = S.get('gift_day', null);
+if (last === t) return false;
+S.set('gift_day', t);
+if (last === null) return false;
+S.set('daily_free_hints', daily.freeHints + 1);
+return true;
+},
 get tutorialDone() { return S.get('tutorial', false); },
 markTutorialDone: function () { S.set('tutorial', true); },
 get goalCardSeen() { return S.get('web_goal_card', false); },
@@ -2626,6 +2802,10 @@ this.showInfo(BD.INTROS[section], false, section);
 }
 this.armNudge();
 VPC.Portal.gameplayStart();
+if (this.handOn) VPC.Telemetry.tutorial('started');
+this.tmStart();
+this.events.once('shutdown', function () { self.tmEnd('quit'); });
+this.dailyGift();
 this.refresh();
 this.cameras.main.fadeIn(180, 255, 241, 226);
 try { performance.mark('vpc-created'); } catch (e) {}
@@ -2836,6 +3016,21 @@ this.board.setPosition(this.sky.x, this.sky.y);
 }
 },
 canAct: function () { return !this.busy && !this.card && !VPC.Portal.busy; },
+tmId: function () { return this.daily ? 'daily' : 'level_' + this.level.number; },
+tmIndex: function () { return this.daily ? 0 : this.level.number; },
+tmStart: function (continued) {
+if (this.tmOpen) return;
+this.tmOpen = true;
+VPC.Telemetry.started(this.tmId(), this.tmIndex(), { mode: this.daily ? 'daily' : 'level', continued: continued ? true : undefined });
+},
+/** Ends the attempt in progress: won, lost, restart or quit. */
+tmEnd: function (outcome) {
+if (!this.tmOpen) return;
+this.tmOpen = false;
+var d = { mode: this.daily ? 'daily' : 'level', taps_used: this.g.tapsUsed, hints_used: this.hintsUsed };
+if (outcome === 'won') VPC.Telemetry.completed(this.tmId(), this.tmIndex(), Object.assign({ stars: this.g.stars }, d));
+else VPC.Telemetry.failed(this.tmId(), this.tmIndex(), Object.assign({ reason: outcome }, d));
+},
 onSkyDown: function (p) {
 if (!this.canAct() || this.g.status !== 'playing') return;
 var best = -1, bestD = Infinity, self = this;
@@ -2874,6 +3069,8 @@ var won = self.g.status === 'won';
 if (won) {
 VPC.Portal.gameplayStop();
 VPC.Portal.levelWon();
+self.tmEnd('won');
+if (self.idx === 0 && !self.daily) VPC.Telemetry.tutorial('completed');
 if (self.daily) {
 self.dailyResult = st.daily.complete();
 } else {
@@ -2885,6 +3082,8 @@ if (self.tutorial || self.idx === 0) { st.markTutorialDone(); self.tutorial = fa
 VPC.Audio.play('win', { volume: 0.8 });
 VPC.Juice.confetti(self, null, 96);
 } else {
+VPC.Portal.levelFailed();
+self.tmEnd('out_of_taps');
 VPC.Audio.play('lose');
 }
 self.refresh();
@@ -2994,6 +3193,7 @@ var give = function () {
 self.g.addBonusTap();
 if (self.card) { self.card.close(); self.card = null; }
 VPC.Portal.gameplayStart();
+self.tmStart(true);
 VPC.Juice.floatText(self, self.sky.x + self.sky.w / 2, self.sky.y + self.sky.h * 0.5, '+1 TAP', { fontFamily: VPC.UI.theme.font, fontStyle: '700', fontSize: Math.round(40 * self.v.s) + 'px', color: '#ffffff', stroke: '#1FA8FF', strokeThickness: 8 * self.v.s });
 VPC.Audio.play('unlock', { volume: 0.7 });
 self.refresh();
@@ -3012,11 +3212,13 @@ retry: function () {
 if (this.busy) return;
 if (this.card) { this.card.close(); this.card = null; }
 var replay = this.g.status === 'won';
+if (this.g.status === 'playing') this.tmEnd('restart');
 if (replay) this.g = new BD.Game(this.level); else this.g.retry();
 this.resetSky();
 this.setHighlight(this.tutorial ? this.g.hint() : -1);
 VPC.Audio.play('whoosh', { volume: 0.7 });
 VPC.Portal.gameplayStart();
+this.tmStart();
 this.armNudge();
 this.refresh();
 },
@@ -3033,6 +3235,19 @@ bv.alive = alive;
 });
 this.dartLayer.removeAll(true);
 this.hideCombo();
+},
+/** Daily gift: the first level of each new calendar day gives +1 free hint
+*  (saved with the Daily streak hints). Not on a player's first day. */
+dailyGift: function () {
+var st = BD.Store, self = this;
+if (!st.claimDailyGift()) return;
+VPC.Telemetry.event('daily_gift_claimed', { gift: 'hint' });
+this.time.delayedCall(700, function () {
+if (!self.sys.isActive()) return;
+VPC.UI.toast(self, 'Daily gift: +1 free hint  ·  ' + st.daily.freeHints + ' saved', 2600);
+VPC.Audio.play('unlock', { volume: 0.6 });
+self.refresh();
+});
 },
 armNudge: function () {
 var self = this;
