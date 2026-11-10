@@ -150,6 +150,13 @@ E8.Etsy = (function () {
       };
     }
 
+    // Months for the month chart and table: every month with sales or with fees (a month with only ads or
+    // listing fees still costs money, and the table's total must match the fee cards).
+    if (m.orders) {
+      var mset = {};
+      m.orders.months.concat(m.fees ? Object.keys(m.fees.byMonth) : []).forEach(function (k) { mset[k] = 1; });
+      m.months = Object.keys(mset).sort();
+    }
     var sales = m.orders ? m.orders.sales : (m.fees ? m.fees.statementSales : 0);
     var fees = m.fees ? m.fees.total : 0, refunds = m.fees ? m.fees.refunds : 0;
     var cogs = sales * cogsPct;
@@ -223,9 +230,9 @@ E8.Etsy = (function () {
 
     html += '<div class="grid">';
     if (m.orders) {
-      var months = m.orders.months.slice(-12);
+      var months = m.months.slice(-12);
       html += card('Sales by month', 'Item sales per month' + (m.fees ? ' (blue) against Etsy fees, costs and refunds (orange). A widening gap means more profit.' : '.'),
-        C.lines(months, [{ name: 'Item sales', values: months.map(function (k) { return round2(m.orders.byMonth[k]); }), color: '#3b6fd8' }]
+        C.lines(months, [{ name: 'Item sales', values: months.map(function (k) { return round2(m.orders.byMonth[k] || 0); }), color: '#3b6fd8' }]
           .concat(m.fees ? [{ name: 'Fees, costs and refunds', values: months.map(function (k) { return round2(m.fees.byMonth[k] || 0); }), color: '#e0742c' }] : [])));
       html += card('Best-selling items', 'Item sales per product, biggest first. The grey bar adds up the rest.', C.bars(m.orders.byItem, { color: '#c44a7a', max: 8, more: 'other items', fmt: money }));
       if (m.orders.byCountry.length > 1) html += card('Sales by buyer country', 'Where your buyers live, by item sales.', C.bars(m.orders.byCountry, { color: '#8a63d2', max: 8, more: 'other countries', fmt: money }));
@@ -250,10 +257,10 @@ E8.Etsy = (function () {
       return [label, String(orders), String(units), money(sales)].concat(m.fees ? [money(fees), money(sales - fees)] : []);
     };
     var tot = { o: 0, u: 0, s: 0, f: 0 };
-    var rows = o.months.map(function (k) {
-      var f = fm[k] || 0;
-      tot.o += o.ordersMonth[k] || 0; tot.u += o.unitsMonth[k] || 0; tot.s += o.byMonth[k]; tot.f += f;
-      return row(C.axisLabel(k), o.ordersMonth[k] || 0, o.unitsMonth[k] || 0, o.byMonth[k], f);
+    var rows = m.months.map(function (k) {
+      var f = fm[k] || 0, s = o.byMonth[k] || 0;
+      tot.o += o.ordersMonth[k] || 0; tot.u += o.unitsMonth[k] || 0; tot.s += s; tot.f += f;
+      return row(C.axisLabel(k), o.ordersMonth[k] || 0, o.unitsMonth[k] || 0, s, f);
     });
     return C.table(cols, rows, { foot: [row('Total', o.orders, tot.u, tot.s, tot.f)], minW: m.fees ? 620 : 420 });
   }

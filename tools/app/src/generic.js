@@ -236,7 +236,8 @@ E8.Generic = (function () {
   function cross(data, a, b) {
     var topOf = function (p) { var t = p.top.slice(0, 6).map(function (x) { return x[0]; }); return t; };
     var ra = topOf(a), cb = topOf(b), other = 'Other';
-    var key = function (v, list) { return !v ? '(blank)' : list.indexOf(v) >= 0 ? v : other; };
+    // "n/a", "unknown", "-" are blanks (as in the profile), not values outside the top 6.
+    var key = function (v, list) { return !v || MISSING.test(v) ? '(blank)' : list.indexOf(v) >= 0 ? v : other; };
     var rowsK = ra.slice(), colsK = cb.slice(), grid = {};
     data.records.forEach(function (r) {
       var x = key(cell(r[a.name]), ra), y = key(cell(r[b.name]), cb);

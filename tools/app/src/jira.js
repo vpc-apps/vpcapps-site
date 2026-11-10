@@ -67,7 +67,9 @@ E8.Jira = (function () {
       return Math.max(i.created.getTime(), i.resolved ? i.resolved.getTime() : 0, i.updated ? i.updated.getTime() : 0);
     }).concat([0])));
     var open = issues.filter(function (i) { return !i.done; });
-    var closed = issues.filter(function (i) { return i.done && i.resolved; });
+    // done = every issue that is not open (a done status counts even without a Resolved date); closed = those with a date, for times.
+    var done = issues.filter(function (i) { return i.done; });
+    var closed = done.filter(function (i) { return i.resolved; });
     var ageDays = function (i) { return (asOf - i.created) / DAY; };
     var resDays = closed.map(function (i) { return Math.max(0, (i.resolved - i.created) / DAY); });
     var recentRes = closed.filter(function (i) { return asOf - i.resolved <= 30 * DAY; })
@@ -100,11 +102,14 @@ E8.Jira = (function () {
     issues.forEach(function (i) {
       var s = i.status || '(none)', r = byStatus[s] || (byStatus[s] = { status: s, done: true, counts: {}, n: 0 });
       r.counts[i.priority] = (r.counts[i.priority] || 0) + 1; r.n++;
+      // A status can hold both open and resolved issues (a blank status, a Reopened issue with a Resolved date);
+      // the "Not resolved" subtotal must count only the open ones.
+      if (!i.done) { r.openCounts = r.openCounts || {}; r.openCounts[i.priority] = (r.openCounts[i.priority] || 0) + 1; }
       if (!i.done) r.done = false;
     });
     var statusRows = Object.keys(byStatus).map(function (k) { return byStatus[k]; }).sort(function (a, b) { return b.n - a.n; });
     var ofPrio = function (list, p) { return list.filter(function (i) { return i.priority === p; }); };
-    var fixedOpen = priorityOrder.map(function (p) { return [p, [ofPrio(closed, p).length, ofPrio(open, p).length]]; });
+    var fixedOpen = priorityOrder.map(function (p) { return [p, [ofPrio(done, p).length, ofPrio(open, p).length]]; });
     var fixTime = priorityOrder.map(function (p) {
       var d = ofPrio(closed, p).map(function (i) { return Math.max(0, (i.resolved - i.created) / DAY); });
       return [p, d.length ? Math.round(Eng.median(d) * 10) / 10 : 0, d.length];
@@ -115,7 +120,7 @@ E8.Jira = (function () {
       priorityOrder: priorityOrder, statusRows: statusRows, fixedOpen: fixedOpen, fixTime: fixTime,
       byPriorityOpen: priorityOrder.map(function (p) { return [p, ofPrio(open, p).length]; }),
       reopened: open.filter(function (i) { return /reopen/i.test(i.status); }).sort(function (a, b) { return a.created - b.created; }),
-      issues: issues, open: open, closed: closed,
+      issues: issues, open: open, closed: closed, done: done,
       unassignedOpen: open.filter(function (i) { return i.assignee === 'Unassigned'; }).length,
       medianRes: Eng.median(resDays), medianRecent: Eng.median(recentRes), meanRes: Eng.mean(resDays),
       weeks: weeks, createdW: createdW, resolvedW: resolvedW, ageBuckets: buckets, staleHigh: stale,
@@ -165,7 +170,7 @@ E8.Jira = (function () {
     var c4 = m.createdW.slice(-4).reduce(sum, 0), r4 = m.resolvedW.slice(-4).reduce(sum, 0), net = c4 - r4;
     var slower = m.medianRecent !== null && m.medianRes !== null && m.medianRecent > m.medianRes * 1.15;
     var html = '<div class="kpis">' +
-      C.tile(Nc + ' in file', String(m.total), m.closed.length + ' resolved · ' + m.open.length + ' open') +
+      C.tile(Nc + ' in file', String(m.total), m.done.length + ' resolved · ' + m.open.length + ' open') +
       C.tile('Open ' + N, String(m.open.length), Eng.pct(m.open.length, m.total) + '% of all ' + N, m.open.length ? '' : 'good') +
       C.tile('Median time to resolve', m.medianRes === null ? '–' : days(m.medianRes),
         m.medianRecent === null ? 'none resolved in the last 30 days' : 'last 30 days: ' + days(m.medianRecent), slower ? 'warn' : '') +
@@ -208,11 +213,11 @@ E8.Jira = (function () {
       var tot = 0;
       return ['<b>' + Eng.esc(label) + '</b>'].concat(pri.map(function (p) { var n = counts[p] || 0; tot += n; return n ? String(n) : '<span class="zero">0</span>'; })).concat([String(tot)]);
     };
-    var sumOf = function (list) { var o = {}; list.forEach(function (r) { pri.forEach(function (p) { o[p] = (o[p] || 0) + (r.counts[p] || 0); }); }); return o; };
+    var sumOf = function (list, key) { var o = {}; list.forEach(function (r) { pri.forEach(function (p) { o[p] = (o[p] || 0) + ((r[key || 'counts'] || {})[p] || 0); }); }); return o; };
     var open = rows.filter(function (r) { return !r.done; }), done = rows.filter(function (r) { return r.done; });
     var cols = [{ t: 'Status' }].concat(pri.map(function (p) { return { t: p, num: true }; })).concat([{ t: 'Total', num: true }]);
     return E8.Charts.table(cols, open.concat(done).map(function (r) { return cells(r.status, r.counts); }), {
-      sub: open.length ? { at: open.length, row: cells('Not resolved', sumOf(open)) } : null,
+      sub: open.length ? { at: open.length, row: cells('Not resolved', sumOf(rows, 'openCounts')) } : null,
       foot: [cells('All ' + m.noun, sumOf(rows))], minW: 140 + 80 * pri.length,
     });
   }

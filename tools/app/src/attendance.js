@@ -102,7 +102,9 @@ E8.Attendance = (function () {
   /** parts: { punches | daily: data }, opt: { start: 'HH:MM', end, grace (min), off: [0,6] weekday numbers }. */
   template.analyse = function (parts, opt) {
     opt = opt || {};
-    var start = minutes(opt.start || '09:30'), end = minutes(opt.end || '18:30'), grace = +opt.grace || 10;
+    // Grace 0 is a real setting (late = any minute after the start); only a missing or unreadable value means the default 10.
+    var g = opt.grace === undefined || opt.grace === null || opt.grace === '' ? NaN : +opt.grace;
+    var start = minutes(opt.start || '09:30'), end = minutes(opt.end || '18:30'), grace = isNaN(g) ? 10 : Math.max(0, g);
     var off = opt.off || [0];
     var part = parts.daily ? 'daily' : 'punches', data = parts[part];
     var ed = employeeDays(data, part);
@@ -161,7 +163,7 @@ E8.Attendance = (function () {
   template.insights = function (m) {
     var out = [], pct = function (a, b) { return b ? Math.round(a * 100 / b) : 0; };
     out.push(m.people + ' employees, ' + m.workDays + ' working days (' + m.from.toDateString() + ' – ' + m.to.toDateString() + '). Attendance rate: ' + Math.round(m.rate * 100) + '%.');
-    out.push(m.late + ' late arrivals after ' + hm(m.start) + ' + ' + m.grace + ' min grace (' + pct(m.late, m.presentDays) + '% of attended days).');
+    out.push(m.late + ' late arrivals after ' + hm(m.start) + ' + ' + m.grace + ' min grace (' + pct(m.late, m.total) + '% of attended days).');
     var wd = m.lateByWd.map(function (n, i) { return [WD[i], n]; }).sort(function (a, b) { return b[1] - a[1]; })[0];
     if (wd && wd[1] && m.late >= 10) out.push('Most late arrivals happen on ' + wd[0] + ' (' + wd[1] + ').');
     var lateTop = m.list.slice().sort(function (a, b) { return b.late - a.late; })[0];
@@ -179,7 +181,8 @@ E8.Attendance = (function () {
 
   template.render = function (m) {
     var C = E8.Charts, esc = Eng.esc, card = C.card;
-    var rate = Math.round(m.rate * 100), latePct = m.presentDays ? Math.round(m.late * 1000 / m.presentDays) / 10 : 0;
+    // Late % = late days / every attended day (weekly-off days included, as late arrivals on them are counted too).
+    var rate = Math.round(m.rate * 100), latePct = m.total ? Math.round(m.late * 1000 / m.total) / 10 : 0;
     var html = '<div class="kpis">' +
       C.tile('Attendance rate', rate + '%', m.presentDays + ' of ' + m.expected + ' working person-days', rate >= 95 ? 'good' : rate >= 90 ? 'warn' : 'bad') +
       C.tile('Late arrivals', String(m.late), latePct + '% of attended days, after ' + hm(m.start) + ' + ' + m.grace + ' min', latePct > 10 ? 'bad' : latePct > 5 ? 'warn' : 'good') +

@@ -117,7 +117,7 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
       state.opt = { type: $('f-type').value, project: $('f-project').value, breakdown: $('f-extra').value || null };
       state.model = t.analyse(state.parts.main, state.opt);
     } else if (t.id === 'attendance') {
-      state.opt = { start: $('a-start').value, end: $('a-end').value, grace: +$('a-grace').value || 0,
+      state.opt = { start: $('a-start').value, end: $('a-end').value, grace: $('a-grace').value.trim(),
         off: $('a-off').value.split(',').filter(String).map(Number) };
       state.model = t.analyse(state.parts, state.opt);
     } else {
