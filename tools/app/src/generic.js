@@ -179,7 +179,8 @@ E8.Generic = (function () {
     m.cats = bk.map(function (p) {
       var c = {}, s = {};
       data.records.forEach(function (r) {
-        var k = cell(r[p.name]) || '(blank)';
+        // Blank-like values ("n/a", "unknown", "-", "null", "none", "?") join the empty cells in "(blank)" (user decision 11-16).
+        var cv = cell(r[p.name]), k = !cv || MISSING.test(cv) ? '(blank)' : cv;
         c[k] = (c[k] || 0) + 1;
         if (measure) { var v = val(r, measure); if (v !== null) s[k] = (s[k] || 0) + v; }
       });
@@ -304,7 +305,7 @@ E8.Generic = (function () {
     html += '<div class="grid">';
     var COLORS = ['#3b6fd8', '#c44a7a', '#8a63d2', '#2f9e6e'];
     m.cats.forEach(function (c, i) {
-      html += card('Rows by ' + c.p.name, 'How many rows have each value, most first. The grey bar adds up the rest.',
+      html += card('Rows by ' + c.p.name, 'How many rows have each value, most first. Empty cells and "n/a", "unknown", "-" count as (blank). The grey bar adds up the rest.',
         C.bars(c.counts, { color: COLORS[i % 4], max: 8, more: 'others' }));
     });
     if (m.keys && m.keys.length) {

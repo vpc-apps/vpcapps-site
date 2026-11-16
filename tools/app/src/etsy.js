@@ -2,8 +2,11 @@
 // Two Etsy exports, either or both:
 //  - Sold Order Items CSV (Shop Manager → Settings → Options → Download Data → Orders: "Order Items")
 //  - Payments statement CSV (Shop Manager → Finances → Payment account / Monthly statements → Download CSV)
-// Profit = item sales − Etsy fees (transaction, processing, listing, regulatory) − ads − shipping labels
-//          − refunds − product cost (% of item price, entered by the seller).
+// Profit = item sales + shipping charged − Etsy fees (transaction, processing, listing, regulatory) − ads
+//          − shipping labels − refunds − product cost (% of item sales, entered by the seller).
+// Shipping charged = the shipping buyers paid: the Order Items CSV's "Order Shipping" column. It is an ORDER value that
+// Etsy repeats on every item line of the order, so it is taken once per Order ID (the largest value on its lines,
+// which also works when only the first line carries it). The statement alone has no shipping charged.
 'use strict';
 
 var E8 = window.E8 || (window.E8 = {});
@@ -103,6 +106,15 @@ E8.Etsy = (function () {
         };
       }).filter(function (l) { return l.date; });
       var byItem = {}, byMonth = {}, orders = {}, byCountry = {}, ordersMonth = {}, unitsMonth = {};
+      // Shipping charged: once per order (Etsy repeats the order's shipping on each item line), in the order's first month.
+      var shipOrder = {}, shipMonthOf = {};
+      lines.forEach(function (l, i) {
+        var ok = l.order ? 'o' + l.order : 'line' + i;
+        if (!(ok in shipOrder)) { shipOrder[ok] = 0; shipMonthOf[ok] = Eng.monthKey(l.date); }
+        if (Math.abs(l.shipping) > Math.abs(shipOrder[ok])) shipOrder[ok] = l.shipping;
+      });
+      var shipping = 0, shipMonth = {};
+      Object.keys(shipOrder).forEach(function (k) { shipping += shipOrder[k]; shipMonth[shipMonthOf[k]] = (shipMonth[shipMonthOf[k]] || 0) + shipOrder[k]; });
       lines.forEach(function (l) {
         byItem[l.item] = (byItem[l.item] || 0) + l.total;
         var mk = Eng.monthKey(l.date); byMonth[mk] = (byMonth[mk] || 0) + l.total;
@@ -116,6 +128,7 @@ E8.Etsy = (function () {
       var nOrders = Object.keys(orders).length;
       m.orders = {
         lines: lines.length, sales: sales, units: units, orders: nOrders, aov: nOrders ? sales / nOrders : 0,
+        shipping: round2(shipping), shipMonth: shipMonth,
         discounts: lines.reduce(function (a, l) { return a + l.disc; }, 0),
         byItem: sortObj(byItem), byCountry: sortObj(byCountry),
         months: Object.keys(byMonth).sort(), byMonth: byMonth, unitsMonth: unitsMonth,
@@ -159,10 +172,12 @@ E8.Etsy = (function () {
     }
     var sales = m.orders ? m.orders.sales : (m.fees ? m.fees.statementSales : 0);
     var fees = m.fees ? m.fees.total : 0, refunds = m.fees ? m.fees.refunds : 0;
-    var cogs = sales * cogsPct;
-    m.sales = sales; m.cogs = cogs; m.cogsPct = cogsPct * 100;
-    m.profit = sales - fees - refunds - cogs;
-    m.margin = sales ? m.profit / sales : 0;
+    var cogs = sales * cogsPct, shipping = m.orders ? m.orders.shipping : 0;
+    m.sales = sales; m.cogs = cogs; m.cogsPct = cogsPct * 100; m.shipping = shipping;
+    // What buyers paid = item sales + shipping charged; the margin is profit as a share of it.
+    m.income = sales + shipping;
+    m.profit = sales + shipping - fees - refunds - cogs;
+    m.margin = m.income ? m.profit / m.income : 0;
     m.total = m.orders ? m.orders.lines : (parts.statement ? parts.statement.records.length : 0);
     return m;
   };
@@ -178,7 +193,8 @@ E8.Etsy = (function () {
 
   template.insights = function (m) {
     var out = [], pct = function (a, b) { return b ? Math.round(a * 1000 / b) / 10 : 0; };
-    if (m.orders) out.push(plural(m.orders.orders, 'order') + ', ' + plural(m.orders.units, 'item') + ' sold, ' + fmt(m, m.orders.sales) + ' in item sales (average order ' + fmt(m, m.orders.aov) + ').');
+    if (m.orders) out.push(plural(m.orders.orders, 'order') + ', ' + plural(m.orders.units, 'item') + ' sold, ' + fmt(m, m.orders.sales) + ' in item sales (average order ' + fmt(m, m.orders.aov) + ')' +
+      (m.shipping ? ', plus ' + fmt(m, m.shipping) + ' shipping charged.' : '.'));
     if (m.fees && m.sales) {
       var top = m.fees.rows[0];
       out.push('Etsy fees and costs took ' + fmt(m, m.fees.total) + ' = ' + pct(m.fees.total, m.sales) + '% of sales' +
@@ -198,8 +214,8 @@ E8.Etsy = (function () {
       var ms = m.orders.months, last = m.orders.byMonth[ms[ms.length - 1]], prev = m.orders.byMonth[ms[ms.length - 2]];
       if (prev) out.push('Latest month (' + ms[ms.length - 1] + '): ' + fmt(m, last) + ', ' + (last >= prev ? 'up ' : 'down ') + Math.abs(Math.round((last - prev) * 100 / prev)) + '% on the month before.');
     }
-    if (m.sales) out.push('True profit after Etsy fees' + (m.cogsPct ? ', refunds and product cost (' + m.cogsPct + '%)' : ' and refunds (enter your product cost % to include it)') +
-      ': ' + fmt(m, m.profit) + ' = ' + Math.round(m.margin * 100) + '% of sales.');
+    if (m.sales) out.push('True profit after Etsy fees, labels' + (m.cogsPct ? ', refunds and product cost (' + m.cogsPct + '%)' : ' and refunds') +
+      ': ' + fmt(m, m.profit) + ' = ' + Math.round(m.margin * 100) + '% of ' + (m.shipping ? 'items + shipping' : 'sales') + (m.cogsPct ? '.' : ' (enter your product cost % to include it).'));
     if (!m.fees) out.push('Add your Etsy payments statement CSV to see fees, ads and refunds.');
     if (!m.orders) out.push('Add your Etsy Order Items CSV to see best sellers and monthly sales.');
     return out;
@@ -211,21 +227,23 @@ E8.Etsy = (function () {
     var feePct = m.fees ? pctOf(m.fees.total) : 0, refPct = m.fees ? pctOf(m.fees.refunds) : 0, margin = Math.round(m.margin * 100);
     var html = '<div class="kpis">' +
       C.tile('Item sales', money(m.sales), m.orders ? plural(m.orders.units, 'item') + ' sold' : 'from the payments statement') +
+      C.tile('Shipping charged', m.orders ? money(m.shipping) : '–', m.orders ? 'paid by buyers, once per order' : 'add the Order Items CSV') +
       C.tile('Orders', m.orders ? String(m.orders.orders) : '–', m.orders ? 'average order ' + esc(money(m.orders.aov)) : 'add the Order Items CSV') +
       C.tile('Etsy fees and costs', m.fees ? money(m.fees.total) : '–', m.fees ? feePct + '% of sales' : 'add the payments statement',
         !m.fees ? '' : feePct > 30 ? 'bad' : feePct > 20 ? 'warn' : 'good') +
       C.tile('Refunds', m.fees ? money(m.fees.refunds) : '–', m.fees ? refPct + '% of sales' : 'add the payments statement',
         !m.fees ? '' : refPct >= 8 ? 'bad' : refPct >= 3 ? 'warn' : 'good') +
       C.tile('Product cost', money(m.cogs), m.cogsPct ? m.cogsPct + '% of sales' : 'not entered (0%)') +
-      C.tile('True profit', money(m.profit), margin + '% margin', !m.sales ? '' : margin < 10 ? 'bad' : margin < 30 ? 'warn' : 'good') + '</div>';
+      C.tile('True profit', money(m.profit), margin + '% margin' + (m.shipping ? ' on items + shipping' : ''), !m.sales ? '' : margin < 10 ? 'bad' : margin < 30 ? 'warn' : 'good') + '</div>';
     html += card('Key findings', 'The main points in plain words, most important first.', C.findings(template.insights(m)), 'wide');
 
     var flow = [['Item sales', round2(m.sales)]], colors = ['#3b6fd8'];
+    if (m.shipping) { flow.push(['+ Shipping charged', round2(m.shipping)]); colors.push('#3aa3b8'); }
     if (m.fees) m.fees.rows.forEach(function (r) { flow.push(['− ' + r[0], r[1]]); colors.push('#e0742c'); });
     if (m.fees && m.fees.refunds) { flow.push(['− Refunds', m.fees.refunds]); colors.push('#c44a7a'); }
     if (m.cogs) { flow.push(['− Product cost', round2(m.cogs)]); colors.push('#8a63d2'); }
     flow.push(['= True profit', round2(m.profit)]); colors.push(m.profit < 0 ? '#b3261e' : '#2f9e6e');
-    html += card('Where the money goes', 'Start from item sales (blue), take away each Etsy fee, refund and product cost; the last bar is what you keep.' +
+    html += card('Where the money goes', 'Item sales (blue) plus shipping charged (teal), minus each Etsy fee, shipping label, refund and product cost; the last bar is what you keep.' +
       (m.fees ? '' : ' Add your payments statement to see the fees.'), C.bars(flow, { colors: colors, max: 20, keepZero: true, fmt: money }), 'wide');
 
     html += '<div class="grid">';
@@ -239,7 +257,8 @@ E8.Etsy = (function () {
     }
     if (m.fees) html += card('Etsy fees and costs by type', 'What Etsy charged, by kind of fee. Ads and transaction fees are usually the biggest.', C.bars(m.fees.rows, { color: '#e0742c', max: 8, more: 'other fees', fmt: money }));
     html += '</div>';
-    html += card('Month by month', 'Exact numbers per month to copy into your accounts.' + (m.fees ? ' "Left after fees" is sales minus fees, costs and refunds, before product cost.' : ''), monthTable(m), 'wide');
+    html += card('Month by month', 'Exact numbers per month for your accounts; shipping counts once per order.' +
+      (m.fees ? ' "Left after fees" = item sales + shipping − fees, costs and refunds, before product cost.' : ''), monthTable(m), 'wide');
     return html;
   };
 
@@ -251,18 +270,18 @@ E8.Etsy = (function () {
       return C.table([{ t: 'Month' }, { t: 'Fees, costs and refunds', num: true }], ks.map(function (k) { return [C.axisLabel(k), money(fm[k])]; }),
         { foot: [['Total', money(ks.reduce(function (a, k) { return a + fm[k]; }, 0))]], minW: 300 });
     }
-    var o = m.orders, cols = [{ t: 'Month' }, { t: 'Orders', num: true }, { t: 'Items sold', num: true }, { t: 'Item sales', num: true }];
+    var o = m.orders, cols = [{ t: 'Month' }, { t: 'Orders', num: true }, { t: 'Items sold', num: true }, { t: 'Item sales', num: true }, { t: 'Shipping charged', num: true }];
     if (m.fees) cols = cols.concat([{ t: 'Fees, costs and refunds', num: true }, { t: 'Left after fees', num: true }]);
-    var row = function (label, orders, units, sales, fees) {
-      return [label, String(orders), String(units), money(sales)].concat(m.fees ? [money(fees), money(sales - fees)] : []);
+    var row = function (label, orders, units, sales, ship, fees) {
+      return [label, String(orders), String(units), money(sales), money(ship)].concat(m.fees ? [money(fees), money(sales + ship - fees)] : []);
     };
-    var tot = { o: 0, u: 0, s: 0, f: 0 };
+    var tot = { o: 0, u: 0, s: 0, h: 0, f: 0 };
     var rows = m.months.map(function (k) {
-      var f = fm[k] || 0, s = o.byMonth[k] || 0;
-      tot.o += o.ordersMonth[k] || 0; tot.u += o.unitsMonth[k] || 0; tot.s += s; tot.f += f;
-      return row(C.axisLabel(k), o.ordersMonth[k] || 0, o.unitsMonth[k] || 0, s, f);
+      var f = fm[k] || 0, s = o.byMonth[k] || 0, h = o.shipMonth[k] || 0;
+      tot.o += o.ordersMonth[k] || 0; tot.u += o.unitsMonth[k] || 0; tot.s += s; tot.h += h; tot.f += f;
+      return row(C.axisLabel(k), o.ordersMonth[k] || 0, o.unitsMonth[k] || 0, s, h, f);
     });
-    return C.table(cols, rows, { foot: [row('Total', o.orders, tot.u, tot.s, tot.f)], minW: m.fees ? 620 : 420 });
+    return C.table(cols, rows, { foot: [row('Total', o.orders, tot.u, tot.s, tot.h, tot.f)], minW: m.fees ? 720 : 520 });
   }
 
   return template;

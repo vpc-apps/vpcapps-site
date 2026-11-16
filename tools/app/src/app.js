@@ -118,6 +118,7 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
       state.model = t.analyse(state.parts.main, state.opt);
     } else if (t.id === 'attendance') {
       state.opt = { start: $('a-start').value, end: $('a-end').value, grace: $('a-grace').value.trim(),
+        early: $('a-early').value.trim(), night: $('a-night').checked,
         off: $('a-off').value.split(',').filter(String).map(Number) };
       state.model = t.analyse(state.parts, state.opt);
     } else {
@@ -182,7 +183,7 @@ if (E8.SHOW_WATERMARK === undefined) E8.SHOW_WATERMARK = false;
     document.querySelectorAll('[data-tpl]').forEach(function (b) { b.addEventListener('click', function () { loadSample(b.getAttribute('data-tpl')); }); });
     ['f-type', 'f-project', 'f-extra', 'g-date', 'g-measure', 'g-b0', 'g-b1', 'g-b2', 'g-b3'].forEach(function (id) { $(id).addEventListener('change', update); });
     $('f-cogs').addEventListener('input', function () { if (state.tpl) update(); });
-    ['a-start', 'a-end', 'a-grace', 'a-off'].forEach(function (id) { $(id).addEventListener('change', function () { if (state.tpl) update(); }); });
+    ['a-start', 'a-end', 'a-grace', 'a-early', 'a-night', 'a-off'].forEach(function (id) { $(id).addEventListener('change', function () { if (state.tpl) update(); }); });
     $('x-title').addEventListener('input', function () { $('x-title').dataset.edited = '1'; });
     $('export').addEventListener('click', exportHtml);
     $('print').addEventListener('click', function () { window.print(); });

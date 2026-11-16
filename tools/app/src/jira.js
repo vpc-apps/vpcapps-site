@@ -56,7 +56,9 @@ E8.Jira = (function () {
         project: r['Project name'] || r['Project key'] || '', resolution: r['Resolution'] || '',
         components: list(r['Component/s']), labels: list(r['Labels']), fixVersions: list(r['Fix Version/s']),
         sprints: list(r['Sprint']), created: created, resolved: resolved, updated: updated,
-        done: !!resolved || DONE.test(status), extra: opt.breakdown ? (r[opt.breakdown] || '(none)') : null,
+        // The status wins (user decision 11-16): a done status is resolved, any other status (Reopened, In Progress,
+        // To Do, …) is open even with a leftover Resolved date. Only a blank status falls back to the Resolved date.
+        done: status.trim() ? DONE.test(status.trim()) : !!resolved, extra: opt.breakdown ? (r[opt.breakdown] || '(none)') : null,
       };
     }).filter(function (i) { return i.key && i.created; });
     if (opt.type && opt.type !== '*') issues = issues.filter(function (i) { return i.type === opt.type; });
@@ -81,7 +83,7 @@ E8.Jira = (function () {
     var cw = {}, rw = {};
     issues.forEach(function (i) {
       var k = Eng.weekKey(i.created); cw[k] = (cw[k] || 0) + 1;
-      if (i.resolved) { var k2 = Eng.weekKey(i.resolved); rw[k2] = (rw[k2] || 0) + 1; }
+      if (i.done && i.resolved) { var k2 = Eng.weekKey(i.resolved); rw[k2] = (rw[k2] || 0) + 1; }
     });
     var createdW = weeks.map(function (k) { return cw[k] || 0; });
     var resolvedW = weeks.map(function (k) { return rw[k] || 0; });

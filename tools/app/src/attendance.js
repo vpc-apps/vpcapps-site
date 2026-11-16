@@ -2,8 +2,17 @@
 // Two shapes, recognised by column names (vendors and versions name them differently):
 //  - punch log: one row per punch (employee + date/time, optional in/out flag) → first in / last out per day
 //  - daily report: one row per employee per day with In Time / Out Time (and maybe a status)
-// Settings: shift start/end, grace minutes, weekly off days. Results: late arrivals, early exits,
-// overtime, absences, missing punches, average hours, per-employee summary.
+// Settings: shift start/end, grace minutes (late), early-exit margin, weekly off days, night shift.
+// Results: late arrivals, early exits, overtime, absences, missing punches, average hours, per-employee summary.
+// Definitions (user decisions 11-16):
+//  - late = first punch after shift start + grace; punch times are read to the minute (seconds ignored).
+//  - early exit = last punch before shift end − early-exit margin (default 10 min, its own setting).
+//  - overtime = time after the shift END, counted on days when the last punch is more than 30 min past it.
+//  - night shift (shift end before its start, e.g. 22:00–06:00, or the "Night shift" box ticked): punches are
+//    paired into shift days instead of calendar days. A punch belongs to the shift of day D when it falls from
+//    4 h before D's shift start up to 4 h before the next day's shift start (a 24 h window; for a 22:00–06:00
+//    shift: 18:00 on D to 18:00 on D+1, which covers the shift end + 6 h and more). The whole shift counts as
+//    ONE working day on D. Day shifts keep calendar days exactly as before.
 'use strict';
 
 var E8 = window.E8 || (window.E8 = {});
@@ -59,11 +68,24 @@ E8.Attendance = (function () {
   }
   template.minutes = minutes;
   function hm(min) { min = Math.round(min); return Math.floor(min / 60) + ':' + ('0' + (min % 60)).slice(-2); }
+  /** Minutes after the shift day's midnight (≥ 1440 or < 0 on night shifts) → clock time "6:00". */
+  function hmc(min) { return hm(((Math.round(min) % 1440) + 1440) % 1440); }
   function dayKey(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
   var WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  /** Builds employee-days {id, name, dept, day, inMin, outMin, punches, status}. */
-  function employeeDays(data, part) {
+  var NIGHT_LEAD = 240;   // night shifts: a shift day's punch window opens 4 h before the shift start
+
+  /** Night mode: a clock time on calendar day d → [shift day, minutes after that day's midnight] (may be ≥ 1440). */
+  function shiftDay(d, t, anchor) {
+    var day = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    if (t < anchor) { day.setDate(day.getDate() - 1); t += 1440; }
+    else if (t >= anchor + 1440) { day.setDate(day.getDate() + 1); t -= 1440; }
+    return [day, t];
+  }
+
+  /** Builds employee-days {id, name, dept, day, inMin, outMin, punches, status}.
+   * night: null (calendar days) or { anchor } (minutes; a punch before it belongs to the previous shift day). */
+  function employeeDays(data, part, night) {
     var m = mapCols(data.header), recs = data.records, days = {};
     var who = function (r) { return (m.id && r[m.id]) || (m.name && r[m.name]) || ''; };
     if (part === 'daily') {
@@ -72,6 +94,12 @@ E8.Attendance = (function () {
         var id = who(r), d = Eng.parseDate(r[m.date], dayFirst);
         if (!id || !d) return;
         var inM = minutes(r[m.inT]), outM = m.outT ? minutes(r[m.outT]) : null;
+        if (night) {
+          // The row's date is the shift date. An In before the window (00:30 for a 22:00 shift) is after midnight;
+          // an Out earlier than the In (In 22:05, Out 06:10) is on the next day.
+          if (inM !== null) { if (inM < night.anchor) inM += 1440; else if (inM >= night.anchor + 1440) inM -= 1440; }
+          if (outM !== null && inM !== null && outM < inM) outM += 1440;
+        }
         days[id + '|' + dayKey(d)] = { id: id, name: (m.name && r[m.name]) || id, dept: (m.dept && r[m.dept]) || '', day: d,
           inMin: inM, outMin: outM, punches: (inM !== null) + (outM !== null), status: (m.status && r[m.status]) || '' };
       });
@@ -84,6 +112,7 @@ E8.Attendance = (function () {
         if (!id || !d) return;
         var t = m.datetime ? minutes(r[m.datetime]) : minutes(r[m.time]);
         if (t === null) return;
+        if (night) { var sd = shiftDay(d, t, night.anchor); d = sd[0]; t = sd[1]; }
         var k = id + '|' + dayKey(d);
         var e = days[k] || (days[k] = { id: id, name: (m.name && r[m.name]) || id, dept: (m.dept && r[m.dept]) || '', day: new Date(d.getFullYear(), d.getMonth(), d.getDate()), times: [], status: '' });
         e.times.push(t);
@@ -99,15 +128,25 @@ E8.Attendance = (function () {
     return Object.keys(days).map(function (k) { return days[k]; });
   }
 
-  /** parts: { punches | daily: data }, opt: { start: 'HH:MM', end, grace (min), off: [0,6] weekday numbers }. */
+  /** A minutes setting: 0 is kept; only a missing, empty or unreadable value means the default. */
+  function setting(v, def) {
+    var n = v === undefined || v === null || String(v).trim() === '' ? NaN : +v;
+    return isNaN(n) ? def : Math.max(0, n);
+  }
+
+  /** parts: { punches | daily: data }, opt: { start: 'HH:MM', end, grace (min), early (min), night (bool), off: [0,6] weekday numbers }. */
   template.analyse = function (parts, opt) {
     opt = opt || {};
-    // Grace 0 is a real setting (late = any minute after the start); only a missing or unreadable value means the default 10.
-    var g = opt.grace === undefined || opt.grace === null || opt.grace === '' ? NaN : +opt.grace;
-    var start = minutes(opt.start || '09:30'), end = minutes(opt.end || '18:30'), grace = isNaN(g) ? 10 : Math.max(0, g);
+    // Grace and the early-exit margin: 0 is a real setting; only a missing or unreadable value means the default 10.
+    var start = minutes(opt.start || '09:30'), end = minutes(opt.end || '18:30'), grace = setting(opt.grace, 10);
+    var earlyMargin = setting(opt.early, 10);
+    // Night shift: the end is before the start (22:00–06:00), or the user ticked the box. endAbs = the end in minutes
+    // after the shift day's midnight (06:00 the next day = 1800).
+    var night = end < start || !!opt.night;
+    var endAbs = night && end <= start ? end + 1440 : end;
     var off = opt.off || [0];
     var part = parts.daily ? 'daily' : 'punches', data = parts[part];
-    var ed = employeeDays(data, part);
+    var ed = employeeDays(data, part, night ? { anchor: start - NIGHT_LEAD } : null);
     var people = {}, dates = {};
     ed.forEach(function (e) { people[e.id] = people[e.id] || { id: e.id, name: e.name, dept: e.dept }; dates[dayKey(e.day)] = e.day; });
     var allDays = Object.keys(dates).sort();
@@ -120,7 +159,6 @@ E8.Attendance = (function () {
       return e.inMin !== null && e.inMin !== undefined && !absentStatus;
     });
     rows.forEach(function (e) { present[e.id + '|' + dayKey(e.day)] = e; });
-    var shiftLen = end - start;
     var stats = {}, lateByWd = [0, 0, 0, 0, 0, 0, 0], arrivals = {}, attendByDay = {};
     Object.keys(people).forEach(function (id) { stats[id] = { p: people[id], present: 0, late: 0, lateMin: 0, early: 0, ot: 0, hours: 0, hoursDays: 0, missing: 0, absent: 0 }; });
     rows.forEach(function (e) {
@@ -132,8 +170,10 @@ E8.Attendance = (function () {
       if (e.outMin === null || e.outMin === undefined || e.outMin <= e.inMin) { s.missing++; return; }
       var worked = e.outMin - e.inMin;
       s.hours += worked / 60; s.hoursDays++;
-      if (e.outMin < end - grace) s.early++;
-      if (worked > shiftLen + 30) s.ot += (worked - shiftLen) / 60;
+      // Early exit: left more than the early-exit margin before the shift end (its own setting, not the grace).
+      if (e.outMin < endAbs - earlyMargin) s.early++;
+      // Overtime: time after the shift end, on days the last punch is more than 30 min past it.
+      if (e.outMin > endAbs + 30) s.ot += (e.outMin - endAbs) / 60;
     });
     Object.keys(stats).forEach(function (id) {
       var s = stats[id];
@@ -148,14 +188,14 @@ E8.Attendance = (function () {
     var arrivalKeys = Object.keys(arrivals).map(Number).sort(function (a, b) { return a - b; });
     return {
       total: rows.length, people: list.length, from: from, to: to, workDays: work.length, part: part,
-      start: start, end: end, grace: grace, off: off,
+      start: start, end: end, endAbs: endAbs, grace: grace, earlyMargin: earlyMargin, night: night, off: off,
       presentDays: presentDays, expected: expected, rate: expected ? presentDays / expected : 0,
       late: sum(function (s) { return s.late; }), early: sum(function (s) { return s.early; }),
       ot: sum(function (s) { return s.ot; }), missing: sum(function (s) { return s.missing; }),
       absent: sum(function (s) { return s.absent; }),
       avgHours: sum(function (s) { return s.hours; }) / Math.max(1, sum(function (s) { return s.hoursDays; })),
       list: list, lateByWd: lateByWd,
-      arrivals: arrivalKeys.map(function (k) { return [hm(k), arrivals[k]]; }),
+      arrivals: arrivalKeys.map(function (k) { return [hmc(k), arrivals[k]]; }), arrivalMins: arrivalKeys,
       days: work.map(function (k) { return [k, attendByDay[k] || 0]; }),
     };
   };
@@ -163,19 +203,21 @@ E8.Attendance = (function () {
   template.insights = function (m) {
     var out = [], pct = function (a, b) { return b ? Math.round(a * 100 / b) : 0; };
     out.push(m.people + ' employees, ' + m.workDays + ' working days (' + m.from.toDateString() + ' – ' + m.to.toDateString() + '). Attendance rate: ' + Math.round(m.rate * 100) + '%.');
-    out.push(m.late + ' late arrivals after ' + hm(m.start) + ' + ' + m.grace + ' min grace (' + pct(m.late, m.total) + '% of attended days).');
+    if (m.night) out.push('Night shift ' + hm(m.start) + '–' + hmc(m.endAbs) + ': each shift counts as one working day on the date it starts (punches from ' +
+      hmc(m.start - NIGHT_LEAD) + ' that day to ' + hmc(m.start - NIGHT_LEAD) + ' the next day belong to it).');
+    out.push(m.late + ' late arrivals after ' + hm(m.start) + ' + ' + m.grace + ' min grace (' + pct(m.late, m.total) + '% of attended days; times are read to the minute, seconds ignored).');
     var wd = m.lateByWd.map(function (n, i) { return [WD[i], n]; }).sort(function (a, b) { return b[1] - a[1]; })[0];
     if (wd && wd[1] && m.late >= 10) out.push('Most late arrivals happen on ' + wd[0] + ' (' + wd[1] + ').');
     var lateTop = m.list.slice().sort(function (a, b) { return b.late - a.late; })[0];
     if (lateTop && lateTop.late >= 3) out.push(lateTop.p.name + ' was late ' + lateTop.late + ' times (average ' + Math.round(lateTop.lateMin / lateTop.late) + ' min after shift start).');
-    out.push('Average time at work: ' + hm(m.avgHours * 60) + ' h per day. Overtime: ' + Math.round(m.ot) + ' h in total' +
+    out.push('Average time at work: ' + hm(m.avgHours * 60) + ' h per day. Overtime after the shift end (' + hmc(m.endAbs) + '): ' + Math.round(m.ot) + ' h in total' +
       (m.ot ? ', most by ' + m.list.slice().sort(function (a, b) { return b.ot - a.ot; })[0].p.name + '.' : '.'));
     if (m.absent) {
       var ab = m.list.slice().sort(function (a, b) { return b.absent - a.absent; })[0];
       out.push(m.absent + ' absent days in total; highest: ' + ab.p.name + ' (' + ab.absent + ').');
     }
     if (m.missing) out.push(m.missing + ' days with a missing punch (only an in or only an out): check the device or remind staff to punch out.');
-    if (m.early) out.push(m.early + ' early exits before ' + hm(m.end) + '.');
+    if (m.early) out.push(m.early + ' early exits: left more than ' + m.earlyMargin + ' min early (before ' + hmc(m.endAbs - m.earlyMargin) + ').');
     return out;
   };
 
@@ -187,27 +229,28 @@ E8.Attendance = (function () {
       C.tile('Attendance rate', rate + '%', m.presentDays + ' of ' + m.expected + ' working person-days', rate >= 95 ? 'good' : rate >= 90 ? 'warn' : 'bad') +
       C.tile('Late arrivals', String(m.late), latePct + '% of attended days, after ' + hm(m.start) + ' + ' + m.grace + ' min', latePct > 10 ? 'bad' : latePct > 5 ? 'warn' : 'good') +
       C.tile('Absent days', String(m.absent), m.people ? (Math.round(m.absent * 10 / m.people) / 10) + ' per employee' : '', m.absent ? '' : 'good') +
-      C.tile('Average hours per day', hm(m.avgHours * 60), 'shift is ' + hm(m.end - m.start) + ' h') +
-      C.tile('Overtime', Math.round(m.ot) + ' h', 'days more than 30 min past the shift') +
+      C.tile('Average hours per day', hm(m.avgHours * 60), 'shift is ' + hm(m.endAbs - m.start) + ' h' + (m.night ? ' (night)' : '')) +
+      C.tile('Overtime', Math.round(m.ot) + ' h', 'after the shift end (' + hmc(m.endAbs) + '), on days more than 30 min past it') +
       C.tile('Missing punches', String(m.missing), m.missing ? 'only an in or only an out' : 'every day has an in and an out', m.missing ? 'warn' : 'good') + '</div>';
     html += card('Key findings', 'The main points in plain words, most important first.', C.findings(template.insights(m)), 'wide');
     html += card('Employees present per working day', 'How many people came in on each working day. Dips show holidays, strikes or device problems.',
       C.lines(m.days.map(function (d) { return d[0]; }), [{ name: 'Present', values: m.days.map(function (d) { return d[1]; }), color: '#2f9e6e' }], { wide: true }), 'wide');
     html += '<div class="grid">';
     var cut = m.start + m.grace;
-    html += card('Arrival times', 'First punch per day in 15-minute slots. Orange slots are after the shift start plus grace, amber ones partly so.',
-      C.bars(m.arrivals, { max: 16, more: 'later slots', colors: m.arrivals.map(function (a) { var b = minutes(a[0]); return b >= cut ? '#e0742c' : b + 15 > cut ? '#c9a227' : '#3b6fd8'; }) }));
+    html += card('Arrival times', 'First punch per day in 15-minute slots. Orange slots are after the shift start plus grace, amber ones partly so. Times are read to the minute: seconds are ignored, so 09:40:30 counts as 09:40.',
+      C.bars(m.arrivals, { max: 16, more: 'later slots', colors: m.arrivalMins.map(function (b) { return b >= cut ? '#e0742c' : b + 15 > cut ? '#c9a227' : '#3b6fd8'; }) }));
     html += card('Late arrivals by weekday', 'Late arrivals on each working weekday. A tall Monday bar is common; a tall other day may point to a cause.',
       C.bars(m.lateByWd.map(function (n, i) { return [WD[i], n]; }).filter(function (r, i) { return m.off.indexOf(i) < 0; }), { color: '#e0742c', keepZero: true }));
     html += card('Most late arrivals', 'Employees with the most late days. The grey bar adds up everyone else.',
       C.bars(m.list.map(function (s) { return [s.p.name, s.late]; }).sort(function (a, b) { return b[1] - a[1]; }), { color: '#c44a7a', max: 10, more: 'others' }));
-    html += card('Most overtime hours', 'Employees with the most hours past the shift end.',
+    html += card('Most overtime hours', 'Employees with the most overtime: hours after the shift end (' + hmc(m.endAbs) + '), counted on days they left more than 30 min after it.',
       C.bars(m.list.map(function (s) { return [s.p.name, Math.round(s.ot * 10) / 10]; }).sort(function (a, b) { return b[1] - a[1]; }), { color: '#8a63d2', max: 10, more: 'others', fmt: function (v) { return v + ' h'; } }));
     html += '</div>';
     var depts = deptRows(m);
     if (depts) html += card('By department', 'Exact counts per department to quote in a review. Rates use working days only.', depts, 'wide');
     var rows = m.list.slice().sort(function (a, b) { return (b.late + b.absent) - (a.late + a.absent) || (a.p.name < b.p.name ? -1 : 1); });
-    html += card('Employee summary', 'One row per employee, most late plus absent days first.' + (rows.length > 25 ? ' Showing 25 of ' + rows.length + '.' : ''),
+    html += card('Employee summary', 'One row per employee, most late plus absent days first. Early out = left more than ' + m.earlyMargin +
+      ' min early (before ' + hmc(m.endAbs - m.earlyMargin) + '); overtime = hours after the shift end.' + (rows.length > 25 ? ' Showing 25 of ' + rows.length + '.' : ''),
       C.table([{ t: 'Employee' }, { t: 'Department' }, { t: 'Present', num: true }, { t: 'Late', num: true }, { t: 'Absent', num: true }, { t: 'Early out', num: true },
         { t: 'Average h/day', num: true }, { t: 'Overtime h', num: true }, { t: 'Missing punch', num: true }],
         rows.slice(0, 25).map(function (s) {

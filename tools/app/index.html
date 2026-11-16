@@ -49,7 +49,7 @@ table.data tr.sub td{font-weight:700;background:var(--warnbg);border-top:2px sol
 @media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body{background:#fff;color:#1d2333;font-size:11px;line-height:1.3}.no-print{display:none!important}
 .report{padding:0;max-width:none}h1{font-size:18px}
-.kpis{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:5px}.kpi{padding:4px 7px;border-bottom-width:3px;border-radius:6px;background:none!important;break-inside:avoid}
+.kpis{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:5px}.kpi{padding:4px 7px;border-bottom-width:3px;border-radius:6px;background:none!important;break-inside:avoid}
 .kv{font-size:15px}.kl{font-size:9.5px;margin-top:1px}.kn{font-size:8.5px;margin-top:0}
 .card{padding:5px 9px;border-radius:6px}.card.wide,.kpis+.card{margin-top:6px}.card h3{font-size:11.5px}.desc{font-size:9px;margin:0 0 3px;line-height:1.25}
 .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px}.grid .card:last-child:nth-child(3n+1){grid-column:auto}
@@ -94,12 +94,12 @@ body[data-source] [data-src]:not(.on){display:none}
 <section id="drop" class="drop no-print">
   <h1 id="hero">Turn your export into a dashboard</h1>
   <p id="hero-sub" class="muted">Drop a Jira issues CSV, your Etsy Order Items / payments statement CSV, or a biometric attendance export (eSSL, ZKTeco) here. Any other CSV table gets a general dashboard of its columns. You get KPIs, findings in plain English and a summary to share.</p>
+  <p class="priv">🔒 Your file never leaves your device: everything is calculated in this browser tab. No upload, no account.</p>
   <p><label class="btn">Choose CSV file(s)<input id="file" type="file" accept=".csv,.tsv,.txt" multiple hidden></label>
      <button id="sample-jira" class="btn ghost" type="button" data-tpl="jira" data-src="jira">Try a Jira sample</button>
      <button id="sample-etsy" class="btn ghost" type="button" data-tpl="etsy" data-src="etsy">Try an Etsy sample</button>
      <button id="sample-attendance" class="btn ghost" type="button" data-tpl="attendance" data-src="attendance">Try an attendance sample</button>
      <button id="sample-generic" class="btn ghost" type="button" data-tpl="generic" data-src="generic">Try a generic sample</button></p>
-  <p class="priv">🔒 Your file never leaves your device: everything is calculated in this browser tab. No upload, no account.</p>
   <p id="err" class="err" role="alert" hidden></p>
 </section>
 
@@ -111,6 +111,8 @@ body[data-source] [data-src]:not(.on){display:none}
     <label data-for="etsy" class="muted">Product cost <input id="f-cogs" type="text" inputmode="decimal" value="0" size="3" aria-label="Product cost as percent of sales"> % of sales</label>
     <label data-for="attendance" class="muted">Shift <input id="a-start" type="time" value="09:30" aria-label="Shift start"> – <input id="a-end" type="time" value="18:30" aria-label="Shift end"></label>
     <label data-for="attendance" class="muted">Grace <input id="a-grace" type="text" inputmode="numeric" value="10" size="2" aria-label="Grace minutes"> min</label>
+    <label data-for="attendance" class="muted">Early exit <input id="a-early" type="text" inputmode="numeric" value="10" size="2" aria-label="Early exit margin in minutes"> min before end</label>
+    <label data-for="attendance" class="muted"><input id="a-night" type="checkbox" aria-label="Night shift (crosses midnight)"> Night shift (crosses midnight)</label>
     <label data-for="attendance"><select id="a-off" aria-label="Weekly off days"><option value="0">Sunday off</option><option value="0,6">Saturday + Sunday off</option><option value="5">Friday off</option><option value="">No weekly off</option></select></label>
     <label data-for="etsy" class="btn ghost">Add the other Etsy file<input id="file2" type="file" accept=".csv,.tsv,.txt" hidden></label>
     <details data-for="generic" class="adjust"><summary>Adjust</summary><div class="row">
