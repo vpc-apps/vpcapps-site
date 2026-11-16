@@ -694,7 +694,7 @@ def privacy():
     e = SITE['email']
     body = f'''<section class="wrap section page-head narrow prose">
   <h1>Privacy policy</h1>
-  <p class="muted">Website privacy policy · last updated {UPDATED}</p>
+  <p class="muted">Privacy policy for the website, tools and apps · last updated {UPDATED}</p>
   <p>This policy covers the website <b>vpcapps.net</b>, the browser games played on it, our free tools, and three marketplace apps: the <b>Sheet to Dashboard Report</b> add-on for Google Sheets, the <b>Release Readiness Scorecard</b> app for monday.com and the <b>CSV to Dashboard Report</b> Actor on Apify. Each of our Android apps has its own privacy policy, linked from its game page and its Google Play listing, and our Jira app has <a href="/jira/privacy/">its own policy</a>. VPC Apps is a brand of Venture Path Consulting (India).</p>
   <h2>Summary</h2>
   <ul>
