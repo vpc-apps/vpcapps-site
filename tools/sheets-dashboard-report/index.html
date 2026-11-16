@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheet to Dashboard Report: Google Sheets add-on · VPC Apps</title>
+<meta name="description" content="Help for the Sheet to Dashboard Report add-on for Google Sheets: install, how to use it, report types, the 5,000-row limit, the two permissions and privacy. Your data stays in your spreadsheet.">
+<link rel="canonical" href="https://vpcapps.net/tools/sheets-dashboard-report/">
+<meta property="og:site_name" content="VPC Apps">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sheet to Dashboard Report: Google Sheets add-on">
+<meta property="og:description" content="Help for the Sheet to Dashboard Report add-on for Google Sheets: install, how to use it, report types, the 5,000-row limit, the two permissions and privacy. Your data stays in your spreadsheet.">
+<meta property="og:url" content="https://vpcapps.net/tools/sheets-dashboard-report/">
+<meta property="og:image" content="https://vpcapps.net/assets/img/brand/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ff5a8a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/fredoka.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script src="/assets/js/site.js" defer></script>
+<style>.doc table{width:100%;border-collapse:collapse;margin:12px 0 20px;font-size:.95em}.doc th,.doc td{border:1px solid var(--line,#ddd);padding:8px 10px;text-align:left;vertical-align:top}.doc th{background:var(--soft,#f6f6f8)}.doc .tw{overflow-x:auto}.doc h2{margin-top:32px}.doc .shot{margin:16px 0 24px}.doc .shot img{width:100%;height:auto}.doc .soon{display:inline-block;background:#fff3cd;color:#5f3a00;padding:2px 8px;border-radius:6px;font-weight:600}.doc code{overflow-wrap:anywhere}</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Sheet to Dashboard Report", "description": "Google Sheets add-on that turns a table into a dashboard report: KPI cards, charts and plain-English findings. Templates for Jira, Etsy and attendance exports.", "url": "https://vpcapps.net/tools/sheets-dashboard-report/", "applicationCategory": "BusinessApplication", "operatingSystem": "Google Sheets (web)", "image": "https://vpcapps.net/assets/img/apps/sheets-report-generic.webp", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "VPC Apps", "url": "https://vpcapps.net"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://vpcapps.net/"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://vpcapps.net/tools/"}, {"@type": "ListItem", "position": 3, "name": "Sheet to Dashboard Report", "item": "https://vpcapps.net/tools/sheets-dashboard-report/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></a>
+    <nav aria-label="Main"><ul><li><a href="/games/">Games</a></li><li><a href="/tools/" aria-current="page">Tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
+    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
+  </div>
+</header>
+<main id="main">
+<nav class="wrap crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/tools/">Tools</a> › <span>Sheet to Dashboard Report</span></nav>
+<section class="wrap section narrow doc page-head">
+  <p class="eyebrow">Google Sheets add-on</p>
+  <h1>Sheet to Dashboard Report</h1>
+  <p class="lead">Turn the table in your sheet into a dashboard report your team can read in a minute: KPI cards with good / warning / problem colours, charts that explain themselves, key findings in plain English and bordered tables. Free, no sign-up, and your data stays in your spreadsheet.</p>
+  <p><span class="soon">Coming soon</span> The add-on is waiting for Google Workspace Marketplace approval. This page will link to the Marketplace listing as soon as it is live.</p>
+  <p class="muted">Contents: <a href="#what">What it does</a> · <a href="#install">Install</a> · <a href="#use">How to use it</a> · <a href="#templates">Report types</a> · <a href="#limits">Limits</a> · <a href="#permissions">Permissions</a> · <a href="#privacy">Privacy</a> · <a href="#support">Support</a></p>
+</section>
+<section class="wrap section narrow doc">
+  <h2 id="what">What it does</h2>
+  <p>The add-on reads the table in the sheet you have open (or your selection) and builds a dashboard report in a window inside Google Sheets. It recognises Jira, Etsy and attendance exports by their column names and gives them tailored reports; any other table gets a general summary. It uses the same report engine as our free <a href="/tools/">CSV to Dashboard</a> web tool.</p>
+  <ul>
+    <li><b>Download HTML report</b>: one HTML file with the whole report. It opens in any browser, offline, and contains no scripts, so you can email it or attach it to a ticket.</li>
+    <li><b>Copy KPIs to a new sheet</b>: adds a sheet named “Report KPIs” with the report’s headline numbers, as plain values.</li>
+  </ul>
+  <figure class="shot"><img src="/assets/img/apps/sheets-report-generic.webp" alt="A dashboard report built from a synthetic sales sheet: KPI cards, key findings and bar charts" width="1280" height="800" loading="lazy"><figcaption class="muted small">Example report from a synthetic sales list (invented data).</figcaption></figure>
+
+  <h2 id="install">Install</h2>
+  <p><span class="soon">Coming soon</span> Once Google approves the add-on:</p>
+  <ol class="steps">
+    <li>Open a spreadsheet in Google Sheets.</li>
+    <li>Choose <b>Extensions → Add-ons → Get add-ons</b> and search for <b>Sheet to Dashboard Report</b>.</li>
+    <li>Click <b>Install</b> and review the two permissions (explained <a href="#permissions">below</a>).</li>
+  </ol>
+  <p>A Google Workspace administrator can also install it for a whole domain from the Marketplace.</p>
+
+  <h2 id="use">How to use it</h2>
+  <ol class="steps">
+    <li>Open your sheet. The first row must hold the column names, with one record per row below. The table can start lower down or further right: blank rows and columns are skipped.</li>
+    <li>Choose <b>Extensions → Sheet to Dashboard Report → Open</b>. The sidebar opens on the right.</li>
+    <li>Under <b>Data</b>, choose <b>Whole sheet</b> or <b>Current selection</b>. If you change the sheet or the selection while the sidebar is open, click <b>Refresh</b>.</li>
+    <li>Leave <b>Report type</b> on <b>Auto-detect from the column names</b>, or pick one.</li>
+    <li>Optionally open <b>More options</b>: a report title, a second sheet for Etsy (order items and statement together), the Jira issue type (empty = Bug, <code>*</code> = all types), the Etsy product cost as a % of sales, and the attendance shift start and end, grace minutes and weekly off.</li>
+    <li>Click <b>Build report</b>. The report opens in a window; from there you can download it or copy the KPIs.</li>
+  </ol>
+  <figure class="shot"><img src="/assets/img/apps/sheets-sidebar.webp" alt="The add-on sidebar next to a sheet: data choice, report type, More options and the Build report button" width="1280" height="800" loading="lazy"><figcaption class="muted small">The sidebar (preview with a synthetic sheet).</figcaption></figure>
+
+  <h2 id="templates">Report types</h2>
+  <div class="tw"><table><thead><tr><th>Report type</th><th>Best for</th><th>What the report shows</th></tr></thead><tbody><tr><td>Any table (generic)</td><td>Sales lists, ticket exports, inventories, survey results</td><td>Rows, % of cells filled in, totals of money columns, date range, duplicates, top values per category, rows and totals per day / week / month, number stats, a category-by-category table and a data-quality check</td></tr><tr><td>Jira issues</td><td>A Jira issues export pasted or imported into a sheet</td><td>Open vs resolved, backlog change over 4 weeks, median time to resolve, age of open issues, open by priority / assignee / component, high-priority issues open more than 30 days, reopened issues</td></tr><tr><td>Etsy orders / payments statement</td><td>The Etsy Order Items export, the payments statement, or both (one in another sheet)</td><td>Item sales, every Etsy fee by type, ads, refunds, product cost, true profit and margin, by month, best sellers</td></tr><tr><td>Biometric attendance</td><td>A punch log or a daily In/Out report from an attendance machine</td><td>Attendance rate, late arrivals, early outs, overtime, absences and missing punches, by department and per employee</td></tr></tbody></table></div>
+  <figure class="shot"><img src="/assets/img/apps/sheets-report-jira.webp" alt="A Jira issues report built from a synthetic Jira export" width="1280" height="800" loading="lazy"><figcaption class="muted small">Jira report from a synthetic Jira export (invented data).</figcaption></figure>
+
+  <h2 id="limits">Limits</h2>
+  <ul>
+    <li>Free. The report covers the <b>first 5,000 rows</b> of a sheet or selection; the sidebar and the report say so when a table is longer.</li>
+    <li>One kind of export per report (two sheets only for Etsy’s order items + statement).</li>
+    <li>Dates are read as Sheets stores them, in the spreadsheet’s time zone. Numbers and money keep the format shown in the cells.</li>
+  </ul>
+
+  <h2 id="permissions">Permissions, in plain words</h2>
+  <p>The add-on asks for two permissions and nothing else:</p>
+  <div class="tw"><table><thead><tr><th>What Google shows on the consent screen</th><th>Why the add-on needs it</th></tr></thead><tbody><tr><td><b>See, edit, create and delete only the specific Google Sheets spreadsheets that you use this app with</b><br><code>spreadsheets.currentonly</code></td><td>To read the table you choose in the spreadsheet you have open. It is also used to add one sheet named “Report KPIs” to that same spreadsheet, and only when you click <b>Copy KPIs to a new sheet</b>. It gives no access to your Google Drive or to any other file.</td></tr><tr><td><b>Display and run third-party web content in prompts and sidebars inside Google applications</b><br><code>script.container.ui</code></td><td>To show the add-on’s sidebar (the report options) and the report window inside Google Sheets.</td></tr></tbody></table></div>
+  <p>It has <b>no</b> Google Drive permission, no permission to connect to outside services, and no access to your email, contacts or other files.</p>
+
+  <h2 id="privacy">Privacy</h2>
+  <ul>
+    <li>Your data stays in your spreadsheet and the report window. The add-on reads the cells inside Google and builds the report in your browser window. <b>Nothing is sent to VPC Apps</b> or anyone else, and nothing is stored, logged, or used for advertising or AI training.</li>
+    <li>The add-on reads only the sheet or selection you choose, only while you use it.</li>
+    <li>A downloaded report is a file on your device; where it goes is up to you.</li>
+  </ul>
+  <p>VPC Apps’ use and transfer of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements. Full details: our <a href="/privacy/#sheets-add-on">privacy policy</a> and <a href="/terms/">terms of use</a>.</p>
+
+  <h2 id="support">Support</h2>
+  <p>Email <a href="mailto:support@vpcapps.net">support@vpcapps.net</a> with the report type, what you expected and what you saw. Please do not send real customer or staff data; a screenshot with details hidden, or a few made-up rows with the same columns, is enough.</p>
+  <p class="muted">Google Sheets and Google Workspace are trademarks of Google LLC. This add-on is made by VPC Apps and is not made or endorsed by Google.</p>
+</section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="28" height="28"><span>VPC Apps</span></a>
+      <p class="muted">Bite-size puzzle games for your phone and your browser.</p></div>
+      <ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
+      <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
+    </div>
+    <p class="muted small">© 2026 VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+</footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a470f94b795a45578b8f87cbfcca8c9d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

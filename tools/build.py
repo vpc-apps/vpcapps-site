@@ -24,6 +24,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 from content import ANALYTICS, GAMES, OLD_SITE, PLAY, SITE, TOOL, TOOLS, WORLD  # noqa: E402
 import jira_pages  # noqa: E402  (vpcapps.net/jira/: Jira app docs, privacy, security)
+import app_pages  # noqa: E402  (Sheets add-on + monday.com app help pages)
 
 APPS = os.path.normpath(os.path.join(ROOT, '..', 'APPs'))
 E8 = os.path.join(APPS, 'products', 'e8_dashboard')
@@ -93,6 +94,7 @@ def import_assets():
     _img(os.path.join(brand, 'facebook_cover.png'), os.path.join(out, 'brand', 'vpc-apps-banner.jpg'), fmt='JPEG',
          quality=88)
     favicons(os.path.join(out, 'brand'))
+    app_pages.import_images(APPS, ROOT)  # Sheets add-on + monday.com app help screenshots (synthetic data)
     for g in GAMES:
         d = os.path.join(out, 'games', g['slug'])
         src = os.path.join(LISTINGS, g['key'])
@@ -322,7 +324,8 @@ NAV = [('Games', '/games/'), ('Tools', '/tools/'), ('Apps', '/apps/'), ('About',
 
 
 def page(path, title, desc, body, og_image='/assets/img/brand/og-default.jpg', ld=None, og_type='website',
-         active=None, extra_head='', manifest='/site.webmanifest'):
+         active=None, extra_head='', manifest='/site.webmanifest', bare=False):
+    """bare=True: no site navigation, no footer links (pages that a marketplace embeds in an iframe)."""
     url = SITE['url'] + path
     full = title if title == SITE['name'] else f'{title} · {SITE["name"]}'
     cur = ' aria-current="page"'
@@ -331,6 +334,35 @@ def page(path, title, desc, body, og_image='/assets/img/brand/og-default.jpg', l
                   for x in (ld or []))
     date = page_date(path, title + desc + body)
     body = body.replace(UPDATED, datetime.date.fromisoformat(date).strftime('%d %B %Y').lstrip('0'))
+    if bare:
+        header = f'''<header class="top">
+  <div class="wrap bar">
+    <span class="brand"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></span>
+    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
+  </div>
+</header>'''
+        footer = f'''<footer class="foot">
+  <div class="wrap"><p class="muted small">© {datetime.date.today().year} VPC Apps, a brand of Venture Path Consulting (India) · {E(SITE['email'])}</p></div>
+</footer>'''
+    else:
+        header = f'''<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></a>
+    <nav aria-label="Main"><ul>{nav}</ul></nav>
+    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
+  </div>
+</header>'''
+        footer = f'''<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="28" height="28"><span>VPC Apps</span></a>
+      <p class="muted">{E(SITE['tagline'])}</p></div>
+      <ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
+      <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
+    </div>
+    <p class="muted small">© {datetime.date.today().year} VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+</footer>'''
     doc = f'''<!doctype html>
 <html lang="en">
 <head>
@@ -359,27 +391,11 @@ def page(path, title, desc, body, og_image='/assets/img/brand/og-default.jpg', l
 {extra_head}{lds}</head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="top">
-  <div class="wrap bar">
-    <a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></a>
-    <nav aria-label="Main"><ul>{nav}</ul></nav>
-    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
-  </div>
-</header>
+{header}
 <main id="main">
 {body}
 </main>
-<footer class="foot">
-  <div class="wrap">
-    <div class="foot-grid">
-      <div><a class="brand" href="/"><img src="/assets/img/brand/icon-192.png" alt="" width="28" height="28"><span>VPC Apps</span></a>
-      <p class="muted">{E(SITE['tagline'])}</p></div>
-      <ul><li><a href="/games/">Games</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/apps/">Apps</a></li><li><a href="/about/">About</a></li><li><a href="/press/">Press kit</a></li></ul>
-      <ul><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul>
-    </div>
-    <p class="muted small">© {datetime.date.today().year} VPC Apps, a brand of Venture Path Consulting (India) · Google Play and the Google Play logo are trademarks of Google LLC.</p>
-  </div>
-</footer>
+{footer}
 {ANALYTICS}
 </body>
 </html>
@@ -679,12 +695,13 @@ def privacy():
     body = f'''<section class="wrap section page-head narrow prose">
   <h1>Privacy policy</h1>
   <p class="muted">Website privacy policy · last updated {UPDATED}</p>
-  <p>This policy covers the website <b>vpcapps.net</b> and the browser games played on it. Each of our Android apps has its own privacy policy, linked from its game page and its Google Play listing.</p>
+  <p>This policy covers the website <b>vpcapps.net</b>, the browser games played on it, our free tools, and three marketplace apps: the <b>Sheet to Dashboard Report</b> add-on for Google Sheets, the <b>Release Readiness Scorecard</b> app for monday.com and the <b>CSV to Dashboard Report</b> Actor on Apify. Each of our Android apps has its own privacy policy, linked from its game page and its Google Play listing, and our Jira app has <a href="/jira/privacy/">its own policy</a>. VPC Apps is a brand of Venture Path Consulting (India).</p>
   <h2>Summary</h2>
   <ul>
     <li>We don't ask you for any personal information, and there are no accounts.</li>
     <li>The website counts anonymous page visits with Cloudflare Web Analytics. It sets no cookies and stores nothing in your browser. There is no advertising.</li>
     <li>Browser games save your progress in your own browser (local storage). It never reaches us.</li>
+    <li>Our tools, add-ons and marketplace apps work on your data inside your browser or inside the platform you use them on (Google Sheets, monday.com, Apify). We have no server that receives your files or your data.</li>
   </ul>
   <h2>Hosting</h2>
   <p>The site is hosted on GitHub Pages (GitHub, Inc.). Like any web server, GitHub receives your IP address and browser details when you load a page, and may keep them in its logs for security purposes. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub's privacy statement</a>. Our domain name is registered with Cloudflare, which answers address lookups for the domain; the pages themselves are not served through Cloudflare.</p>
@@ -694,6 +711,33 @@ def privacy():
   <p>When you play a game on this site, it stores your progress (levels unlocked, stars, settings) in your browser's local storage on your device. You can delete it at any time by clearing your browser's site data. Some game demos are loaded from our older site, vpc-apps.github.io, which is also hosted by GitHub Pages and run by us under the same rules.</p>
   <h2>Free tools</h2>
   <p>Our tools at <a href="/tools/">vpcapps.net/tools</a> (such as CSV to Dashboard) process the files you choose locally in your browser and send nothing from them to us or anyone else; your files never leave your device. The tool pages count visits like the rest of the site (see Visit counter), and that count never includes your file, its name or its contents.</p>
+  <h2 id="sheets-add-on">Sheet to Dashboard Report (Google Sheets add-on)</h2>
+  <p>This section explains how the add-on accesses, uses, stores and shares Google user data.</p>
+  <p><b>Data accessed.</b> The add-on asks for two Google permissions and no others:</p>
+  <ul>
+    <li><b>See, edit, create and delete only the specific Google Sheets spreadsheets that you use this app with</b> (<code>https://www.googleapis.com/auth/spreadsheets.currentonly</code>). With it, the add-on reads, from the spreadsheet you have open: the names of its sheets, the address of the used range and of your current selection, the spreadsheet's time zone, and the cell values of the sheet or selection you choose (the header row plus up to 5,000 rows), plus a second sheet of the same spreadsheet if you pick one for an Etsy report. It writes to your spreadsheet only when you click <b>Copy KPIs to a new sheet</b>: it then adds one new sheet named "Report KPIs" with the report's headline numbers. It cannot open any other file and has no access to your Google Drive, email, contacts or account details.</li>
+    <li><b>Display and run third-party web content in prompts and sidebars inside Google applications</b> (<code>https://www.googleapis.com/auth/script.container.ui</code>). It is used only to show the add-on's sidebar and report window inside Google Sheets. It gives the add-on no access to data.</li>
+  </ul>
+  <p><b>How the data is used.</b> Only to build the dashboard report you asked for, in your own session: the cells are read by Google Apps Script inside Google, and the report is calculated in the add-on's window in your browser. The add-on makes no network requests to us or to anyone else.</p>
+  <p><b>Storage.</b> The add-on stores nothing: no copy of your data, no settings, no logs. When you close the report window, the report is gone, unless you downloaded it (a file on your device) or copied the KPIs into your spreadsheet.</p>
+  <p><b>Sharing.</b> We do not receive your Google user data, so we do not share, sell or transfer it to anyone. It is not used for advertising, and it is not used to develop, improve or train generalized or non-personalized AI or machine-learning models.</p>
+  <p><b>Limited Use.</b> VPC Apps' use and transfer of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+  <p><b>Removing access.</b> You can remove the add-on in Google Sheets (Extensions → Add-ons → Manage add-ons) and revoke its access at any time in your Google Account (Security → Third-party apps and services). As we hold none of your data, there is nothing for us to delete.</p>
+  <p>Help page: <a href="/tools/sheets-dashboard-report/">vpcapps.net/tools/sheets-dashboard-report</a>.</p>
+  <h2 id="monday">Release Readiness Scorecard for monday.com</h2>
+  <p>The app is a board view hosted by monday.com and runs in your browser. VPC Apps has no server for it.</p>
+  <ul>
+    <li><b>What it reads.</b> With the single permission <code>boards:read</code> and your own monday.com access, it reads the board you open it on: the board name, groups, columns, and the items' values in the columns you map (such as status, release, priority, dates, assignee names, description, environment, files and reopen count). It does not read item updates, your account's user list or other boards, and it has no write permission, so it never changes your board.</li>
+    <li><b>How it is used.</b> Only to calculate the scorecard on your screen. Board data is not sent to VPC Apps or anyone else, and it is not stored or logged.</li>
+    <li><b>What it stores.</b> Per board, in monday.com's own app storage for your account: the column mapping (column IDs), the status labels that mean done, and the go/no-go rule limits. No item content and no personal data. Everyone who can open the board's scorecard sees these settings.</li>
+    <li><b>No tracking.</b> The app has no analytics, advertising or AI features.</li>
+    <li><b>Files you create.</b> A printed or downloaded report is a file on your device that can include item names, priorities and assignee names; you control who receives it.</li>
+    <li><b>Contact.</b> We do not contact users of the app, other than replying when you email us.</li>
+    <li><b>Deletion.</b> The stored settings stay in monday.com's app storage until you change them or uninstall the app; monday.com handles that storage. Questions: email us.</li>
+  </ul>
+  <p>monday.com's own handling of your account data is described in <a href="https://monday.com/l/privacy/privacy-policy/" rel="noopener">monday.com's privacy policy</a>. How-to page: <a href="/release-readiness-monday/">vpcapps.net/release-readiness-monday</a>.</p>
+  <h2 id="apify">CSV to Dashboard Report (Apify Actor)</h2>
+  <p>The Actor runs on Apify's platform under your own Apify account. It reads the CSV file you give it (a link it downloads the file from, an upload, or pasted text) during the run, inside the run's container, and writes the HTML report, a dataset of KPIs and findings and a summary record to your own Apify storage. Apart from downloading the file from the link you give, it calls no outside services and sends nothing to VPC Apps. The input and the results are kept in your Apify account according to Apify's data retention for your plan; delete the run's storages to remove them sooner. Apify's handling is described in <a href="https://apify.com/privacy-policy" rel="noopener">Apify's privacy policy</a>. Please use only data you are allowed to process.</p>
   <h2>Videos and images</h2>
   <p>All videos, images and fonts are served from this site. We don't embed third-party players or social media widgets.</p>
   <h2>Advertising</h2>
@@ -705,7 +749,8 @@ def privacy():
   <h2>Changes and contact</h2>
   <p>We'll post any change on this page with a new date. Questions or requests: <a href="mailto:{e}">{e}</a>.</p>
 </section>'''
-    page('/privacy/', 'Privacy policy', 'How the VPC Apps website and its browser games handle your information: no accounts, no cookies, an anonymous visit counter, progress saved in your browser.', body)
+    page('/privacy/', 'Privacy policy', 'How the VPC Apps website, browser games, tools, Google Sheets add-on, monday.com app and Apify Actor handle your information: no accounts, no cookies, your data stays with you.', body,
+         extra_head='<style>.prose code{overflow-wrap:anywhere}</style>\n')
 
 
 def terms():
@@ -713,11 +758,13 @@ def terms():
     body = f'''<section class="wrap section page-head narrow prose">
   <h1>Terms of use</h1>
   <p class="muted">Last updated {UPDATED}</p>
-  <p>These terms apply to the website vpcapps.net and the browser games on it ("the site"), run by VPC Apps ("we"). By using the site you agree to them. Our Android apps are also covered by the Google Play terms.</p>
+  <p>These terms apply to the website vpcapps.net and the browser games and tools on it ("the site"), and to our marketplace apps listed below, run by VPC Apps ("we"). By using them you agree to these terms. Our Android apps are also covered by the Google Play terms.</p>
   <h2>Using the site and the games</h2>
   <p>You may play the games and read the site for your own personal, non-commercial use. Please don't copy, modify, re-host or sell the games or their content, try to break or overload the site, or use it for anything unlawful.</p>
   <h2>Our content</h2>
   <p>The games, art, music, text and logos on the site belong to VPC Apps or are used under licence (for example open-licence fonts, whose licences ship with the games). The press kit images may be used to write about our games.</p>
+  <h2>Marketplace apps</h2>
+  <p>These terms also cover the <b>Sheet to Dashboard Report</b> add-on for Google Sheets, the <b>Release Readiness Scorecard</b> app for monday.com and the <b>CSV to Dashboard Report</b> Actor on Apify. The terms of the platform you use them on (Google Workspace Marketplace, monday.com marketplace, Apify) apply as well. Reports and verdicts are calculated from your data by fixed rules; check them before relying on them for a decision. We do not contact users of these apps, other than replying when you write to us. Our Jira app has its own terms on the Atlassian Marketplace.</p>
   <h2>Links to other services</h2>
   <p>The site links to Google Play and a few other services. Their own terms and privacy policies apply there; we're not responsible for their content.</p>
   <h2>No warranty</h2>
@@ -766,7 +813,11 @@ def tools_hub():
     <li>Free. Reads the first {TOOL['free_rows']} rows of each file.</li>
     <li>No upload: the file is read by your own browser, so it suits work and staff data. The pages only count anonymous visits (Cloudflare Web Analytics, no cookies, never your file).</li>
     <li>Works offline after your first visit. In Chrome or Edge you can install it as an app from the address bar.</li></ul></div>
-</section>'''
+</section>
+<section class="wrap section"><div class="panel"><h2>Also inside the apps you use</h2><ul class="checks">
+  <li><a href="/tools/sheets-dashboard-report/">Sheet to Dashboard Report for Google Sheets</a>: the same reports from a table in your sheet (coming soon to the Google Workspace Marketplace).</li>
+  <li><a href="/release-readiness-monday/">Release Readiness Scorecard for monday.com</a>: a GO / AT RISK / NO-GO verdict for a release from your QA board.</li>
+  <li><a href="https://apify.com/vpcapps/csv-to-dashboard-report" rel="noopener">CSV to Dashboard Report on Apify</a>: the report engine as an Actor, for automations.</li></ul></div></section>'''
     url = SITE['url'] + '/tools/'
     page('/tools/', TOOL['full_name'],
          'Free CSV to dashboard for Jira, Etsy and attendance exports, or any other CSV: a dashboard, plain-English '
@@ -994,6 +1045,7 @@ def main(argv=None):
     press()
     privacy()
     jira_pages.build(page)
+    app_pages.build(page, tool_app_ld, SITE['url'])
     terms()
     legacy_pages()
     not_found()

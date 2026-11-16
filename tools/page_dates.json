@@ -20,8 +20,8 @@
   "date": "2026-11-01"
  },
  "/contact/": {
-  "hash": "0f7130c4a3a9dc31",
-  "date": "2026-11-01"
+  "hash": "b6aa67b8def9525a",
+  "date": "2026-11-16"
  },
  "/games/": {
   "hash": "44f743a7bbbfa9e4",
@@ -96,12 +96,16 @@
   "date": "2026-11-01"
  },
  "/press/": {
-  "hash": "67c0e1918529c81d",
-  "date": "2026-11-01"
+  "hash": "a8632ddf8d00bef9",
+  "date": "2026-11-16"
  },
  "/privacy/": {
-  "hash": "b80c8aa9eb1fc881",
-  "date": "2026-11-08"
+  "hash": "09332456e30b9921",
+  "date": "2026-11-16"
+ },
+ "/release-readiness-monday/": {
+  "hash": "a8cf138ce2c1ec8b",
+  "date": "2026-11-16"
  },
  "/shuriken-ricochet/privacy.html": {
   "hash": "71a5c09ddc738abf",
@@ -112,12 +116,12 @@
   "date": "2026-11-01"
  },
  "/terms/": {
-  "hash": "3c8d7a18eab4bb9f",
-  "date": "2026-10-31"
+  "hash": "43b221e0d491bd5e",
+  "date": "2026-11-16"
  },
  "/tools/": {
-  "hash": "9034be2a4ac94fc1",
-  "date": "2026-11-08"
+  "hash": "a69935145d8f622a",
+  "date": "2026-11-16"
  },
  "/tools/any-csv-dashboard/": {
   "hash": "800448a7876a15a8",
@@ -138,5 +142,9 @@
  "/tools/jira-csv-dashboard/": {
   "hash": "b60f00beebc8a6cc",
   "date": "2026-11-08"
+ },
+ "/tools/sheets-dashboard-report/": {
+  "hash": "4cc1cfbc254e2d24",
+  "date": "2026-11-16"
  }
 }

@@ -4,7 +4,7 @@ APPs repo (docs/store_listings/<key>.md), so the site says what Play says."""
 SITE = dict(
     name='VPC Apps',
     url='https://vpcapps.net',
-    email='vpconsulting.apps@gmail.com',
+    email='support@vpcapps.net',
     tagline='Bite-size puzzle games for your phone and your browser.',
     description='VPC Apps makes bite-size puzzle games: Balloon Domino, Pop Pairs, Target Tiles, Lantern Chain '
                 'and Shuriken Ricochet. Play free in your browser or get them on Google Play.',

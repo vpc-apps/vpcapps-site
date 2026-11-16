@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Release Readiness Scorecard for monday.com: how to use · VPC Apps</title>
+<meta name="description" content="How to set up and use Release Readiness Scorecard for monday.com: column mapping, GO / AT RISK / NO-GO / NO DATA, the six rules, quality checks, release notes, printing, permissions and privacy.">
+<link rel="canonical" href="https://vpcapps.net/release-readiness-monday/">
+<meta property="og:site_name" content="VPC Apps">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Release Readiness Scorecard for monday.com: how to use">
+<meta property="og:description" content="How to set up and use Release Readiness Scorecard for monday.com: column mapping, GO / AT RISK / NO-GO / NO DATA, the six rules, quality checks, release notes, printing, permissions and privacy.">
+<meta property="og:url" content="https://vpcapps.net/release-readiness-monday/">
+<meta property="og:image" content="https://vpcapps.net/assets/img/brand/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ff5a8a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/fredoka.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script src="/assets/js/site.js" defer></script>
+<style>.doc table{width:100%;border-collapse:collapse;margin:12px 0 20px;font-size:.95em}.doc th,.doc td{border:1px solid var(--line,#ddd);padding:8px 10px;text-align:left;vertical-align:top}.doc th{background:var(--soft,#f6f6f8)}.doc .tw{overflow-x:auto}.doc h2{margin-top:32px}.doc .shot{margin:16px 0 24px}.doc .shot img{width:100%;height:auto}.doc .soon{display:inline-block;background:#fff3cd;color:#5f3a00;padding:2px 8px;border-radius:6px;font-weight:600}.doc code{overflow-wrap:anywhere}</style></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap bar">
+    <span class="brand"><img src="/assets/img/brand/icon-192.png" alt="" width="32" height="32"><span>VPC Apps</span></span>
+    <button class="theme" type="button" aria-label="Switch light or dark theme" title="Light / dark"><span aria-hidden="true"></span></button>
+  </div>
+</header>
+<main id="main">
+<section class="wrap section narrow doc page-head">
+  <p class="eyebrow">How to use</p>
+  <h1>Release Readiness Scorecard for monday.com</h1>
+  <p class="lead">Know if this release can ship, with the reasons. This board view turns your QA or bugs board into a <b>GO / AT RISK / NO-GO</b> verdict for a release, with the checks behind it, charts, a defect report quality check and release notes.</p>
+  <p class="muted">On this page: setup, what the verdict means, the six rules and how to change them, quality checks, release notes, printing and sharing, permissions, privacy and support.</p>
+</section>
+<section class="wrap section narrow doc">
+  <h2>Before you start</h2>
+  <ul>
+    <li>A monday.com board where each item is a defect (or a mix of defects and other work items), with a <b>Status</b> column.</li>
+    <li>Somewhere that says which release each item belongs to: board groups, a dropdown, a connected board, or similar. Without it the whole board counts as one release.</li>
+    <li>Optional but useful: priority, created and resolved dates, a description, environment, files and a reopen count.</li>
+  </ul>
+
+  <h2>Set up</h2>
+  <ol class="steps">
+    <li>Install <b>Release Readiness Scorecard</b> from the monday.com apps marketplace (an account admin may need to approve it).</li>
+    <li>On your QA or bugs board, add a view (the <b>+</b> next to the board’s views) and choose <b>Release Readiness Scorecard</b>.</li>
+    <li>The welcome page explains the app. Click <b>Set up columns</b>.</li>
+    <li>In <b>Settings</b>, check the suggested mapping (the app guesses from your column names), tick the status labels that mean <b>done</b>, and click <b>Save settings</b>.</li>
+    <li>Pick a <b>Release</b> at the top. The scorecard appears.</li>
+  </ol>
+  <p>Only <b>Status</b> is required. Everything else is optional, and the report says what is missing in a notice above it, never as a silent zero. One column cannot be used for two roles.</p>
+  <div class="tw"><table><thead><tr><th>Role</th><th>Column types</th><th>If you leave it empty</th></tr></thead><tbody><tr><td><b>Status</b> (required)</td><td>Status</td><td>–</td></tr><tr><td>Release</td><td>Board groups, the whole board, or a dropdown / status / text / connected board / mirror / tags column</td><td>The whole board is one release</td></tr><tr><td>Priority / severity</td><td>Status, dropdown, text</td><td>The two priority rules count nothing (a notice says so)</td></tr><tr><td>Item type</td><td>Status, dropdown, text</td><td>Every item counts as a defect. With it, only items whose type says Bug or Defect are scored; the rest go to the release notes</td></tr><tr><td>Created date</td><td>Date, creation log</td><td>The item’s monday.com creation date (wrong for imported boards)</td></tr><tr><td>Resolved date</td><td>Date</td><td>The last update of done items, as an estimate (a notice says so)</td></tr><tr><td>Assignee</td><td>People, text</td><td>“Unassigned”</td></tr><tr><td>Found in release</td><td>Dropdown, status, text, connected board, mirror, tags</td><td>No “found after the previous release shipped” card</td></tr><tr><td>Description</td><td>Long text, text</td><td>Quality checks read the item name only</td></tr><tr><td>Environment</td><td>Text, long text, dropdown, status, tags</td><td>The environment check reads the description only</td></tr><tr><td>Files / evidence</td><td>File</td><td>The evidence check looks for links in the description only</td></tr><tr><td>Reopen count</td><td>Numbers (times reopened) or checkbox (reopened once)</td><td>The reopen-rate rule shows “not measured” and passes (a notice says so)</td></tr></tbody></table></div>
+  <p>Done labels: a status label counts as done when monday.com marks it done (the green “Done” style) or by its name (Done, Fixed, Closed, Verified…). You can change the ticks in Settings.</p>
+  <p>Priority labels are read by name: Critical also covers Blocker, Highest, Urgent, P0, S0/S1 and Sev 0/1; High covers Major, P1 and S2. Labels with other names keep their own name and count in neither priority rule.</p>
+  <p>Timeline columns are not offered as a release, because a date range is not a release name. Use groups or a dropdown.</p>
+  <figure class="shot"><img src="/assets/img/apps/monday-settings.webp" alt="The Settings page of the scorecard: one dropdown per role, done labels ticked, Save settings" width="1280" height="1032" loading="lazy"><figcaption class="muted small">Settings with a suggested mapping (preview with a synthetic board).</figcaption></figure>
+
+  <h2>What the verdict means</h2>
+  <p>Each rule compares a number with two limits: at or below the <b>GO</b> limit it passes; above GO but at or below <b>AT RISK</b> it is at risk; above AT RISK it fails. The overall verdict is the worst result of any rule.</p>
+  <div class="tw"><table><thead><tr><th>Verdict</th><th>Means</th></tr></thead><tbody><tr><td><b>GO</b></td><td>Every rule is at or below its GO limit.</td></tr><tr><td><b>AT RISK</b></td><td>No rule fails, but at least one is above its GO limit (and at or below its AT RISK limit).</td></tr><tr><td><b>NO-GO</b></td><td>At least one rule is above its AT RISK limit.</td></tr><tr><td><b>NO DATA</b></td><td>No defects are linked to this release. An empty release never reads as GO. Check the Release column in Settings, or pick another release.</td></tr></tbody></table></div>
+  <p>The verdict supports your release decision; it does not replace it. It reflects only what is recorded on the board.</p>
+  <figure class="shot"><img src="/assets/img/apps/monday-report.webp" alt="A NO-GO scorecard for release 2.4: summary cards per rule and the go/no-go rules table" width="1280" height="900" loading="lazy"><figcaption class="muted small">A NO-GO scorecard for a synthetic release (invented data).</figcaption></figure>
+
+  <h2>The six rules</h2>
+  <div class="tw"><table><thead><tr><th>Rule</th><th>GO at or below</th><th>AT RISK at or below</th></tr></thead><tbody><tr><td>Open blocker / critical defects</td><td>0</td><td>0</td></tr><tr><td>Open high-priority defects</td><td>2</td><td>5</td></tr><tr><td>Reopen rate</td><td>10%</td><td>20%</td></tr><tr><td>Defects open more than 30 days</td><td>3</td><td>10</td></tr><tr><td>Created minus resolved, last 14 days</td><td>0</td><td>5</td></tr><tr><td>Open defects without steps or attachment</td><td>25%</td><td>100%</td></tr></tbody></table></div>
+  <ul>
+    <li>“Open” means the status is not one of the done labels.</li>
+    <li>The four count rules can instead be set as a <b>% of all defects</b> in the release. Reopen rate and the evidence rule are always percentages.</li>
+    <li>Without a Reopen count column, the reopen-rate rule is shown as “not measured” and passes.</li>
+  </ul>
+
+  <h2>Changing the rules</h2>
+  <p>Click <b>Edit rules</b>. Start from a template if you like, change the numbers (whole numbers; each AT RISK limit at or above its GO limit) and click <b>Save rules</b>. <b>Use defaults</b> goes back to the built-in limits. Choosing a template only fills the editor; nothing is saved until you click Save rules.</p>
+  <div class="tw"><table><thead><tr><th>Template</th><th>For</th><th>In short</th></tr></thead><tbody><tr><td>Strict</td><td>Regulated or enterprise releases</td><td>No open critical or high defects, nothing left open for 30 days, a low reopen rate</td></tr><tr><td>Standard</td><td>Most teams</td><td>The built-in defaults in the table above</td></tr><tr><td>Fast-moving</td><td>Startups and internal tools</td><td>Limits as a share of all defects, more room for open work; only critical defects block</td></tr></tbody></table></div>
+  <p><b>Who can change them:</b> settings and limits are saved per board and shared by everyone who opens that board’s scorecard. Board viewers and guests see them read-only (<b>View rules</b>). Any board member can change them.</p>
+
+  <h2>Report views</h2>
+  <p>The <b>View</b> menu chooses which reports you see, print in full and download: <b>Executive</b> (the verdict, a card per rule, the comparison and blockers), <b>QA lead</b> (everything) or <b>Release manager</b> (comparison, priority mix, defects found after the last release shipped, status by priority, age and assignee). When there is an earlier release with defects, the report compares this release with it.</p>
+
+  <h2>Defect report quality checks</h2>
+  <p>Each defect is checked for five things, rule-based (no AI). The checks are advisory: they show which defects are hard to verify.</p>
+  <div class="tw"><table><thead><tr><th>Check</th><th>Passes when</th></tr></thead><tbody><tr><td>Steps to reproduce</td><td>A “Steps to reproduce” (or STR / Repro) heading, or a numbered list</td></tr><tr><td>Expected and actual result</td><td>Both an expected and an actual result are written down</td></tr><tr><td>Environment stated</td><td>The Environment column, or browser / OS / device / build words</td></tr><tr><td>Evidence attached</td><td>A file in the Files column, or a link to a screenshot, video or log</td></tr><tr><td>Clear title</td><td>More than 3 words, and more than “not working”, “issue” or “error”</td></tr></tbody></table></div>
+  <p>The app reads the board’s columns only. <b>Item updates are not read</b>, so put the steps to reproduce in a Description column for the quality check.</p>
+
+  <h2>Release notes</h2>
+  <p>The report lists the release’s items grouped as new features, improvements, fixed defects and known issues, with a short summary paragraph. <b>Copy as</b> Text, Markdown or HTML copies every line, ready to paste into a changelog or an email. If the browser blocks copying inside monday.com, the text is selected for you to press Ctrl+C (Cmd+C on a Mac).</p>
+
+  <h2>Print and download</h2>
+  <ul>
+    <li><b>Print summary (1 page)</b>: the verdict, the summary cards and the key charts on one A4 page.</li>
+    <li><b>Print full report</b>: every report in the chosen view, over as many pages as needed.</li>
+    <li><b>Download shareable report</b>: one HTML file with no scripts that opens in any browser, for people without monday.com access.</li>
+  </ul>
+  <p>Use the app’s own buttons. The browser’s Print menu prints the whole monday.com page instead. Printed and downloaded reports contain item names, priorities and assignee names: treat them like any board export.</p>
+
+  <h2>Limits</h2>
+  <ul>
+    <li>The app reads up to 10,000 items of a board; above that the report says <b>partial data</b>.</li>
+    <li>Without a Resolved date column, fix times are estimated from the item’s last update.</li>
+  </ul>
+
+  <h2>Permissions</h2>
+  <p>The app asks for one permission: <code>boards:read</code>, to read the board’s name, groups, columns and items. It has no write permission, so it <b>never changes your board</b>. It does not read item updates, your account’s users or anything outside the board you open it on. It reads with your own monday.com access, so each person sees only what they are allowed to see.</p>
+  <p>The column mapping, done labels and rule limits are saved per board in monday.com’s own app storage. Nothing else is saved: no item content.</p>
+
+  <h2>Privacy</h2>
+  <ul>
+    <li>The app runs in your browser on monday.com and is hosted by monday.com. VPC Apps has no server for it.</li>
+    <li>Board data is read only to build the report on your screen. It is not sent to VPC Apps or anyone else, and it is not stored or logged.</li>
+    <li>No AI, no analytics and no advertising inside the app.</li>
+    <li>A downloaded or printed report is a file on your device; you control who receives it.</li>
+  </ul>
+  <p>Full privacy policy: vpcapps.net/privacy (section “Release Readiness Scorecard for monday.com”). Terms of use: vpcapps.net/terms. This help page itself counts anonymous visits with Cloudflare Web Analytics (no cookies); the app inside monday.com does not.</p>
+
+  <h2>Support</h2>
+  <p>Email <b>support@vpcapps.net</b> with the release name, what you saw, and the build number shown at the bottom of the app. Please do not send real defect content; a screenshot with details hidden is fine. We use your email only to answer you; we do not contact users otherwise.</p>
+  <p class="muted">monday.com is a trademark of monday.com Ltd. This app is made by VPC Apps and is not made or endorsed by monday.com.</p>
+</section>
+</main>
+<footer class="foot">
+  <div class="wrap"><p class="muted small">© 2026 VPC Apps, a brand of Venture Path Consulting (India) · support@vpcapps.net</p></div>
+</footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a470f94b795a45578b8f87cbfcca8c9d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
